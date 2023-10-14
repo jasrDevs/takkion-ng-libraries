@@ -27,7 +27,10 @@
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/@takkion/ng-material/prebuilt-themes/default-and-dark.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -35,13 +38,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "4kb",
+                  "maximumError": "8kb"
                 }
               ],
               "outputHashing": "all"
@@ -86,6 +89,39 @@
           }
         }
       }
+    },
+    "ng-utilities": {
+      "projectType": "library",
+      "root": "libraries/ng-utilities",
+      "sourceRoot": "libraries/ng-utilities",
+      "prefix": "tak",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "libraries/ng-utilities/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libraries/ng-utilities/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libraries/ng-utilities/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "libraries/ng-utilities/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
     }
+  },
+  "cli": {
+    "analytics": "f5042d84-6929-4107-8cd4-bde86fb6af8f"
   }
 }

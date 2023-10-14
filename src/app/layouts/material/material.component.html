@@ -1,0 +1,19 @@
+<tak-sidenav-container class="tak-admin-layout-container" (backdropClick)="close()">
+  <tak-sidenav class="tak-sidenav" #sidenav (keydown.escape)="close()" disableClose>
+    <p><button tak-button (click)="close()">Toggle</button></p>
+  </tak-sidenav>
+
+  <tak-sidenav-content>
+    <tak-toolbar color="primary" class="tak-admin-layout-header">
+      <button tak-icon-button (click)="open()"><tak-icon>menu</tak-icon></button>
+
+      <button tak-icon-button (click)="toggleTheme()"><tak-icon>dark_mode</tak-icon></button>
+    </tak-toolbar>
+
+    <div class="tak-container">
+      <router-outlet></router-outlet>
+    </div>
+
+    <tak-toolbar color="primary" class="tak-admin-layout-footer"> footer works </tak-toolbar>
+  </tak-sidenav-content>
+</tak-sidenav-container>
