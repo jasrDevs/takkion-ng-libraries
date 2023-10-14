@@ -1,0 +1,40 @@
+@import 'themes/main';
+
+@import 'breadcrumb';
+@import 'expansion';
+@import 'loader';
+@import 'footer';
+@import 'header';
+@import 'sidenav';
+@import 'sidebar';
+@import 'layout';
+@import 'toggle-sidebar';
+
+:root {
+  --tak-header-height: 50px;
+  --tak-footer-height: 50px;
+  --tak-sidebar-compact-width: 50px;
+  --tak-sidebar-full-width: 240px;
+  --tak-layout-outlet-padding: 20px;
+}
+
+.tak-layout {
+  * {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+  }
+  margin: 0;
+  overflow: auto;
+  &__loader-hidden {
+    display: none !important;
+  }
+}
+
+.tak__txt-dec-none {
+  text-decoration: none;
+}
+.tak__min-wdh-32 {
+  min-width: 32px;
+}
+.tak__admin-layout__not-exist {
+  display: none !important;
+}

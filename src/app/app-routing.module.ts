@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MaterialComponent } from './layouts/material/material.component';
+import { AdminLayoutComponent } from './layouts/custom/layout.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/material/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
-    path: 'material',
-    component: MaterialComponent,
+    path: '',
+    component: AdminLayoutComponent,
     children: [
       {
         path: 'home',

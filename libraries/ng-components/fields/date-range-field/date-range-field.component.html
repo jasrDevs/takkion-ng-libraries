@@ -1,0 +1,48 @@
+<div class="tak-form-container" *ngIf="!notInput">
+  <tak-form-field [appearance]="appearance" [color]="color">
+    <tak-label>
+      <ng-content></ng-content>
+      {{ ' ' }}<span class="tak-field__danger-x" *ngIf="required">*</span>
+    </tak-label>
+    <tak-date-range-input [rangePicker]="picker">
+      <input
+        takStartDate
+        [placeholder]="startPlaceholder"
+        [formControl]="start"
+        [autocomplete]="autocomplete"
+      />
+      <input takEndDate [placeholder]="endPlaceholder" [formControl]="end" />
+    </tak-date-range-input>
+    <tak-datepicker-toggle takSuffix [for]="picker"></tak-datepicker-toggle>
+    <tak-date-range-picker #picker></tak-date-range-picker>
+  </tak-form-field>
+  <tak-error
+    [start]="start"
+    [end]="end"
+    *ngIf="(start.invalid || end.invalid) && (start.touched || end.touched)"
+  >
+  </tak-error>
+</div>
+
+<div *ngIf="notInput">
+  <div class="tak__date-not-input__picker-container">
+    <tak-datepicker-toggle takSuffix [for]="picker" class="not-input-field"></tak-datepicker-toggle>
+    <tak-date-range-picker #picker [disabled]="false"></tak-date-range-picker>
+  </div>
+
+  <div class="tak__date-not-input__field-container">
+    <tak-form-field [color]="color">
+      <tak-date-range-input [rangePicker]="picker">
+        <input takStartDate [formControl]="start" />
+        <input takEndDate [formControl]="end" />
+      </tak-date-range-input>
+    </tak-form-field>
+  </div>
+
+  <tak-error
+    [start]="start"
+    [end]="end"
+    *ngIf="(start.invalid || end.invalid) && (start.touched || end.touched)"
+  >
+  </tak-error>
+</div>

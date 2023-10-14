@@ -5,8 +5,12 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { CustomPreloadingStrategy } from './app.preloading';
-import { MaterialModule } from './layouts/material/material.module';
-import { HttpClientModule } from '@angular/common/http';
+import { TakSnackBarModule } from '@takkion/ng-material/snack-bar';
+import { TakDialogModule } from '@takkion/ng-material/dialog';
+import { TAK_DATE_LOCALE } from '@takkion/ng-material/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AddTokenInterceptor } from './interceptors/add-token';
+import { AdminLayoutModule } from './layouts/custom/layout.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,9 +22,16 @@ import { HttpClientModule } from '@angular/common/http';
     }),
     AppRoutingModule,
     HttpClientModule,
-    MaterialModule,
+    TakSnackBarModule,
+    HttpClientModule,
+    TakDialogModule,
+    AdminLayoutModule,
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true },
+    { provide: TAK_DATE_LOCALE, useValue: 'es-ES' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

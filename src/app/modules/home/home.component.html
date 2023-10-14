@@ -1,1 +1,134 @@
-<p>home works!</p>
+<tak-capsule>
+  <tak-box-form
+    takTitle="Hey Joee"
+    takSubtitle="Hello again"
+    [showActionButtons]="true"
+    [hasResetButton]="true"
+    [formGroup]="fieldsForm"
+    (ngSubmit)="onSubmit()"
+    (onBack)="onBack()"
+    [hasBackButton]="true"
+  >
+    <!-- <section tak-custom-branding>Hey Joe</section> -->
+
+    <tak-form-field appearance="standard">
+      <tak-label>Outline form field</tak-label>
+      <input takInput placeholder="Placeholder" formControlName="text" />
+      <tak-error>sadsdasda</tak-error>
+    </tak-form-field>
+
+    <button tak-button (click)="openToast('notification', 'notification')" type="button">
+      NOTIFICATION
+    </button>
+    <button tak-button (click)="openToast('success', 'success')" type="button">SUCCESS</button>
+    <button tak-button (click)="openToast('danger', 'danger')" type="button">DANGER</button>
+
+    <button tak-button (click)="openModal()" type="button">MODAL</button>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-50">
+          <tak-general-field
+            [formControl]="fieldsForm.text"
+            [countCaracters]="true"
+            [maxLength]="100"
+          >
+            Text field
+          </tak-general-field>
+        </div>
+        <div class="col-50">
+          <tak-general-field
+            [formControl]="fieldsForm.text"
+            [countCaracters]="true"
+            type="password"
+            [maxLength]="100"
+          >
+            Password field
+          </tak-general-field>
+        </div>
+        <div class="col-50">
+          <tak-general-field type="filter" [formControl]="fieldsForm.filter"></tak-general-field>
+        </div>
+        <div class="col-100">
+          <tak-textarea-field
+            [formControl]="fieldsForm.textarea"
+            [countCaracters]="true"
+            [maxLength]="100"
+          >
+            Textarea
+          </tak-textarea-field>
+        </div>
+
+        <div class="col-50">
+          <tak-select-field
+            [formControl]="fieldsForm.select"
+            [suggestions]="suggestions"
+            option="nombreCompleto"
+            (selectAction)="onSelect($event)"
+          >
+            Producto
+          </tak-select-field>
+        </div>
+        <div class="col-50">
+          <tak-number-field [formControl]="fieldsForm.number">
+            Number field (200-500)
+          </tak-number-field>
+        </div>
+
+        <div class="col-100">
+          <tak-money-field [formControl]="fieldsForm.money"> Money field </tak-money-field>
+        </div>
+
+        <div class="col-80">
+          <tak-date-field [formControl]="fieldsForm.date" [minDate]="nowDate" [maxDate]="endDate">
+            Date field
+          </tak-date-field>
+        </div>
+        <div class="col-20">
+          <tak-date-field
+            [minDate]="nowDate"
+            [maxDate]="endDate"
+            [formControl]="fieldsForm.date"
+            color="warn"
+            [notInput]="true"
+          ></tak-date-field>
+        </div>
+
+        <div class="col-80">
+          <tak-date-range-field [start]="fieldsForm.start" [end]="fieldsForm.end" color="accent">
+            Date Range field
+          </tak-date-range-field>
+        </div>
+
+        <div class="col-20">
+          <tak-date-range-field [start]="fieldsForm.start" [end]="fieldsForm.end" [notInput]="true">
+          </tak-date-range-field>
+        </div>
+
+        <div class="col-50">
+          <tak-general-field
+            [hasActionButton]="true"
+            formControlName="query"
+            (onExecuteAction)="onQuery($event)"
+          >
+            Query field
+          </tak-general-field>
+        </div>
+
+        <div class="col-100">
+          <tak-autocomplete-field
+            #autocomplete
+            formControlName="autocomplete"
+            [isRemoteSearch]="true"
+            [isLoading]="isLoading"
+            option="descripcion"
+            extraInfo="codigo"
+            (onSearch)="onChange($event)"
+          >
+            Tipo de Gestión
+          </tak-autocomplete-field>
+        </div>
+      </div>
+    </div>
+  </tak-box-form>
+</tak-capsule>

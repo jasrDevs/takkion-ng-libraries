@@ -1,0 +1,163 @@
+<div class="tak__sidenav__container">
+  <tak-layout-accordion>
+    <div *ngFor="let item of navigation.items; let i = index">
+      <!-- Links -->
+      <a
+        *ngIf="item.type === 'link'"
+        class="tak__txt-dec-none"
+        [class.tak__admin-layout__not-exist]="
+          ([authorities, item.disableOnContexts!] | validateAccess: [context, item.authorities!]) ||
+          item.forceDisabledContent ||
+          item.disabledOnWeb
+        "
+        routerLink="{{ item.url }}"
+        routerLinkActive="tak__snav-link-active"
+        (click)="onCloseSidebar()"
+      >
+        <tak-layout-expansion-panel-header class="tak__sidenav__accordion__header is-link">
+          <span class="material-icons tak__min-wdh-32 icon-link">{{ item.icon }}</span>
+          <span class="tak__sidenav__link-name accordion">{{ item.name }}</span>
+        </tak-layout-expansion-panel-header>
+      </a>
+      <!-- Dropdowns -->
+      <tak-layout-expansion-panel
+        *ngIf="item.type === 'dropdown'"
+        [class.tak__admin-layout__not-exist]="
+          ([authorities, item.disableOnContexts!] | validateAccess: [context, item.authorities!]) ||
+          item.forceDisabledContent ||
+          item.disabledOnWeb
+        "
+      >
+        <tak-layout-expansion-panel-header class="tak__sidenav__accordion__header">
+          <span class="material-icons tak__min-wdh-32 icon-link">{{ item.icon }}</span>
+          <span class="tak__sidenav__link-name accordion">{{ item.name }}</span>
+        </tak-layout-expansion-panel-header>
+        <div
+          *ngFor="let link of item.dropdownLinks"
+          [class.tak__admin-layout__not-exist]="
+            ([authorities, link.disableOnContexts!]
+              | validateAccess: [context, link.authorities!]) ||
+            link.forceDisabledContent ||
+            link.disabledOnWeb
+          "
+        >
+          <div takRipple class="tak__sidenav__accordion__link-container">
+            <a
+              class="tak__txt-dec-none"
+              routerLink="{{ link.urlIsNotAutoCompleted ? link.url : item.url + '/' + link.url }}"
+              routerLinkActive="tak__snav-link-active"
+              (click)="onCloseSidebar()"
+            >
+              <button class="tak__sidenav__accordion__link-button">
+                <span>
+                  {{ link.name }}
+                </span>
+              </button>
+            </a>
+          </div>
+        </div>
+      </tak-layout-expansion-panel>
+      <!-- Collections -->
+      <section *ngIf="item.type === 'collection'">
+        <div
+          [class.tak__admin-layout__not-exist]="
+            ([authorities, item.disableOnContexts!]
+              | validateAccess: [context, item.authorities!]) ||
+            item.forceDisabledContent ||
+            item.disabledOnWeb
+          "
+        >
+          <tak-layout-expansion-panel-header
+            (click)="toggleModule(i)"
+            class="tak__sidenav__accordion__header is-module"
+          >
+            <span class="material-icons tak__min-wdh-32 icon-link is-module">
+              {{
+                !disableHiddenCollections
+                  ? item.showCollectionContent
+                    ? 'visibility'
+                    : 'visibility_off'
+                  : 'radio_button_checked'
+              }}
+            </span>
+            <span class="tak__sidenav__link-name accordion">{{ item.name }}</span>
+          </tak-layout-expansion-panel-header>
+          <div
+            class="tak-divider"
+            [class.tak__admin-layout__not-exist]="
+              ([authorities, item.disableOnContexts!]
+                | validateAccess: [context, item.authorities!]) ||
+              item.forceDisabledContent ||
+              item.disabledOnWeb
+            "
+          ></div>
+          <div *ngFor="let el of item.objects" [hidden]="!item.showCollectionContent">
+            <a
+              class="tak__txt-dec-none"
+              [class.tak__admin-layout__not-exist]="
+                ([authorities, el.disableOnContexts!]
+                  | validateAccess: [context, el.authorities!]) ||
+                el.forceDisabledContent ||
+                el.disabledOnWeb
+              "
+              routerLink="{{ !el.urlIsNotAutoCompleted ? item.url + '/' + el.url : el.url }}"
+              routerLinkActive="tak__snav-link-active"
+              (click)="onCloseSidebar()"
+            >
+              <tak-layout-expansion-panel-header
+                class="tak__sidenav__accordion__header is-link"
+                *ngIf="el.type === 'link'"
+              >
+                <span class="material-icons tak__min-wdh-32 icon-link">{{ el.icon }}</span>
+                <span class="tak__sidenav__link-name accordion">{{ el.name }}</span>
+              </tak-layout-expansion-panel-header>
+            </a>
+
+            <tak-layout-expansion-panel
+              *ngIf="el.type === 'dropdown'"
+              [class.tak__admin-layout__not-exist]="
+                ([authorities, el.disableOnContexts!]
+                  | validateAccess: [context, el.authorities!]) ||
+                el.forceDisabledContent ||
+                el.disabledOnWeb
+              "
+            >
+              <tak-layout-expansion-panel-header class="tak__sidenav__accordion__header">
+                <span class="material-icons tak__min-wdh-32 icon-link">{{ el.icon }}</span>
+                <span class="tak__sidenav__link-name accordion">{{ el.name }}</span>
+              </tak-layout-expansion-panel-header>
+              <div
+                *ngFor="let link of el.dropdownLinks"
+                [class.tak__admin-layout__not-exist]="
+                  ([authorities, link.disableOnContexts!]
+                    | validateAccess: [context, link.authorities!]) ||
+                  link.forceDisabledContent ||
+                  link.disabledOnWeb
+                "
+              >
+                <div takRipple class="tak__sidenav__accordion__link-container">
+                  <a
+                    class="tak__txt-dec-none"
+                    routerLink="{{
+                      !link.urlIsNotAutoCompleted
+                        ? item.url + '/' + el.url + '/' + link.url
+                        : link.url
+                    }}"
+                    routerLinkActive="tak__snav-link-active"
+                    (click)="onCloseSidebar()"
+                  >
+                    <button class="tak__sidenav__accordion__link-button">
+                      <span>
+                        {{ link.name }}
+                      </span>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </tak-layout-expansion-panel>
+          </div>
+        </div>
+      </section>
+    </div>
+  </tak-layout-accordion>
+</div>

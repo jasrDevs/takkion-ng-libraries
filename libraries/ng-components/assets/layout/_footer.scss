@@ -1,0 +1,12 @@
+.tak {
+  &__footer {
+    width: 100%;
+    border-top: 1px solid var(--tak-divider-border-top-dark-color);
+    height: var(--tak-footer-height);
+    color: var(--tak-layout-dark-color);
+    display: flex;
+  }
+}
+[tak-custom-footer] {
+  width: 100%;
+}

@@ -1,0 +1,18 @@
+<tak-layout
+  *ngIf="resourcesLoaded"
+  appTitle="Takkion"
+  appSidebarTitle="JASR Desarrollo Web"
+  [navigation]="navigation"
+  [authorities]="permissions"
+  [context]="context"
+  [isDinamicSidebar]="true"
+  [includeBreadcrumbs]="true"
+  [sidebarDebounceTime]="200"
+  [accordionInCollections]="accordionInCollections"
+  [disableHiddenCollections]="disableHiddenCollections"
+  [mdWidth]="980"
+>
+  <section tak-custom-header><app-header></app-header></section>
+  <section tak-custom-footer><app-footer></app-footer></section>
+  <router-outlet></router-outlet>
+</tak-layout>

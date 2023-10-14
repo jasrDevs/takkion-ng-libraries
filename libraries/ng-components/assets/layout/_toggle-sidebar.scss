@@ -1,0 +1,191 @@
+/***********************************************/
+/******************** FULL *********************/
+/***********************************************/
+.tak__layout__container.full {
+  .tak__sidebar {
+    &__container {
+      width: var(--tak-sidebar-full-width);
+      transition: width ease $DEFAULT_EASE_TM_FAST;
+      & > .tak__sidebar__content {
+        width: var(--tak-sidebar-full-width);
+        transition: width ease $DEFAULT_EASE_TM_FAST;
+      }
+    }
+  }
+  @media (min-width: $SIDEBAR_MD_RESOLUTION) {
+    .tak__container.sidebar-fixed {
+      margin-left: 240px;
+      transition: margin-left ease $DEFAULT_EASE_TM_FAST;
+    }
+  }
+}
+/***********************************************/
+/**************** MOBILE FULL ******************/
+/***********************************************/
+.tak__layout__container.mobile.full {
+  .tak__sidebar {
+    &__container {
+      width: var(--tak-sidebar-full-width);
+      transition: width ease $DEFAULT_EASE_TM_FAST;
+      & > .tak__sidebar__content {
+        width: var(--tak-sidebar-full-width);
+        transition: width ease $DEFAULT_EASE_TM_FAST;
+      }
+    }
+  }
+  @media (max-width: calc($SIDEBAR_MD_RESOLUTION - 1px)) {
+    .tak__sidebar__mobile-toggle-sidebar-button {
+      display: block;
+    }
+  }
+}
+
+/***********************************************/
+/**************** EXPAND FULL ******************/
+/***********************************************/
+
+.tak__layout__container.expand.full {
+  .tak__sidebar {
+    &__container {
+      width: var(--tak-sidebar-full-width);
+      transition: width ease $DEFAULT_EASE_TM_FAST;
+      & > .tak__sidebar__content {
+        width: var(--tak-sidebar-full-width);
+        transition: width ease $DEFAULT_EASE_TM_FAST;
+      }
+    }
+  }
+  @media (min-width: $SIDEBAR_MD_RESOLUTION) {
+    .tak__container.sidebar-fixed {
+      margin-left: 240px;
+      transition: margin-left ease $DEFAULT_EASE_TM_FAST;
+    }
+  }
+}
+
+/***********************************************/
+/****************** COMPACT ********************/
+/***********************************************/
+.tak__layout__container.compact {
+  .tak__sidebar {
+    &__container {
+      width: var(--tak-sidebar-compact-width);
+      transition: width ease $DEFAULT_EASE_TM_FAST;
+      & > .tak__sidebar__content {
+        width: var(--tak-sidebar-compact-width);
+        transition: width ease $DEFAULT_EASE_TM_FAST;
+      }
+    }
+    &__branding {
+      &__title {
+        display: none;
+      }
+      &__toggle {
+        &__container {
+          display: none;
+        }
+      }
+    }
+  }
+  .tak__sidenav {
+    &__link-name,
+    &__accordion__link-container {
+      display: none;
+    }
+  }
+  .tak-layout-expansion-panel-header {
+    &::after {
+      display: none;
+    }
+  }
+}
+/***********************************************/
+/************** MOBILE COMPACT *****************/
+/***********************************************/
+.tak__layout__container.mobile {
+  .tak__container {
+    margin-left: 0px;
+  }
+  .tak__sidebar {
+    &__container {
+      width: 0px;
+      margin-left: -1px;
+      & > .tak__sidebar__content {
+        width: 0px;
+        margin-left: -1px;
+        transition: width ease $DEFAULT_EASE_TM_FAST;
+      }
+    }
+  }
+}
+
+/***********************************************/
+/************ HIDE ON NO MOBILE ****************/
+/***********************************************/
+@media (min-width: $SIDEBAR_MD_RESOLUTION) {
+  .tak__sidebar__mobile-toggle-sidebar-button,
+  .tak__header__toggle-sbar-btn {
+    display: none !important;
+  }
+  .tak__sidebar__branding__toggle {
+    display: block !important;
+  }
+}
+
+/***********************************************/
+/******* EXPAND COMPACT *********/
+/***********************************************/
+
+.tak__layout__container.expand {
+  .tak__container {
+    margin-left: 0px;
+    transition: margin-left ease 0.3s;
+  }
+  .tak__sidebar {
+    &__container {
+      width: 0px;
+      margin-left: -1px;
+      & > .tak__sidebar__content {
+        width: 0px;
+        margin-left: -1px;
+        transition: width ease $DEFAULT_EASE_TM_FAST;
+      }
+    }
+    &__branding {
+      &__logo {
+        margin-left: 10px;
+      }
+      &__title {
+        text-align: left;
+        width: 200px;
+      }
+      &__toggle__container {
+        display: none !important;
+      }
+    }
+  }
+}
+
+/***********************************************/
+/******* DISABLE TRANSITION ON MOBILES *********/
+/***********************************************/
+.tak__layout__container.mobile.full {
+  .tak__sidebar {
+    &__container {
+      transition: width ease $DEFAULT_EASE_TM_SLOW !important;
+      & > .tak__sidebar__content {
+        transition: width ease $DEFAULT_EASE_TM_SLOW !important;
+      }
+    }
+  }
+}
+.tak__layout__container.mobile {
+  .tak__sidebar {
+    &__container {
+      transition: width ease $DEFAULT_EASE_TM_SLOW !important;
+      & > .tak__sidebar__content {
+        transition: width ease $DEFAULT_EASE_TM_SLOW !important;
+      }
+    }
+  }
+}

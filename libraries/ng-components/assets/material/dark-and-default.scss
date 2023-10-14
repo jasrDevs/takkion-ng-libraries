@@ -1,0 +1,58 @@
+.tak-box-form {
+  &__branding {
+    &__title {
+      color: var(--tak-primary-500);
+    }
+    &__subtitle {
+      color: var(--tak-primary-100);
+    }
+  }
+  &__scroll {
+    color: var(--tak-dark-color-700);
+  }
+}
+.tak-focused .tak-field__danger-x {
+  color: var(--tak-warn-500);
+}
+.tak-form-field-appearance-fill input:-webkit-autofill,
+.tak-form-field-appearance-fill input:-webkit-autofill:hover,
+.tak-form-field-appearance-fill input:-webkit-autofill:focus,
+.tak-form-field-appearance-fill input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px var(--tak-dark-background-color-10) inset !important;
+  -webkit-box-shadow: 0 0 0 30px var(--tak-dark-background-color-10) inset !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px var(--tak-dark-background-color-10) inset !important;
+  -webkit-box-shadow: 0 0 0 30px var(--tak-dark-background-color-10) inset !important;
+}
+
+.tak-autocomplete-not-records {
+  color: var(--tak-warn-500);
+}
+
+.tak-custom-error {
+  color: var(--tak-warn-500);
+}
+
+.tak-option {
+  &-span-extra {
+    color: gray;
+  }
+}
+@media only screen and (min-width: calc($MD_RESOLUTION - 1px)) {
+  .tak-dialog-container,
+  .tak-select-panel,
+  .tak-autocomplete-panel,
+  .tak-box-form__scroll,
+  textarea.tak-input-element {
+    &::-webkit-scrollbar {
+      background-color: var(--tak-scrollbar-thumb-background-color-500);
+    }
+    &::-webkit-scrollbar-thumb {
+      color: var(--tak-hover-scrollbar-thumb-color-500);
+    }
+  }
+}

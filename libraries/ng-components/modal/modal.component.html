@@ -1,0 +1,44 @@
+<div tak-dialog-title *ngIf="hasTopCloseButton">
+  <div class="tak-modal__top-container">
+    <h1 *ngIf="data.title !== ''" class="tak-modal__title">{{ data.title }}</h1>
+
+    <div *ngIf="hasTopCloseButton">
+      <button tak-icon-button (click)="onClose()"><tak-icon>close</tak-icon></button>
+    </div>
+  </div>
+</div>
+
+<div tak-dialog-content>
+  <tak-divider></tak-divider>
+  <p class="tak-modal__content">{{ data.content }}</p>
+  <tak-divider></tak-divider>
+</div>
+
+<tak-dialog-actions align="end">
+  <button tak-button *ngIf="!isAlert" color="accent" class="tak-bolder" (click)="onConfirm()">
+    {{ confirmButton }}
+  </button>
+
+  <button
+    tak-button
+    *ngIf="!isAlert"
+    color="warn"
+    class="tak-bolder"
+    (click)="onClose()"
+    cdkFocusInitial
+  >
+    {{ deniedButton }}
+  </button>
+
+  <button
+    tak-button
+    *ngIf="isAlert"
+    color="accent"
+    (click)="onClose()"
+    style="float: right"
+    class="tak-bolder"
+    cdkFocusInitial
+  >
+    {{ okButton }}
+  </button>
+</tak-dialog-actions>

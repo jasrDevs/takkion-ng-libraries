@@ -1,0 +1,63 @@
+<div class="tak-form-container" *ngIf="!notInput">
+  <tak-form-field
+    [class.tak-form-field-invalid]="isInvalid || (isSubmitted && control.invalid)"
+    [appearance]="appearance"
+    [color]="color"
+  >
+    <tak-label>
+      <ng-content></ng-content>{{ ' ' }}
+      <span class="tak-field__danger-x" *ngIf="required">*</span>
+    </tak-label>
+    <input
+      takInput
+      [min]="minDate"
+      [max]="maxDate"
+      [autocomplete]="autocomplete"
+      [takDatepicker]="picker"
+      [value]="value"
+      (keyup)="onChange($event)"
+      (dateChange)="onChange($event)"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      (focusout)="onFocusout()"
+    />
+    <tak-datepicker-toggle takSuffix [for]="picker"></tak-datepicker-toggle>
+    <tak-datepicker (closed)="onCloseDatePicker()" #picker></tak-datepicker>
+  </tak-form-field>
+  <tak-error
+    [control]="control"
+    [isDateField]="true"
+    *ngIf="isInvalid || (isSubmitted && control.invalid)"
+  >
+  </tak-error>
+</div>
+
+<div *ngIf="notInput">
+  <div class="tak__date-not-input__picker-container">
+    <tak-datepicker-toggle takSuffix [for]="picker" class="not-input-field"></tak-datepicker-toggle>
+    <tak-datepicker (closed)="onCloseDatePicker()" #picker></tak-datepicker>
+  </div>
+
+  <div class="tak__date-not-input__field-container">
+    <tak-form-field [color]="color">
+      <input
+        takInput
+        [min]="minDate"
+        [max]="maxDate"
+        autocomplete="off"
+        [takDatepicker]="picker"
+        [value]="value"
+        (keyup)="onChange($event)"
+        (dateChange)="onChange($event)"
+        [disabled]="disabled"
+        (focusout)="onFocusout()"
+      />
+    </tak-form-field>
+  </div>
+  <tak-error
+    [control]="control"
+    [isDateField]="true"
+    *ngIf="isInvalid || (isSubmitted && control.invalid)"
+  >
+  </tak-error>
+</div>

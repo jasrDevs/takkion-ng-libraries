@@ -22,7 +22,8 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "paths": {
-      "@takkion/ng-utilities": ["libraries/ng-utilities"]
+      "@takkion/ng-utilities": ["libraries/ng-utilities"],
+      "@takkion/ng-components/*": ["libraries/ng-components/*"]
     }
   },
   "angularCompilerOptions": {

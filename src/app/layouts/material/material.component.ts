@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TakSidenav } from '@takkion/ng-material/sidenav';
 
 @Component({
@@ -6,7 +6,6 @@ import { TakSidenav } from '@takkion/ng-material/sidenav';
   templateUrl: './material.component.html',
   styleUrls: ['./material.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialComponent {
   @ViewChild('sidenav') sidenav!: TakSidenav;

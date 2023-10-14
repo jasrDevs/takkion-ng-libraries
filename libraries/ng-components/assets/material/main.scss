@@ -1,0 +1,35 @@
+@import 'fields';
+
+@media only screen and (min-width: calc($MD_RESOLUTION - 1px)) {
+  .tak-dialog-container,
+  .tak-select-panel,
+  .tak-autocomplete-panel,
+  .tak-box-form__scroll,
+  textarea.tak-input-element {
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      box-shadow: inset 0 0 0 5px;
+      border-radius: 10px;
+    }
+  }
+  .tak-select-panel {
+    &::-webkit-scrollbar {
+      width: 6px !important;
+    }
+  }
+}
+
+.tak-input-element,
+.tak-date-range-input-inner,
+.tak-select-value,
+.tak-form-field-infix,
+.tak-hint,
+.tak-button-base,
+.tak-simple-snack-bar-content,
+.tak-button-wrapper,
+.tak-card,
+.tak-menu-item {
+  font-family: 'bodycommerce' !important;
+}

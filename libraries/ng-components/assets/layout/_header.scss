@@ -1,0 +1,47 @@
+$TOGGLE_SBAR_BTN_CONTINR_WIDTH: 40px;
+
+.tak {
+  &__header {
+    width: 100%;
+    background-color: var(--tak-header-background-color);
+    height: var(--tak-header-height);
+    color: var(--tak-layout-dark-color);
+    width: $DEFAULT_WIDTH;
+    display: flex;
+    &__toggle-sbar-btn {
+      &__container {
+        width: $TOGGLE_SBAR_BTN_CONTINR_WIDTH;
+        height: var(--tak-header-height);
+        align-items: center;
+        display: flex;
+        & > button {
+          background-color: transparent;
+          border: 1px solid transparent;
+          color: inherit;
+        }
+      }
+      @media (min-width: $SIDEBAR_MD_RESOLUTION) {
+        &__container {
+          display: block;
+          align-items: center;
+          display: flex;
+        }
+      }
+    }
+    &__custom {
+      &__container {
+        width: $DEFAULT_WIDTH;
+        align-items: center;
+        display: flex;
+      }
+      @media (max-width: calc($SIDEBAR_MD_RESOLUTION - 1px)) {
+        &__container {
+          width: calc($DEFAULT_WIDTH - $TOGGLE_SBAR_BTN_CONTINR_WIDTH);
+        }
+      }
+    }
+  }
+}
+[tak-custom-header] {
+  width: 100%;
+}

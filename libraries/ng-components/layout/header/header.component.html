@@ -1,0 +1,10 @@
+<header class="tak__header">
+  <div class="tak__header__toggle-sbar-btn__container" *ngIf="!isActionButton || isScreenMd">
+    <button tak-icon-button (click)="onToggleSidebar()">
+      <span class="material-icons">menu</span>
+    </button>
+  </div>
+  <div class="tak__header__custom__container">
+    <ng-content select="[tak-custom-header]"></ng-content>
+  </div>
+</header>

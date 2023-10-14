@@ -1,0 +1,15 @@
+<div class="tak-form-container">
+  <tak-form-field [appearance]="appearance" [color]="color">
+    <tak-label><ng-content></ng-content></tak-label>
+    <tak-select [formControl]="control" (focusout)="onFocusOut()">
+      <tak-option
+        *ngFor="let item of suggestions"
+        [value]="item"
+        (onSelectionChange)="emit($event)"
+      >
+        {{ item[option] }}
+      </tak-option>
+    </tak-select>
+  </tak-form-field>
+  <tak-error [control]="control" *ngIf="isInvalid || (isSubmitted && control.invalid)"></tak-error>
+</div>

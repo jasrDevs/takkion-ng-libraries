@@ -1,0 +1,37 @@
+:root {
+  --tak-loader-overlay-backdrop-background-color: rgba(255, 255, 255, 0.3);
+  --tak-loader-double-bounce1: #fcc02e;
+  --tak-loader-double-bounce2: #03a9f4;
+  --scrollbar-thumb-hover-color-500: rgba(192, 192, 192, 0.862);
+  --tak-layout-hover-scrollbar-thumb-color: rgba(192, 192, 192, 0.562);
+  --tak-layout-scrollbar-thumb-background-color: #f1f4f6;
+  --tak-header-background-color: rgb(10, 161, 174);
+  --tak-header-container-box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%),
+    0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%),
+    0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
+  --tak-footer-background-color: rgb(10, 161, 174);
+  --tak-breadcrumb-color: rgb(8, 119, 129, 0.3);
+  --tak-breadcrumb-title-color: rgb(10, 161, 174);
+  --tak-breadcrumb-active-color: rgb(10, 161, 174);
+  --tak-sidebar-slide-button-knobs-background-color: rgb(10, 161, 174);
+  --tak-sidebar-slide-button-knobs-opacity-background-color: rgb(10, 161, 174, 0.3);
+  --tak-sidebar-slide-toggle-bar-background-color: rgba(0, 0, 0, 0.38);
+  --tak-sidebar-after-background-color: rgba(255, 255, 255, 0.95);
+  --tak-sidebar-background-color: rgb(255, 255, 255);
+  --tak-sidebar-branding-color: rgb(10, 161, 174);
+  --tak-sidenav-scrollbar-thumb-hover-color: var(--scrollbar-thumb-hover-color-500);
+  --tak-sidenav-hover-scrollbar-thumb-color: var(--tak-layout-hover-scrollbar-thumb-color);
+  --tak-sidenav-link-active-background-color: rgba(218, 218, 218, 0.15);
+  --tak-sidenav-link-hover-background-color: rgba(226, 226, 226, 0.46);
+  --tak-sidenav-link-icon-color: rgb(50, 50, 50);
+  --tak-layout-container: rgb(241, 244, 246);
+  --tak-sidebar-container-border-right: rgba(0, 0, 0, 0.12);
+  --tak-divider-border-top-dark-color: var(--tak-sidebar-container-border-right);
+  --tak-divider-border-top-light-color: rgba(214, 214, 214, 0.12);
+  --tak-layout-overlay-backdrop-background-color: rgba(0, 0, 0, 0.32);
+  --tak-layout-scrollbar-thumb-background-color: #f1f4f6;
+  --tak-layout-light-color: #fff;
+  --tak-layout-dark-color: rgba(0, 0, 0, 0.87);
+  --tak-layout-opacity-dark-color: rgba(0, 0, 0, 0.12);
+  --tak-layout-hover-scrollbar-thumb-color: rgba(192, 192, 192, 0.562);
+}

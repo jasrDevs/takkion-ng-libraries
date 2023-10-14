@@ -48,25 +48,3 @@ $PADDING_TAK_CONTAINER: 20px;
   padding: $PADDING_TAK_CONTAINER;
   margin-top: 64px;
 }
-
-table {
-  width: 100%;
-}
-
-.mat-form-field {
-  font-size: 14px;
-  width: 100%;
-}
-
-td,
-th {
-  width: 25%;
-}
-.tak-table-container {
-  height: 270px;
-  overflow: auto;
-}
-
-tr.tak-header-row {
-  height: 56px;
-}
