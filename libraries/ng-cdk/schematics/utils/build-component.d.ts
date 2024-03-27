@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -15,9 +15,6 @@ import { Schema as ComponentOptions } from '@schematics/angular/component/schema
  * This allows inlining the external template or stylesheet files in EJS without having
  * to manually duplicate the file content.
  */
-export declare function buildComponent(
-  options: ComponentOptions,
-  additionalFiles?: {
+export declare function buildComponent(options: ComponentOptions, additionalFiles?: {
     [key: string]: string;
-  }
-): Rule;
+}): Rule;

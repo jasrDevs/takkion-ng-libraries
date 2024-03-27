@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -15,6 +15,4 @@ export declare function findAllSubstringIndices(input: string, search: string): 
  * and therefore could throw because the function is not available yet.
  * https://github.com/Microsoft/TypeScript/commit/8518343dc8762475a5e92c9f80b5c5725bd81796
  */
-export declare function isStringLiteralLike(
-  node: ts.Node
-): node is ts.StringLiteral | ts.NoSubstitutionTemplateLiteral;
+export declare function isStringLiteralLike(node: ts.Node): node is ts.StringLiteral | ts.NoSubstitutionTemplateLiteral;

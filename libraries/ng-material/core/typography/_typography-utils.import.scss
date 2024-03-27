@@ -1,9 +1,0 @@
-@forward 'typography-utils' hide font-family, font-shorthand, font-size, font-weight, line-height,
-  letter-spacing, typography-level;
-@forward 'typography-utils' as tak-* hide tak-font-shorthand, tak-get-type-value,
-  tak-typography-level;
-@forward 'typography-utils' as tak-typography-* hide tak-typography-font-family,
-  tak-typography-font-size, tak-typography-font-weight, tak-typography-get-type-value,
-  tak-typography-line-height, tak-typography-letter-spacing;
-@forward 'typography-deprecated' as tak-typography-*;
-@forward 'typography-utils-deprecated' as tak-typography-*;

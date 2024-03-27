@@ -1,17 +1,1 @@
-<div class="app__header__container">
-  <div class="app__theme-btn__container">
-    <span>
-      <button tak-icon-button [takMenuTriggerFor]="menu">
-        <tak-icon>account_circle</tak-icon>
-      </button>
-      <tak-menu #menu="takMenu">
-        <a tak-menu-item (click)="onLogout()">
-          <tak-icon>logout</tak-icon>
-          <span>Cerrar Sesión</span>
-        </a>
-      </tak-menu>
-    </span>
-
-    <button tak-icon-button (click)="toggleTheme()"><tak-icon>dark_mode</tak-icon></button>
-  </div>
-</div>
+<button mat-icon-button (click)="toggleMode()"><mat-icon>dark_mode</mat-icon></button>

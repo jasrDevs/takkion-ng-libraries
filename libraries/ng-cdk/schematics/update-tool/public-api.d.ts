@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -12,4 +12,5 @@ export * from './migration';
 export * from './target-version';
 export * from './utils/decorators';
 export * from './utils/imports';
+export * from './utils/property-name';
 export * from './version-changes';

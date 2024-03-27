@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -14,13 +14,13 @@ import { UpgradeData } from '../upgrade-data';
  * which had a public property change.
  */
 export declare class ClassInheritanceMigration extends Migration<UpgradeData> {
-  /**
-   * Map of classes that have been updated. Each class name maps to the according property
-   * change data.
-   */
-  propertyNames: Map<string, PropertyNameUpgradeData>;
-  enabled: boolean;
-  init(): void;
-  visitNode(node: ts.Node): void;
-  private _visitClassDeclaration;
+    /**
+     * Map of classes that have been updated. Each class name maps to the according property
+     * change data.
+     */
+    propertyNames: Map<string, PropertyNameUpgradeData>;
+    enabled: boolean;
+    init(): void;
+    visitNode(node: ts.Node): void;
+    private _visitClassDeclaration;
 }

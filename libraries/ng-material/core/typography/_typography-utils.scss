@@ -1,55 +1,10 @@
 @use 'sass:list';
-@use 'sass:map';
 @use 'sass:math';
-@use 'sass:meta';
-@use 'sass:string';
+@use './property-getters';
 
-// Utility for fetching a nested value from a typography config.
-@function _tak-get-type-value($config, $level, $name) {
-  @return map.get(map.get($config, $level), $name);
-}
-
-/// Gets the font size for a level inside a typography config.
-/// @param {Map} $config A typography config.
-/// @param {Map} $level A typography level.
-@function font-size($config, $level) {
-  @return _tak-get-type-value($config, $level, font-size);
-}
-
-/// Gets the line height for a level inside a typography config.
-/// @param {Map} $config A typography config.
-/// @param {Map} $level A typography level.
-@function line-height($config, $level) {
-  @return _tak-get-type-value($config, $level, line-height);
-}
-
-/// Gets the font weight for a level inside a typography config.
-/// @param {Map} $config A typography config.
-/// @param {Map} $level A typography level.
-@function font-weight($config, $level) {
-  @return _tak-get-type-value($config, $level, font-weight);
-}
-
-/// Gets the letter spacing for a level inside a typography config.
-/// @param {Map} $config A typography config.
-/// @param {Map} $level A typography level.
-@function letter-spacing($config, $level) {
-  @return _tak-get-type-value($config, $level, letter-spacing);
-}
-
-/// Gets the font-family from a typography config and removes the quotes around it.
-/// @param {Map} $config A typography config.
-/// @param {Map} $level A typography level.
-@function font-family($config, $level: null) {
-  $font-family: map.get($config, font-family);
-
-  @if $level != null {
-    $font-family: _tak-get-type-value($config, $level, font-family);
-  }
-
-  // Guard against unquoting non-string values, because it's deprecated.
-  @return if(meta.type-of($font-family) == string, string.unquote($font-family), $font-family);
-}
+// Property getters live in their own file to avoid circular dependencies, but we re-export them
+// here so that historical imports from this file continue to work without needing to be updated.
+@forward './property-getters';
 
 /// Outputs the shorthand `font` CSS property, based on a set of typography values. Falls back to
 /// the individual properties if a value that isn't allowed in the shorthand is passed in.
@@ -61,29 +16,21 @@
 @mixin font-shorthand($font-size, $font-weight, $line-height, $font-family) {
   // If any of the values are set to `inherit`, we can't use the shorthand
   // so we fall back to passing in the individual properties.
-  @if (
-    $font-size ==
-      inherit or
-      $font-weight ==
-      inherit or
-      $line-height ==
-      inherit or
-      $font-family ==
-      inherit or
-      $font-size ==
-      null or
-      $font-weight ==
-      null or
-      $line-height ==
-      null or
-      $font-family ==
-      null
-  ) {
+  @if ($font-size == inherit or
+       $font-weight == inherit or
+       $line-height == inherit or
+       $font-family == inherit or
+       $font-size == null or
+       $font-weight == null or
+       $line-height == null or
+       $font-family == null) {
+
     font-size: $font-size;
     font-weight: $font-weight;
     line-height: $line-height;
     font-family: $font-family;
-  } @else {
+  }
+  @else {
     // Otherwise use the shorthand `font`, because it's the least amount of bytes.
     font: $font-weight list.slash($font-size, $line-height) $font-family;
   }
@@ -93,13 +40,14 @@
 /// @param {Map} $config A typography config.
 /// @param {Map} $level A typography level.
 @mixin typography-level($config, $level) {
-  $font-size: font-size($config, $level);
-  $font-weight: font-weight($config, $level);
-  $line-height: line-height($config, $level);
-  $font-family: font-family($config, $level);
-
-  @include font-shorthand($font-size, $font-weight, $line-height, $font-family);
-  letter-spacing: letter-spacing($config, $level);
+  // we deliberately do not use the font shorthand here because it overrides
+  // certain font properties that can't be configured in the current typography
+  // config, e.g. the font-variant-caps or font-feature-settings property
+  font-size: property-getters.font-size($config, $level);
+  font-weight: property-getters.font-weight($config, $level);
+  line-height: property-getters.line-height($config, $level);
+  font-family: property-getters.font-family($config, $level);
+  letter-spacing: property-getters.letter-spacing($config, $level);
 }
 
 /// Coerce a value to `em` if it is a unitless number, otherwise returns

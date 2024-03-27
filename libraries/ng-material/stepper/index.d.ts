@@ -1,17 +1,15 @@
-import { _AbstractConstructor } from '@takkion/ng-material/core';
 import { AbstractControl } from '@angular/forms';
 import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import { AnimationEvent as AnimationEvent_2 } from '@angular/animations';
 import { AnimationTriggerMetadata } from '@angular/animations';
-import { CanColor } from '@takkion/ng-material/core';
 import { CdkStep } from '@takkion/ng-cdk/stepper';
+import { CdkStepHeader } from '@takkion/ng-cdk/stepper';
 import { CdkStepLabel } from '@takkion/ng-cdk/stepper';
 import { CdkStepper } from '@takkion/ng-cdk/stepper';
 import { CdkStepperNext } from '@takkion/ng-cdk/stepper';
 import { CdkStepperPrevious } from '@takkion/ng-cdk/stepper';
 import { ChangeDetectorRef } from '@angular/core';
-import { _Constructor } from '@takkion/ng-material/core';
 import { Directionality } from '@takkion/ng-cdk/bidi';
 import { ElementRef } from '@angular/core';
 import { ErrorStateMatcher } from '@takkion/ng-material/core';
@@ -20,12 +18,11 @@ import { FocusMonitor } from '@takkion/ng-cdk/a11y';
 import { FocusOrigin } from '@takkion/ng-cdk/a11y';
 import { FormGroupDirective } from '@angular/forms';
 import * as i0 from '@angular/core';
-import * as i10 from '@takkion/ng-material/button';
-import * as i11 from '@takkion/ng-cdk/stepper';
-import * as i12 from '@takkion/ng-material/icon';
-import * as i7 from '@takkion/ng-material/core';
-import * as i8 from '@angular/common';
-import * as i9 from '@takkion/ng-cdk/portal';
+import * as i1 from '@takkion/ng-material/core';
+import * as i2 from '@angular/common';
+import * as i3 from '@takkion/ng-cdk/portal';
+import * as i4 from '@takkion/ng-cdk/stepper';
+import * as i5 from '@takkion/ng-material/icon';
 import { NgForm } from '@angular/forms';
 import { OnDestroy } from '@angular/core';
 import { Optional } from '@angular/core';
@@ -39,385 +36,246 @@ import { TemplateRef } from '@angular/core';
 import { ThemePalette } from '@takkion/ng-material/core';
 import { ViewContainerRef } from '@angular/core';
 
-declare namespace i1 {
-  export { TakStep, TakStepper };
+declare namespace i10 {
+    export {
+        MatStepperIconContext,
+        MatStepperIcon
+    }
 }
 
-declare namespace i2 {
-  export { TakStepLabel };
-}
-
-declare namespace i3 {
-  export { TakStepperNext, TakStepperPrevious };
-}
-
-declare namespace i4 {
-  export { TakStepHeader };
-}
-
-declare namespace i5 {
-  export { TakStepperIconContext, TakStepperIcon };
+declare namespace i11 {
+    export {
+        MatStepContent
+    }
 }
 
 declare namespace i6 {
-  export { TakStepContent };
+    export {
+        MatStep,
+        MatStepper
+    }
+}
+
+declare namespace i7 {
+    export {
+        MatStepLabel
+    }
+}
+
+declare namespace i8 {
+    export {
+        MatStepperNext,
+        MatStepperPrevious
+    }
+}
+
+declare namespace i9 {
+    export {
+        MatStepHeader
+    }
 }
 
 /** @docs-private */
-export declare const TAK_STEPPER_INTL_PROVIDER: {
-  provide: typeof TakStepperIntl;
-  deps: Optional[][];
-  useFactory: typeof TAK_STEPPER_INTL_PROVIDER_FACTORY;
+export declare const MAT_STEPPER_INTL_PROVIDER: {
+    provide: typeof MatStepperIntl;
+    deps: Optional[][];
+    useFactory: typeof MAT_STEPPER_INTL_PROVIDER_FACTORY;
 };
 
 /** @docs-private */
-export declare function TAK_STEPPER_INTL_PROVIDER_FACTORY(
-  parentIntl: TakStepperIntl
-): TakStepperIntl;
+export declare function MAT_STEPPER_INTL_PROVIDER_FACTORY(parentIntl: MatStepperIntl): MatStepperIntl;
 
-export declare class TakStep
-  extends CdkStep
-  implements ErrorStateMatcher, AfterContentInit, OnDestroy
-{
-  private _errorStateMatcher;
-  private _viewContainerRef;
-  private _isSelected;
-  /** Content for step label given by `<ng-template takStepLabel>`. */
-  stepLabel: TakStepLabel;
-  /** Theme color for the particular step. */
-  color: ThemePalette;
-  /** Content that will be rendered lazily. */
-  _lazyContent: TakStepContent;
-  /** Currently-attached portal containing the lazy content. */
-  _portal: TemplatePortal;
-  constructor(
-    stepper: TakStepper,
-    _errorStateMatcher: ErrorStateMatcher,
-    _viewContainerRef: ViewContainerRef,
-    stepperOptions?: StepperOptions
-  );
-  ngAfterContentInit(): void;
-  ngOnDestroy(): void;
-  /** Custom error state matcher that additionally checks for validity of interacted form. */
-  isErrorState(control: AbstractControl | null, form: FormGroupDirective | NgForm | null): boolean;
-  static ɵfac: i0.ɵɵFactoryDeclaration<
-    TakStep,
-    [null, { skipSelf: true }, null, { optional: true }]
-  >;
-  static ɵcmp: i0.ɵɵComponentDeclaration<
-    TakStep,
-    'tak-step',
-    ['takStep'],
-    { color: 'color' },
-    {},
-    ['stepLabel', '_lazyContent'],
-    ['*'],
-    false
-  >;
+export declare class MatStep extends CdkStep implements ErrorStateMatcher, AfterContentInit, OnDestroy {
+    private _errorStateMatcher;
+    private _viewContainerRef;
+    private _isSelected;
+    /** Content for step label given by `<ng-template matStepLabel>`. */
+    stepLabel: MatStepLabel;
+    /** Theme color for the particular step. */
+    color: ThemePalette;
+    /** Content that will be rendered lazily. */
+    _lazyContent: MatStepContent;
+    /** Currently-attached portal containing the lazy content. */
+    _portal: TemplatePortal;
+    constructor(stepper: MatStepper, _errorStateMatcher: ErrorStateMatcher, _viewContainerRef: ViewContainerRef, stepperOptions?: StepperOptions);
+    ngAfterContentInit(): void;
+    ngOnDestroy(): void;
+    /** Custom error state matcher that additionally checks for validity of interacted form. */
+    isErrorState(control: AbstractControl | null, form: FormGroupDirective | NgForm | null): boolean;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatStep, [null, { skipSelf: true; }, null, { optional: true; }]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MatStep, "mat-step", ["matStep"], { "color": { "alias": "color"; "required": false; }; }, {}, ["stepLabel", "_lazyContent"], ["*"], true, never>;
 }
 
 /**
- * Content for a `tak-step` that will be rendered lazily.
+ * Content for a `mat-step` that will be rendered lazily.
  */
-export declare class TakStepContent {
-  _template: TemplateRef<any>;
-  constructor(_template: TemplateRef<any>);
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakStepContent, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakStepContent,
-    'ng-template[takStepContent]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatStepContent {
+    _template: TemplateRef<any>;
+    constructor(_template: TemplateRef<any>);
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatStepContent, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatStepContent, "ng-template[matStepContent]", never, {}, {}, never, never, true, never>;
 }
 
-export declare class TakStepHeader
-  extends _TakStepHeaderBase
-  implements AfterViewInit, OnDestroy, CanColor
-{
-  _intl: TakStepperIntl;
-  private _focusMonitor;
-  private _intlSubscription;
-  /** State of the given step. */
-  state: StepState;
-  /** Label of the given step. */
-  label: TakStepLabel | string;
-  /** Error message to display when there's an error. */
-  errorMessage: string;
-  /** Overrides for the header icons, passed in via the stepper. */
-  iconOverrides: {
-    [key: string]: TemplateRef<TakStepperIconContext>;
-  };
-  /** Index of the given step. */
-  index: number;
-  /** Whether the given step is selected. */
-  selected: boolean;
-  /** Whether the given step label is active. */
-  active: boolean;
-  /** Whether the given step is optional. */
-  optional: boolean;
-  /** Whether the ripple should be disabled. */
-  disableRipple: boolean;
-  constructor(
-    _intl: TakStepperIntl,
-    _focusMonitor: FocusMonitor,
-    _elementRef: ElementRef<HTMLElement>,
-    changeDetectorRef: ChangeDetectorRef
-  );
-  ngAfterViewInit(): void;
-  ngOnDestroy(): void;
-  /** Focuses the step header. */
-  focus(origin?: FocusOrigin, options?: FocusOptions): void;
-  /** Returns string label of given step if it is a text label. */
-  _stringLabel(): string | null;
-  /** Returns TakStepLabel if the label of given step is a template label. */
-  _templateLabel(): TakStepLabel | null;
-  /** Returns the host HTML element. */
-  _getHostElement(): HTMLElement;
-  /** Template context variables that are exposed to the `takStepperIcon` instances. */
-  _getIconContext(): TakStepperIconContext;
-  _getDefaultTextForState(state: StepState): string;
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakStepHeader, never>;
-  static ɵcmp: i0.ɵɵComponentDeclaration<
-    TakStepHeader,
-    'tak-step-header',
-    never,
-    {
-      color: 'color';
-      state: 'state';
-      label: 'label';
-      errorMessage: 'errorMessage';
-      iconOverrides: 'iconOverrides';
-      index: 'index';
-      selected: 'selected';
-      active: 'active';
-      optional: 'optional';
-      disableRipple: 'disableRipple';
-    },
-    {},
-    never,
-    never,
-    false
-  >;
-}
-
-/** @docs-private */
-declare const _TakStepHeaderBase: _Constructor<CanColor> &
-  _AbstractConstructor<CanColor> & {
-    new (elementRef: ElementRef): {
-      _elementRef: ElementRef<HTMLElement>;
-      focus(): void;
+export declare class MatStepHeader extends CdkStepHeader implements AfterViewInit, OnDestroy {
+    _intl: MatStepperIntl;
+    private _focusMonitor;
+    private _intlSubscription;
+    /** State of the given step. */
+    state: StepState;
+    /** Label of the given step. */
+    label: MatStepLabel | string;
+    /** Error message to display when there's an error. */
+    errorMessage: string;
+    /** Overrides for the header icons, passed in via the stepper. */
+    iconOverrides: {
+        [key: string]: TemplateRef<MatStepperIconContext>;
     };
-    ɵfac: unknown;
-    ɵdir: unknown;
-  };
-
-export declare class TakStepLabel extends CdkStepLabel {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakStepLabel, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakStepLabel,
-    '[takStepLabel]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
+    /** Index of the given step. */
+    index: number;
+    /** Whether the given step is selected. */
+    selected: boolean;
+    /** Whether the given step label is active. */
+    active: boolean;
+    /** Whether the given step is optional. */
+    optional: boolean;
+    /** Whether the ripple should be disabled. */
+    disableRipple: boolean;
+    /** Theme palette color of the step header. */
+    color: ThemePalette;
+    constructor(_intl: MatStepperIntl, _focusMonitor: FocusMonitor, _elementRef: ElementRef<HTMLElement>, changeDetectorRef: ChangeDetectorRef);
+    ngAfterViewInit(): void;
+    ngOnDestroy(): void;
+    /** Focuses the step header. */
+    focus(origin?: FocusOrigin, options?: FocusOptions): void;
+    /** Returns string label of given step if it is a text label. */
+    _stringLabel(): string | null;
+    /** Returns MatStepLabel if the label of given step is a template label. */
+    _templateLabel(): MatStepLabel | null;
+    /** Returns the host HTML element. */
+    _getHostElement(): HTMLElement;
+    /** Template context variables that are exposed to the `matStepperIcon` instances. */
+    _getIconContext(): MatStepperIconContext;
+    _getDefaultTextForState(state: StepState): string;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatStepHeader, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MatStepHeader, "mat-step-header", never, { "state": { "alias": "state"; "required": false; }; "label": { "alias": "label"; "required": false; }; "errorMessage": { "alias": "errorMessage"; "required": false; }; "iconOverrides": { "alias": "iconOverrides"; "required": false; }; "index": { "alias": "index"; "required": false; }; "selected": { "alias": "selected"; "required": false; }; "active": { "alias": "active"; "required": false; }; "optional": { "alias": "optional"; "required": false; }; "disableRipple": { "alias": "disableRipple"; "required": false; }; "color": { "alias": "color"; "required": false; }; }, {}, never, never, true, never>;
 }
 
-export declare class TakStepper extends CdkStepper implements AfterContentInit {
-  /** The list of step headers of the steps in the stepper. */
-  _stepHeader: QueryList<TakStepHeader>;
-  /** Full list of steps inside the stepper, including inside nested steppers. */
-  _steps: QueryList<TakStep>;
-  /** Steps that belong to the current stepper, excluding ones from nested steppers. */
-  readonly steps: QueryList<TakStep>;
-  /** Custom icon overrides passed in by the consumer. */
-  _icons: QueryList<TakStepperIcon>;
-  /** Event emitted when the current step is done transitioning in. */
-  readonly animationDone: EventEmitter<void>;
-  /** Whether ripples should be disabled for the step headers. */
-  disableRipple: boolean;
-  /** Theme color for all of the steps in stepper. */
-  color: ThemePalette;
-  /**
-   * Whether the label should display in bottom or end position.
-   * Only applies in the `horizontal` orientation.
-   */
-  labelPosition: 'bottom' | 'end';
-  /**
-   * Position of the stepper's header.
-   * Only applies in the `horizontal` orientation.
-   */
-  headerPosition: 'top' | 'bottom';
-  /** Consumer-specified template-refs to be used to override the header icons. */
-  _iconOverrides: Record<string, TemplateRef<TakStepperIconContext>>;
-  /** Stream of animation `done` events when the body expands/collapses. */
-  readonly _animationDone: Subject<AnimationEvent_2>;
-  /** Duration for the animation. Will be normalized to milliseconds if no units are set. */
-  get animationDuration(): string;
-  set animationDuration(value: string);
-  private _animationDuration;
-  constructor(
-    dir: Directionality,
-    changeDetectorRef: ChangeDetectorRef,
-    elementRef: ElementRef<HTMLElement>
-  );
-  ngAfterContentInit(): void;
-  _stepIsNavigable(index: number, step: TakStep): boolean;
-  _getAnimationDuration(): string;
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakStepper, [{ optional: true }, null, null]>;
-  static ɵcmp: i0.ɵɵComponentDeclaration<
-    TakStepper,
-    'tak-stepper, tak-vertical-stepper, tak-horizontal-stepper, [takStepper]',
-    ['takStepper', 'takVerticalStepper', 'takHorizontalStepper'],
-    {
-      selectedIndex: 'selectedIndex';
-      disableRipple: 'disableRipple';
-      color: 'color';
-      labelPosition: 'labelPosition';
-      headerPosition: 'headerPosition';
-      animationDuration: 'animationDuration';
-    },
-    { animationDone: 'animationDone' },
-    ['_steps', '_icons'],
-    never,
-    false
-  >;
+export declare class MatStepLabel extends CdkStepLabel {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatStepLabel, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatStepLabel, "[matStepLabel]", never, {}, {}, never, never, true, never>;
+}
+
+export declare class MatStepper extends CdkStepper implements AfterContentInit {
+    /** The list of step headers of the steps in the stepper. */
+    _stepHeader: QueryList<MatStepHeader>;
+    /** Full list of steps inside the stepper, including inside nested steppers. */
+    _steps: QueryList<MatStep>;
+    /** Steps that belong to the current stepper, excluding ones from nested steppers. */
+    readonly steps: QueryList<MatStep>;
+    /** Custom icon overrides passed in by the consumer. */
+    _icons: QueryList<MatStepperIcon>;
+    /** Event emitted when the current step is done transitioning in. */
+    readonly animationDone: EventEmitter<void>;
+    /** Whether ripples should be disabled for the step headers. */
+    disableRipple: boolean;
+    /** Theme color for all of the steps in stepper. */
+    color: ThemePalette;
+    /**
+     * Whether the label should display in bottom or end position.
+     * Only applies in the `horizontal` orientation.
+     */
+    labelPosition: 'bottom' | 'end';
+    /**
+     * Position of the stepper's header.
+     * Only applies in the `horizontal` orientation.
+     */
+    headerPosition: 'top' | 'bottom';
+    /** Consumer-specified template-refs to be used to override the header icons. */
+    _iconOverrides: Record<string, TemplateRef<MatStepperIconContext>>;
+    /** Stream of animation `done` events when the body expands/collapses. */
+    readonly _animationDone: Subject<AnimationEvent_2>;
+    /** Duration for the animation. Will be normalized to milliseconds if no units are set. */
+    get animationDuration(): string;
+    set animationDuration(value: string);
+    private _animationDuration;
+    /** Whether the stepper is rendering on the server. */
+    protected _isServer: boolean;
+    constructor(dir: Directionality, changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<HTMLElement>);
+    ngAfterContentInit(): void;
+    _stepIsNavigable(index: number, step: MatStep): boolean;
+    _getAnimationDuration(): string;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatStepper, [{ optional: true; }, null, null]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MatStepper, "mat-stepper, mat-vertical-stepper, mat-horizontal-stepper, [matStepper]", ["matStepper", "matVerticalStepper", "matHorizontalStepper"], { "disableRipple": { "alias": "disableRipple"; "required": false; }; "color": { "alias": "color"; "required": false; }; "labelPosition": { "alias": "labelPosition"; "required": false; }; "headerPosition": { "alias": "headerPosition"; "required": false; }; "animationDuration": { "alias": "animationDuration"; "required": false; }; }, { "animationDone": "animationDone"; }, ["_steps", "_icons"], ["*"], true, never>;
 }
 
 /**
  * Animations used by the Material steppers.
  * @docs-private
  */
-export declare const takStepperAnimations: {
-  readonly horizontalStepTransition: AnimationTriggerMetadata;
-  readonly verticalStepTransition: AnimationTriggerMetadata;
+export declare const matStepperAnimations: {
+    readonly horizontalStepTransition: AnimationTriggerMetadata;
+    readonly verticalStepTransition: AnimationTriggerMetadata;
 };
 
 /**
  * Template to be used to override the icons inside the step header.
  */
-export declare class TakStepperIcon {
-  templateRef: TemplateRef<TakStepperIconContext>;
-  /** Name of the icon to be overridden. */
-  name: StepState;
-  constructor(templateRef: TemplateRef<TakStepperIconContext>);
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakStepperIcon, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakStepperIcon,
-    'ng-template[takStepperIcon]',
-    never,
-    { name: 'takStepperIcon' },
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatStepperIcon {
+    templateRef: TemplateRef<MatStepperIconContext>;
+    /** Name of the icon to be overridden. */
+    name: StepState;
+    constructor(templateRef: TemplateRef<MatStepperIconContext>);
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatStepperIcon, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatStepperIcon, "ng-template[matStepperIcon]", never, { "name": { "alias": "matStepperIcon"; "required": false; }; }, {}, never, never, true, never>;
 }
 
-/** Template context available to an attached `takStepperIcon`. */
-export declare interface TakStepperIconContext {
-  /** Index of the step. */
-  index: number;
-  /** Whether the step is currently active. */
-  active: boolean;
-  /** Whether the step is optional. */
-  optional: boolean;
+/** Template context available to an attached `matStepperIcon`. */
+export declare interface MatStepperIconContext {
+    /** Index of the step. */
+    index: number;
+    /** Whether the step is currently active. */
+    active: boolean;
+    /** Whether the step is optional. */
+    optional: boolean;
 }
 
 /** Stepper data that is required for internationalization. */
-export declare class TakStepperIntl {
-  /**
-   * Stream that emits whenever the labels here are changed. Use this to notify
-   * components if the labels have changed after initialization.
-   */
-  readonly changes: Subject<void>;
-  /** Label that is rendered below optional steps. */
-  optionalLabel: string;
-  /** Label that is used to indicate step as completed to screen readers. */
-  completedLabel: string;
-  /** Label that is used to indicate step as editable to screen readers. */
-  editableLabel: string;
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakStepperIntl, never>;
-  static ɵprov: i0.ɵɵInjectableDeclaration<TakStepperIntl>;
+export declare class MatStepperIntl {
+    /**
+     * Stream that emits whenever the labels here are changed. Use this to notify
+     * components if the labels have changed after initialization.
+     */
+    readonly changes: Subject<void>;
+    /** Label that is rendered below optional steps. */
+    optionalLabel: string;
+    /** Label that is used to indicate step as completed to screen readers. */
+    completedLabel: string;
+    /** Label that is used to indicate step as editable to screen readers. */
+    editableLabel: string;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatStepperIntl, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<MatStepperIntl>;
 }
 
-export declare class TakStepperModule {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakStepperModule, never>;
-  static ɵmod: i0.ɵɵNgModuleDeclaration<
-    TakStepperModule,
-    [
-      typeof i1.TakStep,
-      typeof i2.TakStepLabel,
-      typeof i1.TakStepper,
-      typeof i3.TakStepperNext,
-      typeof i3.TakStepperPrevious,
-      typeof i4.TakStepHeader,
-      typeof i5.TakStepperIcon,
-      typeof i6.TakStepContent,
-    ],
-    [
-      typeof i7.TakCommonModule,
-      typeof i8.CommonModule,
-      typeof i9.PortalModule,
-      typeof i10.TakButtonModule,
-      typeof i11.CdkStepperModule,
-      typeof i12.TakIconModule,
-      typeof i7.TakRippleModule,
-    ],
-    [
-      typeof i7.TakCommonModule,
-      typeof i1.TakStep,
-      typeof i2.TakStepLabel,
-      typeof i1.TakStepper,
-      typeof i3.TakStepperNext,
-      typeof i3.TakStepperPrevious,
-      typeof i4.TakStepHeader,
-      typeof i5.TakStepperIcon,
-      typeof i6.TakStepContent,
-    ]
-  >;
-  static ɵinj: i0.ɵɵInjectorDeclaration<TakStepperModule>;
+export declare class MatStepperModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatStepperModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<MatStepperModule, never, [typeof i1.MatCommonModule, typeof i2.CommonModule, typeof i3.PortalModule, typeof i4.CdkStepperModule, typeof i5.MatIconModule, typeof i1.MatRippleModule, typeof i6.MatStep, typeof i7.MatStepLabel, typeof i6.MatStepper, typeof i8.MatStepperNext, typeof i8.MatStepperPrevious, typeof i9.MatStepHeader, typeof i10.MatStepperIcon, typeof i11.MatStepContent], [typeof i1.MatCommonModule, typeof i6.MatStep, typeof i7.MatStepLabel, typeof i6.MatStepper, typeof i8.MatStepperNext, typeof i8.MatStepperPrevious, typeof i9.MatStepHeader, typeof i10.MatStepperIcon, typeof i11.MatStepContent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<MatStepperModule>;
 }
 
 /** Button that moves to the next step in a stepper workflow. */
-export declare class TakStepperNext extends CdkStepperNext {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakStepperNext, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakStepperNext,
-    'button[takStepperNext]',
-    never,
-    { type: 'type' },
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatStepperNext extends CdkStepperNext {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatStepperNext, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatStepperNext, "button[matStepperNext]", never, {}, {}, never, never, true, never>;
 }
 
 /** Button that moves to the previous step in a stepper workflow. */
-export declare class TakStepperPrevious extends CdkStepperPrevious {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakStepperPrevious, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakStepperPrevious,
-    'button[takStepperPrevious]',
-    never,
-    { type: 'type' },
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatStepperPrevious extends CdkStepperPrevious {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatStepperPrevious, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatStepperPrevious, "button[matStepperPrevious]", never, {}, {}, never, never, true, never>;
 }
 
-export { StepperOrientation };
+export { StepperOrientation }
 
-export { StepState };
+export { StepState }
 
-export {};
+export { }

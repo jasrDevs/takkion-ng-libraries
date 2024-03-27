@@ -1,6 +1,6 @@
 import { DataSource } from '@takkion/ng-cdk/collections';
-import { TakPaginator } from '@takkion/ng-material/paginator';
-import { TakSort } from '@takkion/ng-material/sort';
+import { MatPaginator } from '@takkion/ng-material/paginator';
+import { MatSort } from '@takkion/ng-material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 
@@ -41,8 +41,8 @@ const EXAMPLE_DATA: <%= classify(name) %>Item[] = [
  */
 export class <%= classify(name) %>DataSource extends DataSource<<%= classify(name) %>Item> {
   data: <%= classify(name) %>Item[] = EXAMPLE_DATA;
-  paginator: TakPaginator | undefined;
-  sort: TakSort | undefined;
+  paginator: MatPaginator | undefined;
+  sort: MatSort | undefined;
 
   constructor() {
     super();

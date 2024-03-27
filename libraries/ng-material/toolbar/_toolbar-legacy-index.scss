@@ -1,4 +1,0 @@
-@forward 'toolbar-variables' as tak-toolbar-*;
-@forward 'toolbar-theme' hide color, density, theme, typography;
-@forward 'toolbar-theme' as tak-toolbar-* hide tak-toolbar-color, tak-toolbar-form-field-overrides,
-  tak-toolbar-height;

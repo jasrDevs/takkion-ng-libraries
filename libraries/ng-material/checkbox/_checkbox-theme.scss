@@ -1,133 +1,132 @@
-@use 'sass:map';
+@use '@material/checkbox/checkbox-theme' as mdc-checkbox-theme;
+@use '@material/form-field/form-field-theme' as mdc-form-field-theme;
+@use '../core/style/sass-utils';
 @use '../core/theming/theming';
+@use '../core/theming/inspection';
+@use '../core/theming/validation';
+@use '../core/tokens/token-utils';
 @use '../core/typography/typography';
-@use '../core/typography/typography-utils';
+@use '../core/tokens/m2/mdc/checkbox' as tokens-mdc-checkbox;
+@use '../core/tokens/m2/mdc/form-field' as tokens-mdc-form-field;
+@use '../core/tokens/m2/mat/checkbox' as tokens-mat-checkbox;
 
-@mixin color($config-or-theme) {
-  $config: theming.get-color-config($config-or-theme);
-  $is-dark-theme: map.get($config, is-dark);
-  $primary: map.get($config, primary);
-  $accent: map.get($config, accent);
-  $warn: map.get($config, warn);
-  $background: map.get($config, background);
-  $foreground: map.get($config, foreground);
-
-  // The color of the checkbox's checkmark / mixedmark.
-  $checkbox-mark-color: theming.get-color-from-palette($background, background);
-
-  // NOTE(traviskaufman): While the spec calls for translucent blacks/whites for disabled colors,
-  // this does not work well with elements layered on top of one another. To get around this we
-  // blend the colors together based on the base color and the theme background.
-  $white-30pct-opacity-on-dark: #686868;
-  $black-26pct-opacity-on-light: #b0b0b0;
-  $disabled-color: if($is-dark-theme, $white-30pct-opacity-on-dark, $black-26pct-opacity-on-light);
-
-  .tak-checkbox-frame {
-    border-color: theming.get-color-from-palette($foreground, secondary-text);
+/// Outputs base theme styles (styles not dependent on the color, typography, or density settings)
+/// for the mat-checkbox.
+/// @param {Map} $theme The theme to generate base styles for.
+@mixin base($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, base));
   }
-
-  .tak-checkbox-checkmark {
-    fill: $checkbox-mark-color;
-  }
-
-  .tak-checkbox-checkmark-path {
-    // !important is needed here because a stroke must be set as an
-    // attribute on the SVG in order for line animation to work properly.
-    stroke: $checkbox-mark-color !important;
-  }
-
-  .tak-checkbox-mixedmark {
-    background-color: $checkbox-mark-color;
-  }
-
-  .tak-checkbox-indeterminate,
-  .tak-checkbox-checked {
-    &.tak-primary .tak-checkbox-background {
-      background-color: theming.get-color-from-palette($primary);
-    }
-
-    &.tak-accent .tak-checkbox-background {
-      background-color: theming.get-color-from-palette($accent);
-    }
-
-    &.tak-warn .tak-checkbox-background {
-      background-color: theming.get-color-from-palette($warn);
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-checkbox-theme.theme(tokens-mdc-checkbox.get-unthemable-tokens());
+      @include token-utils.create-token-values(
+        tokens-mat-checkbox.$prefix, tokens-mat-checkbox.get-unthemable-tokens());
     }
   }
+}
 
-  .tak-checkbox-disabled {
-    &.tak-checkbox-checked,
-    &.tak-checkbox-indeterminate {
-      .tak-checkbox-background {
-        background-color: $disabled-color;
+/// Outputs color theme styles for the mat-checkbox.
+/// @param {Map} $theme The theme to generate color styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the checkbox: primary, secondary, tertiary, or
+///     error (If not specified, default primary color will be used).
+@mixin color($theme, $options...) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, color), $options...);
+  }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-checkbox-theme.theme(tokens-mdc-checkbox.get-color-tokens($theme));
+      @include token-utils.create-token-values(
+        tokens-mat-checkbox.$prefix, tokens-mat-checkbox.get-color-tokens($theme));
+    }
+
+    .mat-mdc-checkbox {
+      @include mdc-form-field-theme.theme(tokens-mdc-form-field.get-color-tokens($theme));
+
+      &.mat-primary {
+        @include mdc-checkbox-theme.theme(tokens-mdc-checkbox.get-color-tokens($theme, primary));
+      }
+
+      &.mat-warn {
+        @include mdc-checkbox-theme.theme(tokens-mdc-checkbox.get-color-tokens($theme, warn));
       }
     }
+  }
+}
 
-    &:not(.tak-checkbox-checked) {
-      .tak-checkbox-frame {
-        border-color: $disabled-color;
+/// Outputs typography theme styles for the mat-checkbox.
+/// @param {Map} $theme The theme to generate typography styles for.
+@mixin typography($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, typography));
+  }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-checkbox-theme.theme(tokens-mdc-checkbox.get-typography-tokens($theme));
+      @include token-utils.create-token-values(
+        tokens-mat-checkbox.$prefix, tokens-mat-checkbox.get-typography-tokens($theme));
+    }
+
+    .mat-mdc-checkbox {
+      @include mdc-form-field-theme.theme(tokens-mdc-form-field.get-typography-tokens($theme));
+    }
+  }
+}
+
+/// Outputs density theme styles for the mat-checkbox.
+/// @param {Map} $theme The theme to generate density styles for.
+@mixin density($theme) {
+  $density-scale: inspection.get-theme-density($theme);
+
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, density));
+  }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-checkbox-theme.theme(tokens-mdc-checkbox.get-density-tokens($theme));
+      @include token-utils.create-token-values(
+        tokens-mat-checkbox.$prefix, tokens-mat-checkbox.get-density-tokens($theme));
+    }
+  }
+}
+
+/// Outputs all (base, color, typography, and density) theme styles for the mat-checkbox.
+/// @param {Map} $theme The theme to generate styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the checkbox: primary, secondary, tertiary, or
+///     error (If not specified, default primary color will be used).
+@mixin theme($theme, $options...) {
+  @include theming.private-check-duplicate-theme-styles($theme, 'mat-checkbox') {
+    @if inspection.get-theme-version($theme) == 1 {
+      @include _theme-from-tokens(inspection.get-theme-tokens($theme), $options...);
+    }
+    @else {
+      @include base($theme);
+      @if inspection.theme-has($theme, color) {
+        @include color($theme);
+      }
+      @if inspection.theme-has($theme, density) {
+        @include density($theme);
+      }
+      @if inspection.theme-has($theme, typography) {
+        @include typography($theme);
       }
     }
-
-    .tak-checkbox-label {
-      color: theming.get-color-from-palette($foreground, disabled);
-    }
-  }
-
-  // Switch this to a solid color since we're using `opacity`
-  // to control how opaque the ripple should be.
-  .tak-checkbox .tak-ripple-element {
-    background-color: map.get(map.get($config, foreground), base);
-  }
-
-  .tak-checkbox-checked:not(.tak-checkbox-disabled),
-  .tak-checkbox:active:not(.tak-checkbox-disabled) {
-    &.tak-primary .tak-ripple-element {
-      background: theming.get-color-from-palette($primary);
-    }
-
-    &.tak-accent .tak-ripple-element {
-      background: theming.get-color-from-palette($accent);
-    }
-
-    &.tak-warn .tak-ripple-element {
-      background: theming.get-color-from-palette($warn);
-    }
   }
 }
 
-@mixin typography($config-or-theme) {
-  $config: typography.private-typography-to-2014-config(
-    theming.get-typography-config($config-or-theme)
-  );
-  .tak-checkbox {
-    font-family: typography-utils.font-family($config);
-  }
-
-  // TODO(kara): Remove this style when fixing vertical baseline
-  .tak-checkbox-layout .tak-checkbox-label {
-    line-height: typography-utils.line-height($config, body-2);
-  }
-}
-
-@mixin _density($config-or-theme) {
-}
-
-@mixin theme($theme-or-color-config) {
-  $theme: theming.private-legacy-get-theme($theme-or-color-config);
-  @include theming.private-check-duplicate-theme-styles($theme, 'tak-checkbox') {
-    $color: theming.get-color-config($theme);
-    $density: theming.get-density-config($theme);
-    $typography: theming.get-typography-config($theme);
-
-    @if $color != null {
-      @include color($color);
-    }
-    @if $density != null {
-      @include _density($density);
-    }
-    @if $typography != null {
-      @include typography($typography);
-    }
-  }
+@mixin _theme-from-tokens($tokens, $options...) {
+  @include validation.selector-defined(
+      'Calls to Angular Material theme mixins with an M3 theme must be wrapped in a selector');
+  $mdc-checkbox-tokens: token-utils.get-tokens-for(
+      $tokens, tokens-mdc-checkbox.$prefix, $options...);
+  // Don't pass $options here, since the mdc-form-field doesn't support color options,
+  // only the mdc-checkbox does.
+  $mdc-form-field-tokens: token-utils.get-tokens-for($tokens, tokens-mdc-form-field.$prefix);
+  $mat-checkbox-tokens: token-utils.get-tokens-for($tokens, tokens-mat-checkbox.$prefix);
+  @include mdc-checkbox-theme.theme($mdc-checkbox-tokens);
+  @include mdc-form-field-theme.theme($mdc-form-field-tokens);
+  @include token-utils.create-token-values(tokens-mat-checkbox.$prefix, $mat-checkbox-tokens);
 }

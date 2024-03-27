@@ -1,15 +1,15 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
 import * as ts from 'typescript';
 /** Name of the Angular Material module specifier. */
-export declare const materialModuleSpecifier = '@angular/material';
+export declare const materialModuleSpecifier = "@takkion/ng-material";
 /** Name of the Angular CDK module specifier. */
-export declare const cdkModuleSpecifier = '@takkion/ng-cdk';
+export declare const cdkModuleSpecifier = "@takkion/ng-cdk";
 /** Whether the specified node is part of an Angular Material or CDK import declaration. */
 export declare function isMaterialImportDeclaration(node: ts.Node): boolean;
 /** Whether the specified node is part of an Angular Material or CDK import declaration. */

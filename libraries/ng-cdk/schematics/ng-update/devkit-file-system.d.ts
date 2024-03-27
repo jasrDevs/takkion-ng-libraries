@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -14,17 +14,17 @@ import { DirectoryEntry, FileSystem } from '../update-tool/file-system';
  * Angular CLI.
  */
 export declare class DevkitFileSystem extends FileSystem {
-  private _tree;
-  private _updateRecorderCache;
-  constructor(_tree: Tree);
-  resolve(...segments: string[]): Path;
-  edit(filePath: Path): UpdateRecorder;
-  commitEdits(): void;
-  fileExists(filePath: Path): boolean;
-  directoryExists(dirPath: Path): boolean;
-  overwrite(filePath: Path, content: string): void;
-  create(filePath: Path, content: string): void;
-  delete(filePath: Path): void;
-  read(filePath: Path): string | null;
-  readDirectory(dirPath: Path): DirectoryEntry;
+    private _tree;
+    private _updateRecorderCache;
+    constructor(_tree: Tree);
+    resolve(...segments: string[]): Path;
+    edit(filePath: Path): UpdateRecorder;
+    commitEdits(): void;
+    fileExists(filePath: Path): boolean;
+    directoryExists(dirPath: Path): boolean;
+    overwrite(filePath: Path, content: string): void;
+    create(filePath: Path, content: string): void;
+    delete(filePath: Path): void;
+    read(filePath: Path): string | null;
+    readDirectory(dirPath: Path): DirectoryEntry;
 }

@@ -1,20 +1,20 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
 import { TargetVersion } from './target-version';
-export declare type VersionChanges<T> = {
-  [target in TargetVersion]?: ReadableChange<T>[];
+export type VersionChanges<T> = {
+    [target in TargetVersion]?: ReadableChange<T>[];
 };
-export declare type ReadableChange<T> = {
-  pr: string;
-  changes: T[];
+export type ReadableChange<T> = {
+    pr: string;
+    changes: T[];
 };
 /** Conditional type that unwraps the value of a version changes type. */
-export declare type ValueOfChanges<T> = T extends VersionChanges<infer X> ? X : null;
+export type ValueOfChanges<T> = T extends VersionChanges<infer X> ? X : null;
 /**
  * Gets the changes for a given target version from the specified version changes object.
  *

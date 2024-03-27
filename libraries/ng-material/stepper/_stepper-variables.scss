@@ -10,7 +10,7 @@ $density-config: (
     default: $header-height,
     maximum: $header-maximum-height,
     minimum: $header-minimum-height,
-  ),
+  )
 ) !default;
 
 // Note: These variables are not denoted with `!default` because they are used in the non-theme

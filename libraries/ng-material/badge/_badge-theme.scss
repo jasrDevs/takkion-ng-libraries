@@ -1,264 +1,105 @@
-// This contains all of the styles for the badge
-// rather than just the color/theme because of
-// no style sheet support for directives.
 @use 'sass:color';
-@use 'sass:map';
-@use 'sass:meta';
-@use 'sass:math';
-@use '@takkion/ng-cdk';
-
 @use '../core/theming/theming';
+@use '../core/theming/inspection';
+@use '../core/theming/validation';
 @use '../core/typography/typography';
-@use '../core/typography/typography-utils';
+@use '../core/tokens/m2/mat/badge' as tokens-mat-badge;
+@use '../core/tokens/token-utils';
+@use '../core/style/sass-utils';
 
-$font-size: 12px;
-$font-weight: 600;
-$default-size: 22px !default;
-$small-size: $default-size - 6;
-$large-size: $default-size + 6;
-$_badge-structure-emitted: false !default;
-
-// Mixin for building offset given different sizes
-@mixin _badge-size($size) {
-  // This mixin isn't used in the context of a theme so we can disable the ampersand check.
-  // stylelint-disable material/no-ampersand-beyond-selector-start
-  .tak-badge-content {
-    width: $size;
-    height: $size;
-    line-height: $size;
+/// Outputs base theme styles (styles not dependent on the color, typography, or density settings)
+/// for the mat-badge.
+/// @param {Map} $theme The theme to generate base styles for.
+@mixin base($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, base));
   }
-
-  &.tak-badge-above {
-    .tak-badge-content {
-      top: math.div(-$size, 2);
-    }
-  }
-
-  &.tak-badge-below {
-    .tak-badge-content {
-      bottom: math.div(-$size, 2);
-    }
-  }
-
-  &.tak-badge-before {
-    .tak-badge-content {
-      left: -$size;
-    }
-  }
-
-  [dir='rtl'] &.tak-badge-before {
-    .tak-badge-content {
-      left: auto;
-      right: -$size;
-    }
-  }
-
-  &.tak-badge-after {
-    .tak-badge-content {
-      right: -$size;
-    }
-  }
-
-  [dir='rtl'] &.tak-badge-after {
-    .tak-badge-content {
-      right: auto;
-      left: -$size;
-    }
-  }
-
-  &.tak-badge-overlap {
-    &.tak-badge-before {
-      .tak-badge-content {
-        left: math.div(-$size, 2);
-      }
-    }
-
-    [dir='rtl'] &.tak-badge-before {
-      .tak-badge-content {
-        left: auto;
-        right: math.div(-$size, 2);
-      }
-    }
-
-    &.tak-badge-after {
-      .tak-badge-content {
-        right: math.div(-$size, 2);
-      }
-    }
-
-    [dir='rtl'] &.tak-badge-after {
-      .tak-badge-content {
-        right: auto;
-        left: math.div(-$size, 2);
-      }
-    }
-  }
-  // stylelint-enable
-}
-
-// Structural styles for the badge. They have to be included as a part of the theme,
-// because the badge is a directive and we have no other way of attaching styles to it.
-@mixin _badge-structure {
-  .tak-badge {
-    position: relative;
-  }
-
-  // The badge should make sure its host is overflow visible so that the badge content
-  // can be rendered outside of the element. Some components such as <tak-icon> explicitly
-  // style `overflow: hidden` so this requires extra specificity so that it does not
-  // depend on style load order.
-  .tak-badge.tak-badge {
-    overflow: visible;
-  }
-
-  .tak-badge-hidden {
-    .tak-badge-content {
-      display: none;
-    }
-  }
-
-  .tak-badge-content {
-    position: absolute;
-    text-align: center;
-    display: inline-block;
-    border-radius: 50%;
-    transition: transform 200ms ease-in-out;
-    transform: scale(0.6);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    pointer-events: none;
-  }
-
-  .ng-animate-disabled .tak-badge-content,
-  .tak-badge-content._tak-animation-noopable {
-    transition: none;
-  }
-
-  // The active class is added after the element is added
-  // so it can animate scale to default
-  .tak-badge-content.tak-badge-active {
-    // Scale to `none` instead of `1` to avoid blurry text in some browsers.
-    transform: none;
-  }
-
-  .tak-badge-small {
-    @include _badge-size($small-size);
-  }
-
-  .tak-badge-medium {
-    @include _badge-size($default-size);
-  }
-
-  .tak-badge-large {
-    @include _badge-size($large-size);
-  }
-}
-
-@mixin color($config-or-theme) {
-  $config: theming.get-color-config($config-or-theme);
-  $accent: map.get($config, accent);
-  $warn: map.get($config, warn);
-  $primary: map.get($config, primary);
-  $background: map.get($config, background);
-  $foreground: map.get($config, foreground);
-
-  .tak-badge-content {
-    color: theming.get-color-from-palette($primary, default-contrast);
-    background: theming.get-color-from-palette($primary);
-
-    @include cdk.high-contrast(active, off) {
-      outline: solid 1px;
-      border-radius: 0;
-    }
-  }
-
-  .tak-badge-accent {
-    .tak-badge-content {
-      background: theming.get-color-from-palette($accent);
-      color: theming.get-color-from-palette($accent, default-contrast);
-    }
-  }
-
-  .tak-badge-warn {
-    .tak-badge-content {
-      color: theming.get-color-from-palette($warn, default-contrast);
-      background: theming.get-color-from-palette($warn);
-    }
-  }
-
-  .tak-badge-disabled {
-    .tak-badge-content {
-      $app-background: theming.get-color-from-palette($background, 'background');
-      $badge-color: theming.get-color-from-palette($foreground, disabled-button);
-
-      // The disabled color usually has some kind of opacity, but because the badge is overlayed
-      // on top of something else, it won't look good if it's opaque. If it is a color *type*,
-      // we convert it into a solid color by taking the opacity from the rgba value and using
-      // the value to determine the percentage of the background to put into foreground when
-      // mixing the colors together.
-      @if (meta.type-of($badge-color) == color and meta.type-of($app-background) == color) {
-        $badge-opacity: opacity($badge-color);
-        background: color.mix($app-background, rgba($badge-color, 1), (1 - $badge-opacity) * 100%);
-      } @else {
-        background: $badge-color;
-      }
-
-      color: theming.get-color-from-palette($foreground, disabled-text);
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(tokens-mat-badge.$prefix,
+        tokens-mat-badge.get-unthemable-tokens());
     }
   }
 }
 
-@mixin typography($config-or-theme) {
-  $config: typography.private-typography-to-2014-config(
-    theming.get-typography-config($config-or-theme)
-  );
-  .tak-badge-content {
-    font-weight: $font-weight;
-    font-size: $font-size;
-    font-family: typography-utils.font-family($config);
+/// Outputs color theme styles for the mat-badge.
+/// @param {Map} $theme The theme to generate color styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the badge: primary, secondary, tertiary,
+///      or error (If not specified, default error color will be used).
+@mixin color($theme, $options...) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, color), $options...);
   }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(tokens-mat-badge.$prefix,
+        tokens-mat-badge.get-color-tokens($theme));
+    }
 
-  .tak-badge-small .tak-badge-content {
-    // Set the font size to 75% of the original.
-    font-size: $font-size * 0.75;
-  }
+    .mat-badge-accent {
+      @include token-utils.create-token-values(tokens-mat-badge.$prefix,
+        tokens-mat-badge.private-get-color-palette-color-tokens($theme, accent));
+    }
 
-  .tak-badge-large .tak-badge-content {
-    font-size: $font-size * 2;
+    .mat-badge-warn {
+      @include token-utils.create-token-values(tokens-mat-badge.$prefix,
+        tokens-mat-badge.private-get-color-palette-color-tokens($theme, warn));
+    }
   }
 }
 
-@mixin _density($config-or-theme) {
+/// Outputs typography theme styles for the mat-badge.
+/// @param {Map} $theme The theme to generate typography styles for.
+@mixin typography($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, typography));
+  }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(tokens-mat-badge.$prefix,
+        tokens-mat-badge.get-typography-tokens($theme));
+    }
+  }
 }
 
-@mixin theme($theme-or-color-config) {
-  $theme: theming.private-legacy-get-theme($theme-or-color-config);
-  @include theming.private-check-duplicate-theme-styles($theme, 'tak-badge') {
-    $color: theming.get-color-config($theme);
-    $density: theming.get-density-config($theme);
-    $typography: theming.get-typography-config($theme);
+/// Outputs density theme styles for the mat-badge.
+/// @param {Map} $theme The theme to generate density styles for.
+@mixin density($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, density));
+  }
+  @else {}
+}
 
-    // Try to reduce the number of times that the structural styles are emitted.
-    @if not $_badge-structure-emitted {
-      @include _badge-structure;
-
-      // Only flip the flag if the mixin is included at the top level. Otherwise the first
-      // inclusion might be inside of a theme class which will exclude the structural styles
-      // from all other themes.
-      @if not & {
-        $_badge-structure-emitted: true !global;
+/// Outputs all (base, color, typography, and density) theme styles for the mat-badge.
+/// @param {Map} $theme The theme to generate styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the badge: primary, secondary, tertiary,
+///      or error (If not specified, default error color will be used).
+@mixin theme($theme, $options...) {
+  @include theming.private-check-duplicate-theme-styles($theme, 'mat-badge') {
+    @if inspection.get-theme-version($theme) == 1 {
+      @include _theme-from-tokens(inspection.get-theme-tokens($theme), $options...);
+    }
+    @else {
+      @include base($theme);
+      @if inspection.theme-has($theme, color) {
+        @include color($theme);
+      }
+      @if inspection.theme-has($theme, density) {
+        @include density($theme);
+      }
+      @if inspection.theme-has($theme, typography) {
+        @include typography($theme);
       }
     }
-
-    @if $color != null {
-      @include color($color);
-    }
-    @if $density != null {
-      @include _density($density);
-    }
-    @if $typography != null {
-      @include typography($typography);
-    }
   }
+}
+
+@mixin _theme-from-tokens($tokens, $options...) {
+  @include validation.selector-defined(
+      'Calls to Angular Material theme mixins with an M3 theme must be wrapped in a selector');
+  $mat-badge-tokens: token-utils.get-tokens-for($tokens, tokens-mat-badge.$prefix, $options...);
+  @include token-utils.create-token-values(tokens-mat-badge.$prefix, $mat-badge-tokens);
 }

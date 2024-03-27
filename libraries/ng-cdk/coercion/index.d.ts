@@ -1,10 +1,12 @@
 import { ElementRef } from '@angular/core';
 
+
 /**
  * Type describing the allowed values for a boolean input.
  * @docs-private
  */
 export declare type BooleanInput = string | boolean | null | undefined;
+
 
 /** Wraps the provided value in an array, unless the provided value is an array. */
 export declare function coerceArray<T>(value: T | T[]): T[];
@@ -13,6 +15,7 @@ export declare function coerceArray<T>(value: T | readonly T[]): readonly T[];
 
 /** Coerces a data-bound value (typically a string) to a boolean. */
 export declare function coerceBooleanProperty(value: any): boolean;
+
 
 /** Coerces a value to a CSS pixel value. */
 export declare function coerceCssPixelValue(value: any): string;
@@ -27,6 +30,7 @@ export declare function coerceElement<T>(elementOrRef: ElementRef<T> | T): T;
 export declare function coerceNumberProperty(value: any): number;
 
 export declare function coerceNumberProperty<D>(value: any, fallback: D): number | D;
+
 
 /**
  * Coerces a value to an array of trimmed non-empty strings.
@@ -53,10 +57,11 @@ export declare function coerceStringArray(value: any, separator?: string | RegEx
  */
 export declare function _isNumberValue(value: any): boolean;
 
+
 /**
  * Type describing the allowed values for a number input
  * @docs-private
  */
 export declare type NumberInput = string | number | null | undefined;
 
-export {};
+export { }

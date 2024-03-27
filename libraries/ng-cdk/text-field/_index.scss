@@ -33,12 +33,8 @@
   // by watching for the animation events that are fired when they start. Note: the /*!*/ comment is
   // needed to prevent LibSass from stripping the keyframes out.
   // Based on: https://medium.com/@brunn/detecting-autofilled-fields-in-javascript-aed598d25da7
-  @keyframes cdk-text-field-autofill-start {
-    /*!*/
-  }
-  @keyframes cdk-text-field-autofill-end {
-    /*!*/
-  }
+  @keyframes cdk-text-field-autofill-start {/*!*/}
+  @keyframes cdk-text-field-autofill-end {/*!*/}
 
   .cdk-text-field-autofill-monitored:-webkit-autofill {
     // Since Chrome 80 we need a 1ms delay, or the animationstart event won't fire.
@@ -64,13 +60,11 @@ $autofill-color-frame-count: 0;
 // Mixin used to apply custom background and foreground colors to an autofilled text field.
 // Based on: https://stackoverflow.com/questions/2781549/
 // removing-input-background-colour-for-chrome-autocomplete#answer-37432260
-@mixin text-field-autofill-color($background, $foreground: '') {
+@mixin text-field-autofill-color($background, $foreground:'') {
   @keyframes cdk-text-field-autofill-color-#{$autofill-color-frame-count} {
     to {
       background: $background;
-      @if $foreground != '' {
-        color: $foreground;
-      }
+      @if $foreground != '' { color: $foreground; }
     }
   }
 
@@ -81,9 +75,8 @@ $autofill-color-frame-count: 0;
   &.cdk-text-field-autofill-monitored:-webkit-autofill {
     // Since Chrome 80 we need a 1ms delay for cdk-text-field-autofill-start, or the animationstart
     // event won't fire.
-    animation:
-      cdk-text-field-autofill-start 0s 1ms,
-      cdk-text-field-autofill-color-#{$autofill-color-frame-count} both;
+    animation: cdk-text-field-autofill-start 0s 1ms,
+               cdk-text-field-autofill-color-#{$autofill-color-frame-count} both;
   }
 
   $autofill-color-frame-count: $autofill-color-frame-count + 1 !global;

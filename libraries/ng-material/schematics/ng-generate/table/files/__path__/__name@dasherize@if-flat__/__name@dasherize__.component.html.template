@@ -1,26 +1,26 @@
-<div class="tak-elevation-z8">
-  <table tak-table class="full-width-table" takSort aria-label="Elements">
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
     <!-- Id Column -->
-    <ng-container takColumnDef="id">
-      <th tak-header-cell *takHeaderCellDef tak-sort-header>Id</th>
-      <td tak-cell *takCellDef="let row">{{row.id}}</td>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let row">{{row.id}}</td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container takColumnDef="name">
-      <th tak-header-cell *takHeaderCellDef tak-sort-header>Name</th>
-      <td tak-cell *takCellDef="let row">{{row.name}}</td>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">{{row.name}}</td>
     </ng-container>
 
-    <tr tak-header-row *takHeaderRowDef="displayedColumns"></tr>
-    <tr tak-row *takRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <tak-paginator #paginator
-      [length]="dataSource?.data?.length"
+  <mat-paginator #paginator
+      [length]="dataSource.data.length"
       [pageIndex]="0"
       [pageSize]="10"
       [pageSizeOptions]="[5, 10, 20]"
       aria-label="Select page">
-  </tak-paginator>
+  </mat-paginator>
 </div>

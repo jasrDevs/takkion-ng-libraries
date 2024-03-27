@@ -1,6 +1,0 @@
-@forward 'chips-theme' hide $chip-remove-font-size, color, theme, typography;
-@forward 'chips-theme' as tak-* hide tak-chip-element-color, tak-chip-theme-color, tak-color,
-  tak-density, tak-ripple-background, tak-theme, tak-typography;
-@forward 'chips-theme' as tak-chips-* hide $tak-chips-chip-remove-font-size,
-  tak-chips-chip-element-color, tak-chips-chip-theme-color, tak-chips-density,
-  tak-chips-ripple-background;

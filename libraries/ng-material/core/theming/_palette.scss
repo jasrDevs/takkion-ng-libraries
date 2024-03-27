@@ -6,6 +6,7 @@
 // calculate them. These contrast colors are pulled from the public Material Design spec swatches.
 // While the contrast colors in the spec are not prescriptive, we use them for convenience.
 
+
 // @deprecated renamed to $dark-primary-text.
 // @breaking-change 8.0.0
 $black-87-opacity: rgba(black, 0.87);
@@ -66,7 +67,7 @@ $red-palette: (
     A200: $light-primary-text,
     A400: $light-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 $pink-palette: (
@@ -99,7 +100,7 @@ $pink-palette: (
     A200: $light-primary-text,
     A400: $light-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 $purple-palette: (
@@ -132,7 +133,7 @@ $purple-palette: (
     A200: $light-primary-text,
     A400: $light-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 $deep-purple-palette: (
@@ -165,7 +166,7 @@ $deep-purple-palette: (
     A200: $light-primary-text,
     A400: $light-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 $indigo-palette: (
@@ -198,7 +199,7 @@ $indigo-palette: (
     A200: $light-primary-text,
     A400: $light-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 $blue-palette: (
@@ -231,7 +232,7 @@ $blue-palette: (
     A200: $light-primary-text,
     A400: $light-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 $light-blue-palette: (
@@ -264,7 +265,7 @@ $light-blue-palette: (
     A200: $dark-primary-text,
     A400: $dark-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 $cyan-palette: (
@@ -297,7 +298,7 @@ $cyan-palette: (
     A200: $dark-primary-text,
     A400: $dark-primary-text,
     A700: $dark-primary-text,
-  ),
+  )
 );
 
 $teal-palette: (
@@ -330,7 +331,7 @@ $teal-palette: (
     A200: $dark-primary-text,
     A400: $dark-primary-text,
     A700: $dark-primary-text,
-  ),
+  )
 );
 
 $green-palette: (
@@ -363,7 +364,7 @@ $green-palette: (
     A200: $dark-primary-text,
     A400: $dark-primary-text,
     A700: $dark-primary-text,
-  ),
+  )
 );
 
 $light-green-palette: (
@@ -396,7 +397,7 @@ $light-green-palette: (
     A200: $dark-primary-text,
     A400: $dark-primary-text,
     A700: $dark-primary-text,
-  ),
+  )
 );
 
 $lime-palette: (
@@ -429,7 +430,7 @@ $lime-palette: (
     A200: $dark-primary-text,
     A400: $dark-primary-text,
     A700: $dark-primary-text,
-  ),
+  )
 );
 
 $yellow-palette: (
@@ -462,7 +463,7 @@ $yellow-palette: (
     A200: $dark-primary-text,
     A400: $dark-primary-text,
     A700: $dark-primary-text,
-  ),
+  )
 );
 
 $amber-palette: (
@@ -495,7 +496,7 @@ $amber-palette: (
     A200: $dark-primary-text,
     A400: $dark-primary-text,
     A700: $dark-primary-text,
-  ),
+  )
 );
 
 $orange-palette: (
@@ -528,7 +529,7 @@ $orange-palette: (
     A200: $dark-primary-text,
     A400: $dark-primary-text,
     A700: black,
-  ),
+  )
 );
 
 $deep-orange-palette: (
@@ -561,7 +562,7 @@ $deep-orange-palette: (
     A200: $dark-primary-text,
     A400: $light-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 $brown-palette: (
@@ -594,7 +595,7 @@ $brown-palette: (
     A200: $dark-primary-text,
     A400: $light-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 $grey-palette: (
@@ -627,7 +628,7 @@ $grey-palette: (
     A200: $dark-primary-text,
     A400: $dark-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 // Alias for alternate spelling.
@@ -663,21 +664,21 @@ $blue-grey-palette: (
     A200: $dark-primary-text,
     A400: $light-primary-text,
     A700: $light-primary-text,
-  ),
+  )
 );
 
 // Alias for alternate spelling.
 $blue-gray-palette: $blue-grey-palette;
 
+
 // Background palette for light themes.
 $light-theme-background-palette: (
   status-bar: map.get($grey-palette, 300),
-  app-bar: map.get($grey-palette, 100),
+  app-bar:    map.get($grey-palette, 100),
   background: map.get($grey-palette, 50),
-  hover: rgba(black, 0.04),
-  // TODO(kara): check style with Material Design UX
-  card: white,
-  dialog: white,
+  hover:      rgba(black, 0.04), // TODO(kara): check style with Material Design UX
+  card:       white,
+  dialog:     white,
   disabled-button: rgba(black, 0.12),
   raised-button: white,
   focused-button: $dark-focused,
@@ -692,12 +693,11 @@ $light-theme-background-palette: (
 // Background palette for dark themes.
 $dark-theme-background-palette: (
   status-bar: black,
-  app-bar: map.get($grey-palette, 900),
+  app-bar:    map.get($grey-palette, 900),
   background: #303030,
-  hover: rgba(white, 0.04),
-  // TODO(kara): check style with Material Design UX
-  card: map.get($grey-palette, 800),
-  dialog: map.get($grey-palette, 800),
+  hover:      rgba(white, 0.04), // TODO(kara): check style with Material Design UX
+  card:       map.get($grey-palette, 800),
+  dialog:     map.get($grey-palette, 800),
   disabled-button: rgba(white, 0.12),
   raised-button: map.get($grey-palette, 800),
   focused-button: $light-focused,
@@ -711,38 +711,38 @@ $dark-theme-background-palette: (
 
 // Foreground palette for light themes.
 $light-theme-foreground-palette: (
-  base: black,
-  divider: $dark-dividers,
-  dividers: $dark-dividers,
-  disabled: $dark-disabled-text,
-  disabled-button: rgba(black, 0.26),
-  disabled-text: $dark-disabled-text,
-  elevation: black,
-  hint-text: $dark-disabled-text,
-  secondary-text: $dark-secondary-text,
-  icon: rgba(black, 0.54),
-  icons: rgba(black, 0.54),
-  text: rgba(black, 0.87),
-  slider-min: rgba(black, 0.87),
-  slider-off: rgba(black, 0.26),
+  base:              black,
+  divider:           $dark-dividers,
+  dividers:          $dark-dividers,
+  disabled:          $dark-disabled-text,
+  disabled-button:   rgba(black, 0.26),
+  disabled-text:     $dark-disabled-text,
+  elevation:         black,
+  hint-text:         $dark-disabled-text,
+  secondary-text:    $dark-secondary-text,
+  icon:              rgba(black, 0.54),
+  icons:             rgba(black, 0.54),
+  text:              rgba(black, 0.87),
+  slider-min:        rgba(black, 0.87),
+  slider-off:        rgba(black, 0.26),
   slider-off-active: rgba(black, 0.38),
 );
 
 // Foreground palette for dark themes.
 $dark-theme-foreground-palette: (
-  base: white,
-  divider: $light-dividers,
-  dividers: $light-dividers,
-  disabled: $light-disabled-text,
-  disabled-button: rgba(white, 0.3),
-  disabled-text: $light-disabled-text,
-  elevation: black,
-  hint-text: $light-disabled-text,
-  secondary-text: $light-secondary-text,
-  icon: white,
-  icons: white,
-  text: white,
-  slider-min: white,
-  slider-off: rgba(white, 0.3),
+  base:              white,
+  divider:           $light-dividers,
+  dividers:          $light-dividers,
+  disabled:          $light-disabled-text,
+  disabled-button:   rgba(white, 0.3),
+  disabled-text:     $light-disabled-text,
+  elevation:         black,
+  hint-text:         $light-disabled-text,
+  secondary-text:    $light-secondary-text,
+  icon:              white,
+  icons:             white,
+  text:              white,
+  slider-min:        white,
+  slider-off:        rgba(white, 0.3),
   slider-off-active: rgba(white, 0.3),
 );

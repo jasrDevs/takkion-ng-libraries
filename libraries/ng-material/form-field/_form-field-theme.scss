@@ -1,276 +1,143 @@
-@use 'sass:map';
-@use 'sass:math';
+@use '@material/textfield/filled-text-field-theme' as mdc-filled-text-field-theme;
+@use '@material/textfield/outlined-text-field-theme' as mdc-outlined-text-field-theme;
+@use '../core/tokens/m2/mdc/filled-text-field' as tokens-mdc-filled-text-field;
+@use '../core/tokens/m2/mdc/outlined-text-field' as tokens-mdc-outlined-text-field;
+@use '../core/tokens/m2/mat/form-field' as tokens-mat-form-field;
 @use '../core/theming/theming';
+@use '../core/theming/inspection';
+@use '../core/theming/validation';
 @use '../core/typography/typography';
-@use '../core/typography/typography-utils';
+@use '../core/style/sass-utils';
+@use '../core/tokens/token-utils';
 
-@use './form-field-fill-theme.scss';
-@use './form-field-legacy-theme.scss';
-@use './form-field-outline-theme.scss';
-@use './form-field-standard-theme.scss';
-
-// Color styles that apply to all appearances of the form-field.
-@mixin color($config-or-theme) {
-  $config: theming.get-color-config($config-or-theme);
-  $primary: map.get($config, primary);
-  $accent: map.get($config, accent);
-  $warn: map.get($config, warn);
-  $background: map.get($config, background);
-  $foreground: map.get($config, foreground);
-  $is-dark-theme: map.get($config, is-dark);
-
-  // Label colors. Required is used for the `*` star shown in the label.
-  $label-color: theming.get-color-from-palette(
-    $foreground,
-    secondary-text,
-    if($is-dark-theme, 0.7, 0.6)
-  );
-  $focused-label-color: theming.get-color-from-palette($primary, text);
-  $required-label-color: theming.get-color-from-palette($accent, text);
-
-  // Underline colors.
-  $underline-color-base: theming.get-color-from-palette(
-    $foreground,
-    divider,
-    if($is-dark-theme, 1, 0.87)
-  );
-  $underline-color-accent: theming.get-color-from-palette($accent, text);
-  $underline-color-warn: theming.get-color-from-palette($warn, text);
-  $underline-focused-color: theming.get-color-from-palette($primary, text);
-
-  .tak-form-field-label {
-    color: $label-color;
+/// Outputs base theme styles (styles not dependent on the color, typography, or density settings)
+/// for the mat-form-field.
+/// @param {Map} $theme The theme to generate base styles for.
+@mixin base($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, base));
   }
-
-  .tak-hint {
-    color: $label-color;
-  }
-
-  .tak-form-field.tak-focused .tak-form-field-label {
-    color: $focused-label-color;
-
-    &.tak-accent {
-      color: $underline-color-accent;
-    }
-
-    &.tak-warn {
-      color: $underline-color-warn;
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(
+          tokens-mdc-filled-text-field.$prefix,
+          tokens-mdc-filled-text-field.get-unthemable-tokens());
+      @include token-utils.create-token-values(
+          tokens-mdc-outlined-text-field.$prefix,
+          tokens-mdc-outlined-text-field.get-unthemable-tokens());
+      @include token-utils.create-token-values(
+          tokens-mat-form-field.$prefix,
+          tokens-mat-form-field.get-unthemable-tokens());
     }
   }
-
-  .tak-focused .tak-form-field-required-marker {
-    color: $required-label-color;
-  }
-
-  .tak-form-field-ripple {
-    background-color: $underline-color-base;
-  }
-
-  .tak-form-field.tak-focused {
-    .tak-form-field-ripple {
-      background-color: $underline-focused-color;
-
-      &.tak-accent {
-        background-color: $underline-color-accent;
-      }
-
-      &.tak-warn {
-        background-color: $underline-color-warn;
-      }
-    }
-  }
-
-  .tak-form-field-type-tak-native-select.tak-focused:not(.tak-form-field-invalid) {
-    .tak-form-field-infix::after {
-      color: $underline-focused-color;
-    }
-
-    &.tak-accent .tak-form-field-infix::after {
-      color: $underline-color-accent;
-    }
-
-    &.tak-warn .tak-form-field-infix::after {
-      color: $underline-color-warn;
-    }
-  }
-
-  // Styling for the error state of the form field. Note that while the same can be
-  // achieved with the ng-* classes, we use this approach in order to ensure that the same
-  // logic is used to style the error state and to show the error messages.
-  .tak-form-field.tak-form-field-invalid {
-    .tak-form-field-label {
-      color: $underline-color-warn;
-
-      &.tak-accent,
-      .tak-form-field-required-marker {
-        color: $underline-color-warn;
-      }
-    }
-
-    .tak-form-field-ripple,
-    .tak-form-field-ripple.tak-accent {
-      background-color: $underline-color-warn;
-    }
-  }
-
-  .tak-error {
-    color: $underline-color-warn;
-  }
-
-  @include form-field-legacy-theme.legacy-color($config);
-  @include form-field-standard-theme.standard-color($config);
-  @include form-field-fill-theme.fill-color($config);
-  @include form-field-outline-theme.outline-color($config);
 }
 
-// Used to make instances of the _tak-form-field-label-floating mixin negligibly different,
-// and prevent Google's CSS Optimizer from collapsing the declarations. This is needed because some
-// of the selectors contain pseudo-classes not recognized in all browsers. If a browser encounters
-// an unknown pseudo-class it will discard the entire rule set.
-$dedupe: 0;
-
-// Applies a floating label above the form field control itself.
-@mixin _label-floating($font-scale, $infix-padding, $infix-margin-top) {
-  transform: translateY(-$infix-margin-top - $infix-padding + $dedupe) scale($font-scale);
-  width: math.div(100%, $font-scale) + $dedupe;
-
-  $dedupe: $dedupe + 0.00001 !global;
-}
-
-@mixin typography($config-or-theme) {
-  $config: typography.private-typography-to-2014-config(
-    theming.get-typography-config($config-or-theme)
-  );
-  // The unit-less line-height from the font config.
-  $line-height: typography-utils.line-height($config, input);
-
-  // The amount to scale the font for the floating label and subscript.
-  $subscript-font-scale: 0.75;
-  // The amount to scale the font for the prefix and suffix icons.
-  $prefix-suffix-icon-font-scale: 1.5;
-
-  // The padding on the infix. Mocks show half of the text size.
-  $infix-padding: 0.5em;
-  // The margin applied to the form-field-infix to reserve space for the floating label.
-  // If the line-height is given as a unitless number, coerce it to `em`.
-  $infix-margin-top: $subscript-font-scale *
-    typography-utils.private-coerce-unitless-to-em($line-height);
-  // Font size to use for the label and subscript text.
-  $subscript-font-size: $subscript-font-scale * 100%;
-  // Font size to use for the for the prefix and suffix icons.
-  $prefix-suffix-icon-font-size: $prefix-suffix-icon-font-scale * 100%;
-  // The space between the bottom of the .tak-form-field-flex area and the subscript wrapper.
-  // Mocks show half of the text size, but this margin is applied to an element with the subscript
-  // text font size, so we need to divide by the scale factor to make it half of the original text
-  // size.
-  $subscript-margin-top: math.div(0.5em, $subscript-font-scale);
-  // The padding applied to the form-field-wrapper to reserve space for the subscript, since it's
-  // absolutely positioned. This is a combination of the subscript's margin and line-height, but we
-  // need to multiply by the subscript font scale factor since the wrapper has a larger font size.
-  $wrapper-padding-bottom: ($subscript-margin-top + $line-height) * $subscript-font-scale;
-
-  .tak-form-field {
-    @include typography-utils.typography-level($config, input);
+/// Outputs color theme styles for the mat-form-field.
+/// @param {Map} $theme The theme to generate color styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the form field: primary, secondary, tertiary,
+///      or error (If not specified, default primary color will be used).
+@mixin color($theme, $options...) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, color), $options...);
   }
-
-  .tak-form-field-wrapper {
-    padding-bottom: $wrapper-padding-bottom;
-  }
-
-  .tak-form-field-prefix,
-  .tak-form-field-suffix {
-    // Allow icons in a prefix or suffix to adapt to the correct size.
-    .tak-icon {
-      font-size: $prefix-suffix-icon-font-size;
-      line-height: $line-height;
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-filled-text-field-theme.theme(
+          tokens-mdc-filled-text-field.get-color-tokens($theme));
+      @include mdc-outlined-text-field-theme.theme(
+          tokens-mdc-outlined-text-field.get-color-tokens($theme));
+      @include token-utils.create-token-values(tokens-mat-form-field.$prefix,
+        tokens-mat-form-field.get-color-tokens($theme));
     }
 
-    // Allow icon buttons in a prefix or suffix to adapt to the correct size.
-    .tak-icon-button {
-      height: $prefix-suffix-icon-font-scale * 1em;
-      width: $prefix-suffix-icon-font-scale * 1em;
+    .mat-mdc-form-field.mat-accent {
+      @include mdc-filled-text-field-theme.theme(
+          tokens-mdc-filled-text-field.private-get-color-palette-color-tokens($theme, accent));
+      @include mdc-outlined-text-field-theme.theme(
+          tokens-mdc-outlined-text-field.private-get-color-palette-color-tokens($theme, accent));
+      @include token-utils.create-token-values(tokens-mat-form-field.$prefix,
+        tokens-mat-form-field.private-get-color-palette-color-tokens($theme, accent));
+    }
 
-      .tak-icon {
-        height: typography-utils.private-coerce-unitless-to-em($line-height);
-        line-height: $line-height;
+    .mat-mdc-form-field.mat-warn {
+      @include mdc-filled-text-field-theme.theme(
+          tokens-mdc-filled-text-field.private-get-color-palette-color-tokens($theme, warn));
+      @include mdc-outlined-text-field-theme.theme(
+          tokens-mdc-outlined-text-field.private-get-color-palette-color-tokens($theme, warn));
+      @include token-utils.create-token-values(tokens-mat-form-field.$prefix,
+        tokens-mat-form-field.private-get-color-palette-color-tokens($theme, warn));
+    }
+  }
+}
+
+/// Outputs typography theme styles for the mat-form-field.
+/// @param {Map} $theme The theme to generate typography styles for.
+@mixin typography($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, typography));
+  }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-filled-text-field-theme.theme(
+          tokens-mdc-filled-text-field.get-typography-tokens($theme));
+      @include mdc-outlined-text-field-theme.theme(
+          tokens-mdc-outlined-text-field.get-typography-tokens($theme));
+      @include token-utils.create-token-values(tokens-mat-form-field.$prefix,
+        tokens-mat-form-field.get-typography-tokens($theme));
+    }
+  }
+}
+
+/// Outputs density theme styles for the mat-form-field.
+/// @param {Map} $theme The theme to generate density styles for.
+@mixin density($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, density));
+  }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(tokens-mat-form-field.$prefix,
+        tokens-mat-form-field.get-density-tokens($theme));
+    }
+  }
+}
+
+/// Outputs all (base, color, typography, and density) theme styles for the mat-form-field.
+/// @param {Map} $theme The theme to generate styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the form field: primary, secondary, tertiary,
+///      or error (If not specified, default primary color will be used).
+@mixin theme($theme, $options...) {
+  @include theming.private-check-duplicate-theme-styles($theme, 'mat-form-field') {
+    @if inspection.get-theme-version($theme) == 1 {
+      @include _theme-from-tokens(inspection.get-theme-tokens($theme), $options...);
+    }
+    @else {
+      @include base($theme);
+      @if inspection.theme-has($theme, color) {
+        @include color($theme);
+      }
+      @if inspection.theme-has($theme, density) {
+        @include density($theme);
+      }
+      @if inspection.theme-has($theme, typography) {
+        @include typography($theme);
       }
     }
   }
-
-  .tak-form-field-infix {
-    padding: $infix-padding 0;
-    // Throws off the baseline if we do it as a real margin, so we do it as a border instead.
-    border-top: $infix-margin-top solid transparent;
-  }
-
-  .tak-form-field-can-float {
-    &.tak-form-field-should-float .tak-form-field-label,
-    .tak-input-server:focus + .tak-form-field-label-wrapper .tak-form-field-label {
-      @include _label-floating($subscript-font-scale, $infix-padding, $infix-margin-top);
-    }
-
-    // Server-side rendered takInput with a label attribute but label not shown
-    // (used as a pure CSS stand-in for tak-form-field-should-float).
-    .tak-input-server[label]:not(:label-shown)
-      + .tak-form-field-label-wrapper
-      .tak-form-field-label {
-      @include _label-floating($subscript-font-scale, $infix-padding, $infix-margin-top);
-    }
-  }
-
-  .tak-form-field-label-wrapper {
-    top: -$infix-margin-top;
-    padding-top: $infix-margin-top;
-  }
-
-  .tak-form-field-label {
-    top: $infix-margin-top + $infix-padding;
-  }
-
-  .tak-form-field-underline {
-    // We want the underline to start at the end of the content box, not the padding box,
-    // so we move it up by the padding amount.
-    bottom: $wrapper-padding-bottom;
-  }
-
-  .tak-form-field-subscript-wrapper {
-    font-size: $subscript-font-size;
-    margin-top: $subscript-margin-top;
-
-    // We want the subscript to start at the end of the content box, not the padding box,
-    // so we move it up by the padding amount (adjusted for the smaller font size);
-    top: calc(100% - #{math.div($wrapper-padding-bottom, $subscript-font-scale)});
-  }
-
-  @include form-field-legacy-theme.legacy-typography($config);
-  @include form-field-standard-theme.standard-typography($config);
-  @include form-field-fill-theme.fill-typography($config);
-  @include form-field-outline-theme.outline-typography($config);
 }
 
-@mixin density($config-or-theme) {
-  $density-scale: theming.get-density-config($config-or-theme);
-  @include form-field-legacy-theme.private-form-field-legacy-density($density-scale);
-  @include form-field-standard-theme.private-form-field-standard-density($density-scale);
-  @include form-field-fill-theme.private-form-field-fill-density($density-scale);
-  @include form-field-outline-theme.private-form-field-outline-density($density-scale);
-}
-
-@mixin theme($theme-or-color-config) {
-  $theme: theming.private-legacy-get-theme($theme-or-color-config);
-  @include theming.private-check-duplicate-theme-styles($theme, 'tak-form-field') {
-    $color: theming.get-color-config($theme);
-    $density: theming.get-density-config($theme);
-    $typography: theming.get-typography-config($theme);
-
-    @if $color != null {
-      @include color($color);
-    }
-    @if $density != null {
-      @include density($density);
-    }
-    @if $typography != null {
-      @include typography($typography);
-    }
-  }
+@mixin _theme-from-tokens($tokens, $options...) {
+  @include validation.selector-defined(
+      'Calls to Angular Material theme mixins with an M3 theme must be wrapped in a selector');
+  $mdc-filled-text-field-tokens:
+    token-utils.get-tokens-for($tokens, tokens-mdc-filled-text-field.$prefix, $options...);
+  $mdc-outlined-text-field-tokens:
+    token-utils.get-tokens-for($tokens, tokens-mdc-outlined-text-field.$prefix, $options...);
+  $mat-form-field-tokens:
+    token-utils.get-tokens-for($tokens, tokens-mat-form-field.$prefix, $options...);
+  @include mdc-filled-text-field-theme.theme($mdc-filled-text-field-tokens);
+  @include mdc-outlined-text-field-theme.theme($mdc-outlined-text-field-tokens);
+  @include token-utils.create-token-values(tokens-mat-form-field.$prefix, $mat-form-field-tokens);
 }

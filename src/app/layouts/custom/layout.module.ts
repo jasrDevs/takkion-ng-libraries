@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { AdminLayoutComponent } from './layout.component';
-import { TakLayoutModule } from '@takkion/ng-components/layout';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { TakButtonModule } from '@takkion/ng-material/button';
-import { TakIconModule } from '@takkion/ng-material/icon';
-import { TakMenuModule } from '@takkion/ng-material/menu';
+import { MatButtonModule } from '@takkion/ng-material/button';
+import { MatIconModule } from '@takkion/ng-material/icon';
+import { MatMenuModule } from '@takkion/ng-material/menu';
 
 @NgModule({
   declarations: [AdminLayoutComponent, HeaderComponent, FooterComponent],
-  imports: [RouterModule, TakButtonModule, TakIconModule, TakMenuModule, TakLayoutModule],
+  imports: [RouterModule, MatButtonModule, MatIconModule, MatMenuModule],
 })
 export class AdminLayoutModule {}

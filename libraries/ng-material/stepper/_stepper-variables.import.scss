@@ -1,6 +1,0 @@
-@forward 'stepper-variables' as tak-* hide $tak-density-config, $tak-header-height,
-  $tak-header-maximum-height, $tak-header-minimum-height, $tak-label-header-height,
-  $tak-label-min-width, $tak-label-position-bottom-top-gap, $tak-line-gap, $tak-line-width,
-  $tak-side-gap;
-@forward 'stepper-variables' as tak-stepper-* hide $tak-stepper-step-header-icon-size,
-  $tak-stepper-step-sub-label-font-size, $tak-stepper-vertical-stepper-content-margin;

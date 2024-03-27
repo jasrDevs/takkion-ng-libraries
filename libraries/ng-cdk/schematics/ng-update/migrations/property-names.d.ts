@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -14,9 +14,9 @@ import { UpgradeData } from '../upgrade-data';
  * accessed properties that have been updated to a new name.
  */
 export declare class PropertyNamesMigration extends Migration<UpgradeData> {
-  /** Change data that upgrades to the specified target version. */
-  data: PropertyNameUpgradeData[];
-  enabled: boolean;
-  visitNode(node: ts.Node): void;
-  private _visitPropertyAccessExpression;
+    /** Change data that upgrades to the specified target version. */
+    data: PropertyNameUpgradeData[];
+    enabled: boolean;
+    visitNode(node: ts.Node): void;
+    private _visitPropertyAccessExpression;
 }

@@ -1,149 +1,18 @@
-<tak-capsule>
-  <tak-box-form
-    takTitle="Hey Joee"
-    takSubtitle="Hello again"
-    [showActionButtons]="true"
-    [hasResetButton]="true"
-    [formGroup]="fieldsForm"
-    (ngSubmit)="onSubmit()"
-    (onBack)="onBack()"
-    [hasBackButton]="true"
-  >
-    <button tak-button (click)="openToast('notification', 'notification')" type="button">
-      NOTIFICATION
-    </button>
-    <button tak-button (click)="openToast('success', 'success')" type="button">SUCCESS</button>
-    <button tak-button (click)="openToast('danger', 'danger')" type="button">DANGER</button>
-
-    <button tak-button (click)="openModal()" type="button">MODAL</button>
-
-    <button
-      tak-button
-      (click)="enable ? (enable = false) : (enable = true); toggleEnable()"
-      type="button"
-    >
-      toggle Enable
-    </button>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-50">
-          <tak-general-field
-            [formControl]="fieldsForm.text"
-            [countCaracters]="true"
-            [maxLength]="100"
-            [hasClearButton]="true"
-          >
-            Text field
-          </tak-general-field>
-        </div>
-        <div class="col-50">
-          <tak-general-field
-            [formControl]="fieldsForm.text"
-            [countCaracters]="true"
-            type="password"
-            [maxLength]="100"
-            [hasClearButton]="true"
-          >
-            Password field
-          </tak-general-field>
-        </div>
-        <div class="col-50">
-          <tak-general-field
-            type="filter"
-            [formControl]="fieldsForm.filter"
-            [hasClearButton]="true"
-          >
-            Buscar
-          </tak-general-field>
-        </div>
-        <div class="col-100">
-          <tak-textarea
-            [formControl]="fieldsForm.textarea"
-            [countCaracters]="true"
-            [maxLength]="300"
-          >
-            Textarea
-          </tak-textarea>
-        </div>
-
-        <div class="col-50">
-          <tak-select-field
-            [formControl]="fieldsForm.select"
-            [suggestions]="suggestions"
-            option="descripcion"
-            (selectAction)="onSelect($event)"
-          >
-            Producto
-          </tak-select-field>
-        </div>
-        <div class="col-50">
-          <tak-number-field
-            [formControl]="fieldsForm.number"
-            placeholder="(200-500)"
-            [hasClearButton]="true"
-          >
-            Number field
-          </tak-number-field>
-        </div>
-
-        <div class="col-100">
-          <tak-money-field [formControl]="fieldsForm.money" [hasClearButton]="true">
-            Money field
-          </tak-money-field>
-        </div>
-
-        <div class="col-80">
-          <tak-date-field [formControl]="fieldsForm.date" [minDate]="nowDate" [maxDate]="endDate">
-            Date field
-          </tak-date-field>
-        </div>
-        <div class="col-20">
-          <tak-date-field
-            [minDate]="nowDate"
-            [maxDate]="endDate"
-            [formControl]="fieldsForm.date"
-            color="warn"
-            [notInput]="true"
-          ></tak-date-field>
-        </div>
-
-        <div class="col-80">
-          <tak-date-range-field [start]="fieldsForm.start" [end]="fieldsForm.end" color="accent">
-            Date Range field
-          </tak-date-range-field>
-        </div>
-
-        <div class="col-20">
-          <tak-date-range-field [start]="fieldsForm.start" [end]="fieldsForm.end" [notInput]="true">
-          </tak-date-range-field>
-        </div>
-
-        <div class="col-50">
-          <tak-general-field
-            [hasActionButton]="true"
-            formControlName="query"
-            (onExecuteAction)="onQuery($event)"
-          >
-            Query field
-          </tak-general-field>
-        </div>
-
-        <div class="col-100">
-          <tak-autocomplete-field
-            #autocomplete
-            [formControl]="fieldsForm.autocomplete"
-            [isRemoteSearch]="false"
-            [suggestions]="suggestions"
-            [isLoading]="isLoading"
-            option="descripcion"
-            (onSearch)="onChange($event)"
-            [hasClearButton]="true"
-          >
-            autocomplete
-          </tak-autocomplete-field>
-        </div>
-      </div>
-    </div>
-  </tak-box-form>
-</tak-capsule>
+<form class="example-form">
+  <mat-form-field >
+    <mat-label>Number</mat-label>
+    <input
+      type="text"
+      placeholder="Pick one"
+      aria-label="Number"
+      matInput
+      [formControl]="myControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      @for (option of filteredOptions | async; track option) {
+        <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

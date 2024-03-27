@@ -1,0 +1,39 @@
+@import 'default';
+@import 'dark';
+
+:root {
+  --mat-primary-100: rgb(120, 203, 211);
+  --mat-primary-500: rgb(10, 161, 174);
+  --mat-primary-700: rgb(8, 119, 129);
+  --mat-primary-opacity-100: rgb(120, 203, 211, 0.3);
+  --mat-primary-opacity-500: rgb(10, 161, 174, 0.3);
+  --mat-primary-opacity-700: rgb(8, 119, 129, 0.3);
+  --mat-primary-constrant-100: rgb(140, 238, 247);
+  --mat-primary-constrant-500: rgb(14, 187, 202);
+  --mat-primary-constrant-700: rgb(15, 163, 177);
+
+  --mat-accent-100: rgb(30, 233, 148);
+  --mat-accent-500: rgb(24, 182, 116);
+  --mat-accent-700: rgb(29, 139, 110);
+  --mat-accent-constrant-100: rgb(177, 243, 214);
+  --mat-accent-constrant-500: rgb(70, 221, 158);
+  --mat-accent-constrant-700: rgb(65, 185, 135);
+  --mat-accent-opacity-100: rgb(30, 233, 148, 0.3);
+  --mat-accent-opacity-500: rgb(24, 182, 116, 0.3);
+  --mat-accent-opacity-700: rgb(29, 139, 110, 0.3);
+
+  --mat-warn-100: rgb(255, 55, 55);
+  --mat-warn-500: rgb(255, 0, 0);
+  --mat-warn-700: rgb(168, 0, 0);
+  --mat-warn-opacity-100: rgb(255, 55, 55, 0.3);
+  --mat-warn-opacity-500: rgb(255, 0, 0, 0.3);
+  --mat-warn-opacity-700: rgb(168, 0, 0, 0.3);
+  --mat-warn-constrant-100: rgb(254, 191, 191);
+  --mat-warn-constrant-500: rgb(255, 128, 128);
+  --mat-warn-constrant-700: rgb(191, 96, 96);
+}
+
+body {
+  background-color: var(--mat-body-background-color);
+  color: var(--mat-body-color);
+}

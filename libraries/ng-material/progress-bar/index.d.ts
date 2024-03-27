@@ -1,175 +1,120 @@
-import { _AbstractConstructor } from '@takkion/ng-material/core';
 import { AfterViewInit } from '@angular/core';
-import { CanColor } from '@takkion/ng-material/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { _Constructor } from '@takkion/ng-material/core';
 import { ElementRef } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import * as i0 from '@angular/core';
-import * as i2 from '@angular/common';
-import * as i3 from '@takkion/ng-material/core';
+import * as i2 from '@takkion/ng-material/core';
 import { InjectionToken } from '@angular/core';
 import { NgZone } from '@angular/core';
-import { NumberInput } from '@takkion/ng-cdk/coercion';
 import { OnDestroy } from '@angular/core';
 import { ThemePalette } from '@takkion/ng-material/core';
 
 declare namespace i1 {
-  export {
-    TAK_PROGRESS_BAR_LOCATION_FACTORY,
-    ProgressAnimationEnd,
-    TAK_PROGRESS_BAR_LOCATION,
-    TakProgressBarLocation,
-    ProgressBarMode,
-    TakProgressBarDefaultOptions,
-    TAK_PROGRESS_BAR_DEFAULT_OPTIONS,
-    TakProgressBar,
-  };
+    export {
+        MAT_PROGRESS_BAR_LOCATION_FACTORY,
+        ProgressAnimationEnd,
+        MatProgressBarDefaultOptions,
+        MAT_PROGRESS_BAR_DEFAULT_OPTIONS,
+        MAT_PROGRESS_BAR_LOCATION,
+        MatProgressBarLocation,
+        ProgressBarMode,
+        MatProgressBar
+    }
 }
 
-/** Injection token to be used to override the default options for `tak-progress-bar`. */
-export declare const TAK_PROGRESS_BAR_DEFAULT_OPTIONS: InjectionToken<TakProgressBarDefaultOptions>;
+/** Injection token to be used to override the default options for `mat-progress-bar`. */
+export declare const MAT_PROGRESS_BAR_DEFAULT_OPTIONS: InjectionToken<MatProgressBarDefaultOptions>;
 
 /**
- * Injection token used to provide the current location to `TakProgressBar`.
+ * Injection token used to provide the current location to `MatProgressBar`.
  * Used to handle server-side rendering and to stub out during unit tests.
  * @docs-private
  */
-export declare const TAK_PROGRESS_BAR_LOCATION: InjectionToken<TakProgressBarLocation>;
+export declare const MAT_PROGRESS_BAR_LOCATION: InjectionToken<MatProgressBarLocation>;
 
 /** @docs-private */
-export declare function TAK_PROGRESS_BAR_LOCATION_FACTORY(): TakProgressBarLocation;
+export declare function MAT_PROGRESS_BAR_LOCATION_FACTORY(): MatProgressBarLocation;
 
-/**
- * `<tak-progress-bar>` component.
- */
-export declare class TakProgressBar
-  extends _TakProgressBarBase
-  implements CanColor, AfterViewInit, OnDestroy
-{
-  private _ngZone;
-  _animationMode?: string | undefined;
-  /**
-   * @deprecated `_changeDetectorRef` parameter to be made required.
-   * @breaking-change 11.0.0
-   */
-  private _changeDetectorRef?;
-  constructor(
-    elementRef: ElementRef,
-    _ngZone: NgZone,
-    _animationMode?: string | undefined,
+export declare class MatProgressBar implements AfterViewInit, OnDestroy {
+    readonly _elementRef: ElementRef<HTMLElement>;
+    private _ngZone;
+    private _changeDetectorRef;
+    _animationMode?: string | undefined;
+    constructor(_elementRef: ElementRef<HTMLElement>, _ngZone: NgZone, _changeDetectorRef: ChangeDetectorRef, _animationMode?: string | undefined, defaults?: MatProgressBarDefaultOptions);
+    /** Flag that indicates whether NoopAnimations mode is set to true. */
+    _isNoopAnimation: boolean;
+    /** Theme palette color of the progress bar. */
+    get color(): string | null | undefined;
+    set color(value: string | null | undefined);
+    private _color;
+    private _defaultColor;
+    /** Value of the progress bar. Defaults to zero. Mirrored to aria-valuenow. */
+    get value(): number;
+    set value(v: number);
+    private _value;
+    /** Buffer value of the progress bar. Defaults to zero. */
+    get bufferValue(): number;
+    set bufferValue(v: number);
+    private _bufferValue;
     /**
-     * @deprecated `location` parameter to be made required.
-     * @breaking-change 8.0.0
+     * Event emitted when animation of the primary progress bar completes. This event will not
+     * be emitted when animations are disabled, nor will it be emitted for modes with continuous
+     * animations (indeterminate and query).
      */
-    location?: TakProgressBarLocation,
-    defaults?: TakProgressBarDefaultOptions,
+    readonly animationEnd: EventEmitter<ProgressAnimationEnd>;
     /**
-     * @deprecated `_changeDetectorRef` parameter to be made required.
-     * @breaking-change 11.0.0
+     * Mode of the progress bar.
+     *
+     * Input must be one of these values: determinate, indeterminate, buffer, query, defaults to
+     * 'determinate'.
+     * Mirrored to mode attribute.
      */
-    _changeDetectorRef?: ChangeDetectorRef | undefined
-  );
-  /** Flag that indicates whether NoopAnimations mode is set to true. */
-  _isNoopAnimation: boolean;
-  /** Value of the progress bar. Defaults to zero. Mirrored to aria-valuenow. */
-  get value(): number;
-  set value(v: NumberInput);
-  private _value;
-  /** Buffer value of the progress bar. Defaults to zero. */
-  get bufferValue(): number;
-  set bufferValue(v: number);
-  private _bufferValue;
-  _primaryValueBar: ElementRef;
-  /**
-   * Event emitted when animation of the primary progress bar completes. This event will not
-   * be emitted when animations are disabled, nor will it be emitted for modes with continuous
-   * animations (indeterminate and query).
-   */
-  readonly animationEnd: EventEmitter<ProgressAnimationEnd>;
-  /** Reference to animation end subscription to be unsubscribed on destroy. */
-  private _animationEndSubscription;
-  /**
-   * Mode of the progress bar.
-   *
-   * Input must be one of these values: determinate, indeterminate, buffer, query, defaults to
-   * 'determinate'.
-   * Mirrored to mode attribute.
-   */
-  mode: ProgressBarMode;
-  /** ID of the progress bar. */
-  progressbarId: string;
-  /** Attribute to be used for the `fill` attribute on the internal `rect` element. */
-  _rectangleFillValue: string;
-  /** Gets the current transform value for the progress bar's primary indicator. */
-  _primaryTransform(): {
-    transform: string;
-  };
-  /**
-   * Gets the current transform value for the progress bar's buffer indicator. Only used if the
-   * progress mode is set to buffer, otherwise returns an undefined, causing no transformation.
-   */
-  _bufferTransform(): {
-    transform: string;
-  } | null;
-  ngAfterViewInit(): void;
-  ngOnDestroy(): void;
-  static ɵfac: i0.ɵɵFactoryDeclaration<
-    TakProgressBar,
-    [null, null, { optional: true }, { optional: true }, { optional: true }, null]
-  >;
-  static ɵcmp: i0.ɵɵComponentDeclaration<
-    TakProgressBar,
-    'tak-progress-bar',
-    ['takProgressBar'],
-    { color: 'color'; value: 'value'; bufferValue: 'bufferValue'; mode: 'mode' },
-    { animationEnd: 'animationEnd' },
-    never,
-    never,
-    false
-  >;
+    get mode(): ProgressBarMode;
+    set mode(value: ProgressBarMode);
+    private _mode;
+    ngAfterViewInit(): void;
+    ngOnDestroy(): void;
+    /** Gets the transform style that should be applied to the primary bar. */
+    _getPrimaryBarTransform(): string;
+    /** Gets the `flex-basis` value that should be applied to the buffer bar. */
+    _getBufferBarFlexBasis(): string;
+    /** Returns whether the progress bar is indeterminate. */
+    _isIndeterminate(): boolean;
+    /** Event handler for `transitionend` events. */
+    private _transitionendHandler;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatProgressBar, [null, null, null, { optional: true; }, { optional: true; }]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MatProgressBar, "mat-progress-bar", ["matProgressBar"], { "color": { "alias": "color"; "required": false; }; "value": { "alias": "value"; "required": false; }; "bufferValue": { "alias": "bufferValue"; "required": false; }; "mode": { "alias": "mode"; "required": false; }; }, { "animationEnd": "animationEnd"; }, never, never, true, never>;
+    static ngAcceptInputType_value: unknown;
+    static ngAcceptInputType_bufferValue: unknown;
 }
 
-/** @docs-private */
-declare const _TakProgressBarBase: _Constructor<CanColor> &
-  _AbstractConstructor<CanColor> & {
-    new (_elementRef: ElementRef): {
-      _elementRef: ElementRef;
-    };
-  };
-
-/** Default `tak-progress-bar` options that can be overridden. */
-export declare interface TakProgressBarDefaultOptions {
-  /** Default color of the progress bar. */
-  color?: ThemePalette;
-  /** Default mode of the progress bar. */
-  mode?: ProgressBarMode;
+/** Default `mat-progress-bar` options that can be overridden. */
+export declare interface MatProgressBarDefaultOptions {
+    /** Default color of the progress bar. */
+    color?: ThemePalette;
+    /** Default mode of the progress bar. */
+    mode?: ProgressBarMode;
 }
 
 /**
- * Stubbed out location for `TakProgressBar`.
+ * Stubbed out location for `MatProgressBar`.
  * @docs-private
  */
-export declare interface TakProgressBarLocation {
-  getPathname: () => string;
+export declare interface MatProgressBarLocation {
+    getPathname: () => string;
 }
 
-export declare class TakProgressBarModule {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakProgressBarModule, never>;
-  static ɵmod: i0.ɵɵNgModuleDeclaration<
-    TakProgressBarModule,
-    [typeof i1.TakProgressBar],
-    [typeof i2.CommonModule, typeof i3.TakCommonModule],
-    [typeof i1.TakProgressBar, typeof i3.TakCommonModule]
-  >;
-  static ɵinj: i0.ɵɵInjectorDeclaration<TakProgressBarModule>;
+export declare class MatProgressBarModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatProgressBarModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<MatProgressBarModule, never, [typeof i1.MatProgressBar], [typeof i1.MatProgressBar, typeof i2.MatCommonModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<MatProgressBarModule>;
 }
 
 /** Last animation end data. */
 export declare interface ProgressAnimationEnd {
-  value: number;
+    value: number;
 }
 
 export declare type ProgressBarMode = 'determinate' | 'indeterminate' | 'buffer' | 'query';
 
-export {};
+export { }

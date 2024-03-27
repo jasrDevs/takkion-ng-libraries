@@ -1,0 +1,8 @@
+@mixin darkThemeMaterial() {
+  --mat-body-background-color: rgb(13, 17, 23);
+  --mat-body-color: rgb(255, 255, 255);
+}
+
+body.dark-theme {
+  @include darkThemeMaterial();
+}

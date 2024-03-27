@@ -1,338 +1,194 @@
 import * as i0 from '@angular/core';
-import * as i2 from '@takkion/ng-material/core';
+import * as i1 from '@takkion/ng-material/core';
+import * as i2 from '@angular/common';
+import { InjectionToken } from '@angular/core';
 
-declare namespace i1 {
-  export {
-    TakCardContent,
-    TakCardTitle,
-    TakCardSubtitle,
-    TakCardActions,
-    TakCardFooter,
-    TakCardImage,
-    TakCardSmImage,
-    TakCardMdImage,
-    TakCardLgImage,
-    TakCardXlImage,
-    TakCardAvatar,
-    TakCard,
-    TakCardHeader,
-    TakCardTitleGroup,
-  };
+declare namespace i3 {
+    export {
+        MatCardAppearance,
+        MatCardConfig,
+        MAT_CARD_CONFIG,
+        MatCard,
+        MatCardTitle,
+        MatCardTitleGroup,
+        MatCardContent,
+        MatCardSubtitle,
+        MatCardActions,
+        MatCardHeader,
+        MatCardFooter,
+        MatCardImage,
+        MatCardSmImage,
+        MatCardMdImage,
+        MatCardLgImage,
+        MatCardXlImage,
+        MatCardAvatar
+    }
 }
 
+/** Injection token that can be used to provide the default options the card module. */
+export declare const MAT_CARD_CONFIG: InjectionToken<MatCardConfig>;
+
 /**
- * A basic content container component that adds the styles of a Material design card.
+ * Material Design card component. Cards contain content and actions about a single subject.
+ * See https://material.io/design/components/cards.html
  *
- * While this component can be used alone, it also provides a number
- * of preset styles for common card sections, including:
- * - tak-card-title
- * - tak-card-subtitle
- * - tak-card-content
- * - tak-card-actions
- * - tak-card-footer
+ * MatCard provides no behaviors, instead serving as a purely visual treatment.
  */
-export declare class TakCard {
-  _animationMode?: string | undefined;
-  constructor(_animationMode?: string | undefined);
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCard, [{ optional: true }]>;
-  static ɵcmp: i0.ɵɵComponentDeclaration<
-    TakCard,
-    'tak-card',
-    ['takCard'],
-    {},
-    {},
-    never,
-    ['*', 'tak-card-footer'],
-    false
-  >;
+export declare class MatCard {
+    appearance: MatCardAppearance;
+    constructor(config?: MatCardConfig);
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCard, [{ optional: true; }]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MatCard, "mat-card", ["matCard"], { "appearance": { "alias": "appearance"; "required": false; }; }, {}, never, ["*"], true, never>;
 }
 
 /**
- * Action section of a card, needed as it's used as a selector in the API.
- * @docs-private
+ * Bottom area of a card that contains action buttons, intended for use within `<mat-card>`.
+ * This component is an optional convenience for use with other convenience elements, such as
+ * `<mat-card-content>`; any custom action block element may be used in its place.
+ *
+ * MatCardActions provides no behaviors, instead serving as a purely visual treatment.
  */
-export declare class TakCardActions {
-  /** Position of the actions inside the card. */
-  align: 'start' | 'end';
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardActions, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardActions,
-    'tak-card-actions',
-    ['takCardActions'],
-    { align: 'align' },
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatCardActions {
+    /** Position of the actions inside the card. */
+    align: 'start' | 'end';
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardActions, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardActions, "mat-card-actions", ["matCardActions"], { "align": { "alias": "align"; "required": false; }; }, {}, never, never, true, never>;
+}
+
+export declare type MatCardAppearance = 'outlined' | 'raised';
+
+/**
+ * Avatar image content for a card, intended for use within `<mat-card>`. Can be applied to
+ * any media element, such as `<img>` or `<picture>`.
+ *
+ * This component is an optional convenience for use with other convenience elements, such as
+ * `<mat-card-title>`; any custom media element may be used in its place.
+ *
+ * MatCardAvatar provides no behaviors, instead serving as a purely visual treatment.
+ */
+export declare class MatCardAvatar {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardAvatar, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardAvatar, "[mat-card-avatar], [matCardAvatar]", never, {}, {}, never, never, true, never>;
+}
+
+/** Object that can be used to configure the default options for the card module. */
+export declare interface MatCardConfig {
+    /** Default appearance for cards. */
+    appearance?: MatCardAppearance;
 }
 
 /**
- * Avatar image used in a card, needed to add the tak- CSS styling.
- * @docs-private
+ * Content of a card, intended for use within `<mat-card>`. This component is an optional
+ * convenience for use with other convenience elements, such as `<mat-card-title>`; any custom
+ * content block element may be used in its place.
+ *
+ * MatCardContent provides no behaviors, instead serving as a purely visual treatment.
  */
-export declare class TakCardAvatar {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardAvatar, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardAvatar,
-    '[tak-card-avatar], [takCardAvatar]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatCardContent {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardContent, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardContent, "mat-card-content", never, {}, {}, never, never, true, never>;
 }
 
 /**
- * Content of a card, needed as it's used as a selector in the API.
- * @docs-private
+ * Footer area a card, intended for use within `<mat-card>`.
+ * This component is an optional convenience for use with other convenience elements, such as
+ * `<mat-card-content>`; any custom footer block element may be used in its place.
+ *
+ * MatCardFooter provides no behaviors, instead serving as a purely visual treatment.
  */
-export declare class TakCardContent {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardContent, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardContent,
-    'tak-card-content, [tak-card-content], [takCardContent]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatCardFooter {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardFooter, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardFooter, "mat-card-footer", never, {}, {}, never, never, true, never>;
 }
 
 /**
- * Footer of a card, needed as it's used as a selector in the API.
- * @docs-private
+ * Header region of a card, intended for use within `<mat-card>`. This header captures
+ * a card title, subtitle, and avatar.  This component is an optional convenience for use with
+ * other convenience elements, such as `<mat-card-footer>`; any custom header block element may be
+ * used in its place.
+ *
+ * MatCardHeader provides no behaviors, instead serving as a purely visual treatment.
  */
-export declare class TakCardFooter {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardFooter, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardFooter,
-    'tak-card-footer',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatCardHeader {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardHeader, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MatCardHeader, "mat-card-header", never, {}, {}, never, ["[mat-card-avatar], [matCardAvatar]", "mat-card-title, mat-card-subtitle,\n      [mat-card-title], [mat-card-subtitle],\n      [matCardTitle], [matCardSubtitle]", "*"], true, never>;
 }
 
 /**
- * Component intended to be used within the `<tak-card>` component. It adds styles for a
- * preset header section (i.e. a title, subtitle, and avatar layout).
- * @docs-private
+ * Primary image content for a card, intended for use within `<mat-card>`. Can be applied to
+ * any media element, such as `<img>` or `<picture>`.
+ *
+ * This component is an optional convenience for use with other convenience elements, such as
+ * `<mat-card-content>`; any custom media element may be used in its place.
+ *
+ * MatCardImage provides no behaviors, instead serving as a purely visual treatment.
  */
-export declare class TakCardHeader {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardHeader, never>;
-  static ɵcmp: i0.ɵɵComponentDeclaration<
-    TakCardHeader,
-    'tak-card-header',
-    never,
-    {},
-    {},
-    never,
-    [
-      '[tak-card-avatar], [takCardAvatar]',
-      'tak-card-title, tak-card-subtitle,\n      [tak-card-title], [tak-card-subtitle],\n      [takCardTitle], [takCardSubtitle]',
-      '*',
-    ],
-    false
-  >;
+export declare class MatCardImage {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardImage, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardImage, "[mat-card-image], [matCardImage]", never, {}, {}, never, never, true, never>;
+}
+
+/** Same as `MatCardImage`, but large. */
+export declare class MatCardLgImage {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardLgImage, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardLgImage, "[mat-card-lg-image], [matCardImageLarge]", never, {}, {}, never, never, true, never>;
+}
+
+/** Same as `MatCardImage`, but medium. */
+export declare class MatCardMdImage {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardMdImage, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardMdImage, "[mat-card-md-image], [matCardImageMedium]", never, {}, {}, never, never, true, never>;
+}
+
+export declare class MatCardModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<MatCardModule, never, [typeof i1.MatCommonModule, typeof i2.CommonModule, typeof i3.MatCard, typeof i3.MatCardActions, typeof i3.MatCardAvatar, typeof i3.MatCardContent, typeof i3.MatCardFooter, typeof i3.MatCardHeader, typeof i3.MatCardImage, typeof i3.MatCardLgImage, typeof i3.MatCardMdImage, typeof i3.MatCardSmImage, typeof i3.MatCardSubtitle, typeof i3.MatCardTitle, typeof i3.MatCardTitleGroup, typeof i3.MatCardXlImage], [typeof i3.MatCard, typeof i3.MatCardActions, typeof i3.MatCardAvatar, typeof i3.MatCardContent, typeof i3.MatCardFooter, typeof i3.MatCardHeader, typeof i3.MatCardImage, typeof i3.MatCardLgImage, typeof i3.MatCardMdImage, typeof i3.MatCardSmImage, typeof i3.MatCardSubtitle, typeof i3.MatCardTitle, typeof i3.MatCardTitleGroup, typeof i3.MatCardXlImage, typeof i1.MatCommonModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<MatCardModule>;
+}
+
+/** Same as `MatCardImage`, but small. */
+export declare class MatCardSmImage {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardSmImage, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardSmImage, "[mat-card-sm-image], [matCardImageSmall]", never, {}, {}, never, never, true, never>;
 }
 
 /**
- * Image used in a card, needed to add the tak- CSS styling.
- * @docs-private
+ * Sub-title of a card, intended for use within `<mat-card>` beneath a `<mat-card-title>`. This
+ * component is an optional convenience for use with other convenience elements, such as
+ * `<mat-card-title>`.
+ *
+ * MatCardSubtitle provides no behaviors, instead serving as a purely visual treatment.
  */
-export declare class TakCardImage {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardImage, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardImage,
-    '[tak-card-image], [takCardImage]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatCardSubtitle {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardSubtitle, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardSubtitle, "mat-card-subtitle, [mat-card-subtitle], [matCardSubtitle]", never, {}, {}, never, never, true, never>;
 }
 
 /**
- * Image used in a card, needed to add the tak- CSS styling.
- * @docs-private
+ * Title of a card, intended for use within `<mat-card>`. This component is an optional
+ * convenience for one variety of card title; any custom title element may be used in its place.
+ *
+ * MatCardTitle provides no behaviors, instead serving as a purely visual treatment.
  */
-export declare class TakCardLgImage {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardLgImage, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardLgImage,
-    '[tak-card-lg-image], [takCardImageLarge]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatCardTitle {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardTitle, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardTitle, "mat-card-title, [mat-card-title], [matCardTitle]", never, {}, {}, never, never, true, never>;
 }
 
 /**
- * Image used in a card, needed to add the tak- CSS styling.
- * @docs-private
+ * Container intended to be used within the `<mat-card>` component. Can contain exactly one
+ * `<mat-card-title>`, one `<mat-card-subtitle>` and one content image of any size
+ * (e.g. `<img matCardLgImage>`).
  */
-export declare class TakCardMdImage {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardMdImage, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardMdImage,
-    '[tak-card-md-image], [takCardImageMedium]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatCardTitleGroup {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardTitleGroup, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MatCardTitleGroup, "mat-card-title-group", never, {}, {}, never, ["mat-card-title, mat-card-subtitle,\n      [mat-card-title], [mat-card-subtitle],\n      [matCardTitle], [matCardSubtitle]", "[mat-card-image], [matCardImage],\n                    [mat-card-sm-image], [matCardImageSmall],\n                    [mat-card-md-image], [matCardImageMedium],\n                    [mat-card-lg-image], [matCardImageLarge],\n                    [mat-card-xl-image], [matCardImageXLarge]", "*"], true, never>;
 }
 
-export declare class TakCardModule {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardModule, never>;
-  static ɵmod: i0.ɵɵNgModuleDeclaration<
-    TakCardModule,
-    [
-      typeof i1.TakCard,
-      typeof i1.TakCardHeader,
-      typeof i1.TakCardTitleGroup,
-      typeof i1.TakCardContent,
-      typeof i1.TakCardTitle,
-      typeof i1.TakCardSubtitle,
-      typeof i1.TakCardActions,
-      typeof i1.TakCardFooter,
-      typeof i1.TakCardSmImage,
-      typeof i1.TakCardMdImage,
-      typeof i1.TakCardLgImage,
-      typeof i1.TakCardImage,
-      typeof i1.TakCardXlImage,
-      typeof i1.TakCardAvatar,
-    ],
-    [typeof i2.TakCommonModule],
-    [
-      typeof i1.TakCard,
-      typeof i1.TakCardHeader,
-      typeof i1.TakCardTitleGroup,
-      typeof i1.TakCardContent,
-      typeof i1.TakCardTitle,
-      typeof i1.TakCardSubtitle,
-      typeof i1.TakCardActions,
-      typeof i1.TakCardFooter,
-      typeof i1.TakCardSmImage,
-      typeof i1.TakCardMdImage,
-      typeof i1.TakCardLgImage,
-      typeof i1.TakCardImage,
-      typeof i1.TakCardXlImage,
-      typeof i1.TakCardAvatar,
-      typeof i2.TakCommonModule,
-    ]
-  >;
-  static ɵinj: i0.ɵɵInjectorDeclaration<TakCardModule>;
+/** Same as `MatCardImage`, but extra-large. */
+export declare class MatCardXlImage {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatCardXlImage, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatCardXlImage, "[mat-card-xl-image], [matCardImageXLarge]", never, {}, {}, never, never, true, never>;
 }
 
-/**
- * Image used in a card, needed to add the tak- CSS styling.
- * @docs-private
- */
-export declare class TakCardSmImage {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardSmImage, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardSmImage,
-    '[tak-card-sm-image], [takCardImageSmall]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
-}
-
-/**
- * Sub-title of a card, needed as it's used as a selector in the API.
- * @docs-private
- */
-export declare class TakCardSubtitle {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardSubtitle, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardSubtitle,
-    'tak-card-subtitle, [tak-card-subtitle], [takCardSubtitle]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
-}
-
-/**
- * Title of a card, needed as it's used as a selector in the API.
- * @docs-private
- */
-export declare class TakCardTitle {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardTitle, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardTitle,
-    'tak-card-title, [tak-card-title], [takCardTitle]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
-}
-
-/**
- * Component intended to be used within the `<tak-card>` component. It adds styles for a preset
- * layout that groups an image with a title section.
- * @docs-private
- */
-export declare class TakCardTitleGroup {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardTitleGroup, never>;
-  static ɵcmp: i0.ɵɵComponentDeclaration<
-    TakCardTitleGroup,
-    'tak-card-title-group',
-    never,
-    {},
-    {},
-    never,
-    [
-      'tak-card-title, tak-card-subtitle,\n      [tak-card-title], [tak-card-subtitle],\n      [takCardTitle], [takCardSubtitle]',
-      'img',
-      '*',
-    ],
-    false
-  >;
-}
-
-/**
- * Large image used in a card, needed to add the tak- CSS styling.
- * @docs-private
- */
-export declare class TakCardXlImage {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakCardXlImage, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakCardXlImage,
-    '[tak-card-xl-image], [takCardImageXLarge]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
-}
-
-export {};
+export { }

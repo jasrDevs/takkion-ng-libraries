@@ -1,25 +1,2 @@
-@import '../../libraries/ng-components/assets/themes/main';
-@import '../../libraries/ng-components/assets/themes/layout/main';
-@import '../../libraries/ng-components/assets/themes/material/main';
-body {
-  margin: 0;
-}
-body,
-.tak-input-element,
-.tak-date-range-input-inner,
-.tak-select-value,
-.tak-form-field-infix,
-.tak-hint,
-.tak-button-base,
-.tak-simple-snack-bar-content,
-.tak-button-wrapper,
-.tak-card,
-.tak-menu-item,
-.tak-custom-error {
-  font-family: 'bodycommerce' !important;
-}
-.tak-modal__content,
-.tak-modal__title,
-.tak-option {
-  font-family: 'bodycommerce' !important;
-}
+@import 'themes/main';
+@import 'indigo-pink';

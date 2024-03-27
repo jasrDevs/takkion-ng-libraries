@@ -5,9 +5,9 @@ import { InjectionToken } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 
 export declare class BidiModule {
-  static ɵfac: i0.ɵɵFactoryDeclaration<BidiModule, never>;
-  static ɵmod: i0.ɵɵNgModuleDeclaration<BidiModule, [typeof i1.Dir], never, [typeof i1.Dir]>;
-  static ɵinj: i0.ɵɵInjectorDeclaration<BidiModule>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<BidiModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<BidiModule, never, [typeof i1.Dir], [typeof i1.Dir]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<BidiModule>;
 }
 
 /**
@@ -17,33 +17,24 @@ export declare class BidiModule {
  * Directionality to get the closest direction.
  */
 export declare class Dir implements Directionality, AfterContentInit, OnDestroy {
-  /** Normalized direction that accounts for invalid/unsupported values. */
-  private _dir;
-  /** Whether the `value` has been set to its initial value. */
-  private _isInitialized;
-  /** Direction as passed in by the consumer. */
-  _rawDir: string;
-  /** Event emitted when the direction changes. */
-  readonly change: EventEmitter<Direction>;
-  /** @docs-private */
-  get dir(): Direction;
-  set dir(value: Direction | 'auto');
-  /** Current layout direction of the element. */
-  get value(): Direction;
-  /** Initialize once default value has been set. */
-  ngAfterContentInit(): void;
-  ngOnDestroy(): void;
-  static ɵfac: i0.ɵɵFactoryDeclaration<Dir, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    Dir,
-    '[dir]',
-    ['dir'],
-    { dir: 'dir' },
-    { change: 'dirChange' },
-    never,
-    never,
-    false
-  >;
+    /** Normalized direction that accounts for invalid/unsupported values. */
+    private _dir;
+    /** Whether the `value` has been set to its initial value. */
+    private _isInitialized;
+    /** Direction as passed in by the consumer. */
+    _rawDir: string;
+    /** Event emitted when the direction changes. */
+    readonly change: EventEmitter<Direction>;
+    /** @docs-private */
+    get dir(): Direction;
+    set dir(value: Direction | 'auto');
+    /** Current layout direction of the element. */
+    get value(): Direction;
+    /** Initialize once default value has been set. */
+    ngAfterContentInit(): void;
+    ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<Dir, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<Dir, "[dir]", ["dir"], { "dir": { "alias": "dir"; "required": false; }; }, { "change": "dirChange"; }, never, never, true, never>;
 }
 
 /**
@@ -70,18 +61,20 @@ export declare type Direction = 'ltr' | 'rtl';
  * Exposes the current direction and a stream of direction changes.
  */
 export declare class Directionality implements OnDestroy {
-  /** The current 'ltr' or 'rtl' value. */
-  readonly value: Direction;
-  /** Stream that emits whenever the 'ltr' / 'rtl' state changes. */
-  readonly change: EventEmitter<Direction>;
-  constructor(_document?: any);
-  ngOnDestroy(): void;
-  static ɵfac: i0.ɵɵFactoryDeclaration<Directionality, [{ optional: true }]>;
-  static ɵprov: i0.ɵɵInjectableDeclaration<Directionality>;
+    /** The current 'ltr' or 'rtl' value. */
+    readonly value: Direction;
+    /** Stream that emits whenever the 'ltr' / 'rtl' state changes. */
+    readonly change: EventEmitter<Direction>;
+    constructor(_document?: any);
+    ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<Directionality, [{ optional: true; }]>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<Directionality>;
 }
 
 declare namespace i1 {
-  export { Dir };
+    export {
+        Dir
+    }
 }
 
-export {};
+export { }

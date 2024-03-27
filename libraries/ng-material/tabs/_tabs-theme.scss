@@ -1,189 +1,163 @@
-@use 'sass:map';
+@use '@material/tab-indicator/tab-indicator-theme' as mdc-tab-indicator-theme;
+@use '@material/tab/tab-theme' as mdc-tab-theme;
+@use '../core/style/sass-utils';
+@use '../core/tokens/m2/mdc/tab' as tokens-mdc-tab;
+@use '../core/tokens/m2/mdc/tab-indicator' as tokens-mdc-tab-indicator;
+@use '../core/tokens/m2/mat/tab-header' as tokens-mat-tab-header;
+@use '../core/tokens/m2/mat/tab-header-with-background' as tokens-mat-tab-header-with-background;
 @use '../core/theming/theming';
+@use '../core/theming/inspection';
+@use '../core/theming/validation';
 @use '../core/typography/typography';
-@use '../core/typography/typography-utils';
+@use '../core/tokens/token-utils';
 
-@mixin color($config-or-theme) {
-  $config: theming.get-color-config($config-or-theme);
-  $primary: map.get($config, primary);
-  $accent: map.get($config, accent);
-  $warn: map.get($config, warn);
-  $background: map.get($config, background);
-  $foreground: map.get($config, foreground);
-  $header-border: 1px solid theming.get-color-from-palette($foreground, divider);
-
-  .tak-tab-nav-bar,
-  .tak-tab-header {
-    border-bottom: $header-border;
+/// Outputs base theme styles (styles not dependent on the color, typography, or density settings)
+/// for the mat-tab.
+/// @param {Map} $theme The theme to generate base styles for.
+@mixin base($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, base));
   }
-
-  .tak-tab-group-inverted-header {
-    .tak-tab-nav-bar,
-    .tak-tab-header {
-      border-top: $header-border;
-      border-bottom: none;
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-tab-indicator-theme.theme(tokens-mdc-tab-indicator.get-unthemable-tokens());
+      @include mdc-tab-theme.secondary-navigation-tab-theme(tokens-mdc-tab.get-unthemable-tokens());
+      @include token-utils.create-token-values(
+          tokens-mat-tab-header.$prefix, tokens-mat-tab-header.get-unthemable-tokens());
+      @include token-utils.create-token-values(
+          tokens-mat-tab-header-with-background.$prefix,
+          tokens-mat-tab-header-with-background.get-unthemable-tokens()
+      );
     }
   }
+}
 
-  .tak-tab-label,
-  .tak-tab-link {
-    color: theming.get-color-from-palette($foreground, text);
-
-    &.tak-tab-disabled {
-      color: theming.get-color-from-palette($foreground, disabled-text);
-    }
+/// Outputs color theme styles for the mat-tab.
+/// @param {Map} $theme The theme to generate color styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the tab indicator: primary, secondary,
+///      tertiary, or error (If not specified, default primary color will be used).
+@mixin color($theme, $options...) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, color), $options...);
   }
+  @else {
+    .mat-mdc-tab-group, .mat-mdc-tab-nav-bar {
+      @include _palette-styles($theme, primary);
 
-  .tak-tab-header-pagination-chevron {
-    border-color: theming.get-color-from-palette($foreground, text);
-  }
-
-  .tak-tab-header-pagination-disabled .tak-tab-header-pagination-chevron {
-    border-color: theming.get-color-from-palette($foreground, disabled-text);
-  }
-
-  // Remove header border when there is a background color
-  .tak-tab-group[class*='tak-background-'] > .tak-tab-header,
-  .tak-tab-nav-bar[class*='tak-background-'] {
-    border-bottom: none;
-    border-top: none;
-  }
-
-  .tak-tab-group,
-  .tak-tab-nav-bar {
-    $theme-colors: (
-      primary: $primary,
-      accent: $accent,
-      warn: $warn,
-    );
-
-    @each $name, $color in $theme-colors {
-      // Set the foreground color of the tabs
-      &.tak-#{$name} {
-        @include _label-focus-color($color);
-        @include _ink-bar-color($color);
-
-        // Override ink bar when background color is the same
-        &.tak-background-#{$name} {
-          > .tak-tab-header,
-          > .tak-tab-link-container {
-            @include _ink-bar-color($color, default-contrast);
-          }
-        }
+      &.mat-accent {
+        @include _palette-styles($theme, accent);
       }
-    }
 
-    @each $name, $color in $theme-colors {
-      // Set background color of the tabs and override focus color
-      &.tak-background-#{$name} {
-        @include _label-focus-color($color);
-        @include _tabs-background($color);
+      &.mat-warn {
+        @include _palette-styles($theme, warn);
+      }
+
+      &.mat-background-primary {
+        @include _background-styles($theme, primary);
+      }
+
+      &.mat-background-accent {
+        @include _background-styles($theme, accent);
+      }
+
+      &.mat-background-warn {
+        @include _background-styles($theme, warn);
       }
     }
   }
 }
 
-@mixin _ink-bar-color($color, $hue: default) {
-  .tak-ink-bar {
-    background-color: theming.get-color-from-palette($color, $hue);
+@mixin _background-styles($theme, $palette-name) {
+  @include token-utils.create-token-values(tokens-mat-tab-header-with-background.$prefix,
+    tokens-mat-tab-header-with-background.get-color-tokens($theme, $palette-name));
+}
+
+@mixin _palette-styles($theme, $palette-name) {
+  @include mdc-tab-theme.secondary-navigation-tab-theme(
+    tokens-mdc-tab.get-color-tokens($theme, $palette-name));
+  @include mdc-tab-indicator-theme.theme(
+    tokens-mdc-tab-indicator.get-color-tokens($theme, $palette-name));
+  @include token-utils.create-token-values(tokens-mat-tab-header.$prefix,
+   tokens-mat-tab-header.get-color-tokens($theme, $palette-name));
+}
+
+/// Outputs typography theme styles for the mat-tab.
+/// @param {Map} $theme The theme to generate typography styles for.
+@mixin typography($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, typography));
+  }
+  @else {
+    .mat-mdc-tab-header {
+      @include mdc-tab-theme.secondary-navigation-tab-theme(
+          tokens-mdc-tab.get-typography-tokens($theme));
+      @include mdc-tab-indicator-theme.theme(
+          tokens-mdc-tab-indicator.get-typography-tokens($theme));
+      @include token-utils.create-token-values(tokens-mat-tab-header.$prefix,
+        tokens-mat-tab-header.get-typography-tokens($theme));
+      @include token-utils.create-token-values(tokens-mat-tab-header-with-background.$prefix,
+        tokens-mat-tab-header-with-background.get-typography-tokens($theme));
+    }
   }
 }
 
-@mixin _label-focus-color($tab-focus-color) {
-  .tak-tab-label,
-  .tak-tab-link {
-    &.cdk-keyboard-focused,
-    &.cdk-program-focused {
-      &:not(.tak-tab-disabled) {
-        background-color: theming.get-color-from-palette($tab-focus-color, lighter, 0.3);
+/// Outputs density theme styles for the mat-tab.
+/// @param {Map} $theme The theme to generate density styles for.
+@mixin density($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, density));
+  }
+  @else {
+    .mat-mdc-tab-header {
+      @include mdc-tab-theme.secondary-navigation-tab-theme(
+          tokens-mdc-tab.get-density-tokens($theme));
+      @include mdc-tab-indicator-theme.theme(
+          tokens-mdc-tab-indicator.get-density-tokens($theme));
+      @include token-utils.create-token-values(tokens-mat-tab-header.$prefix,
+        tokens-mat-tab-header.get-density-tokens($theme));
+      @include token-utils.create-token-values(tokens-mat-tab-header-with-background.$prefix,
+        tokens-mat-tab-header-with-background.get-density-tokens($theme));
+    }
+  }
+}
+
+/// Outputs all (base, color, typography, and density) theme styles for the mat-tab.
+/// @param {Map} $theme The theme to generate styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the tab indicator: primary, secondary,
+///      tertiary, or error (If not specified, default primary color will be used).
+@mixin theme($theme, $options...) {
+  @include theming.private-check-duplicate-theme-styles($theme, 'mat-tabs') {
+    @if inspection.get-theme-version($theme) == 1 {
+      @include _theme-from-tokens(inspection.get-theme-tokens($theme), $options...);
+    }
+    @else {
+      @include base($theme);
+      @if inspection.theme-has($theme, color) {
+        @include color($theme);
+      }
+      @if inspection.theme-has($theme, density) {
+        @include density($theme);
+      }
+      @if inspection.theme-has($theme, typography) {
+        @include typography($theme);
       }
     }
   }
 }
 
-@mixin _tabs-background($background-color) {
-  // Note that these selectors target direct descendants so
-  // that the styles don't apply to any nested tab groups.
-
-  // Set background color for the tab group
-  > .tak-tab-header,
-  > .tak-tab-link-container,
-  > .tak-tab-header-pagination {
-    background-color: theming.get-color-from-palette($background-color);
-  }
-
-  // Set labels to contrast against background
-  > .tak-tab-header .tak-tab-label,
-  > .tak-tab-link-container .tak-tab-link {
-    color: theming.get-color-from-palette($background-color, default-contrast);
-
-    &.tak-tab-disabled {
-      color: theming.get-color-from-palette($background-color, default-contrast, 0.4);
-    }
-  }
-
-  // Set pagination chevrons to contrast background
-  > .tak-tab-header .tak-tab-header-pagination-chevron,
-  > .tak-tab-header-pagination .tak-tab-header-pagination-chevron,
-  > .tak-tab-link-container .tak-focus-indicator::before,
-  > .tak-tab-header .tak-focus-indicator::before {
-    border-color: theming.get-color-from-palette($background-color, default-contrast);
-  }
-
-  > .tak-tab-header .tak-tab-header-pagination-disabled .tak-tab-header-pagination-chevron,
-  > .tak-tab-header-pagination-disabled .tak-tab-header-pagination-chevron {
-    // Set the color opacity via `opacity`, rather than `rgba`, because it may be a CSS variable.
-    border-color: theming.get-color-from-palette($background-color, default-contrast, 1);
-    opacity: 0.4;
-  }
-
-  // Set ripples color to be the contrast color of the new background. Otherwise the ripple
-  // color will be based on the app background color.
-  > .tak-tab-header .tak-ripple-element,
-  > .tak-tab-link-container .tak-ripple-element,
-  > .tak-tab-header-pagination .tak-ripple-element {
-    // Set the color opacity via `opacity`, rather than `rgba`, because it may be a CSS variable.
-    background-color: theming.get-color-from-palette($background-color, default-contrast, 1);
-    opacity: 0.12;
-  }
-}
-
-@mixin typography($config-or-theme) {
-  $config: typography.private-typography-to-2014-config(
-    theming.get-typography-config($config-or-theme)
-  );
-  .tak-tab-group {
-    font-family: typography-utils.font-family($config);
-  }
-
-  .tak-tab-label,
-  .tak-tab-link {
-    font: {
-      family: typography-utils.font-family($config, button);
-      size: typography-utils.font-size($config, button);
-      weight: typography-utils.font-weight($config, button);
-    }
-  }
-}
-
-@mixin _density($config-or-theme) {
-}
-
-@mixin theme($theme-or-color-config) {
-  $theme: theming.private-legacy-get-theme($theme-or-color-config);
-  @include theming.private-check-duplicate-theme-styles($theme, 'tak-tabs') {
-    $color: theming.get-color-config($theme);
-    $density: theming.get-density-config($theme);
-    $typography: theming.get-typography-config($theme);
-
-    @if $color != null {
-      @include color($color);
-    }
-    @if $density != null {
-      @include _density($density);
-    }
-    @if $typography != null {
-      @include typography($typography);
-    }
-  }
+@mixin _theme-from-tokens($tokens, $options...) {
+  @include validation.selector-defined(
+      'Calls to Angular Material theme mixins with an M3 theme must be wrapped in a selector');
+  $mdc-tab-indicator-tokens: token-utils.get-tokens-for(
+      $tokens, tokens-mdc-tab-indicator.$prefix, $options...);
+  $mat-tab-header-tokens: token-utils.get-tokens-for(
+      $tokens, tokens-mat-tab-header.$prefix, $options...);
+  // Don't pass $options here, because the mdc-tab doesn't have color variants,
+  // only the mdc-tab-indicator and mat-tab-header do.
+  $mdc-tab-tokens: token-utils.get-tokens-for($tokens, tokens-mdc-tab.$prefix);
+  @include mdc-tab-theme.secondary-navigation-tab-theme($mdc-tab-tokens);
+  @include mdc-tab-indicator-theme.theme($mdc-tab-indicator-tokens);
+  @include token-utils.create-token-values(tokens-mat-tab-header.$prefix, $mat-tab-header-tokens);
 }

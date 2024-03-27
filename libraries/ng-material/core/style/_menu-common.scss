@@ -3,21 +3,22 @@
 @use './list-common';
 @use './layout-common';
 
-// The mixins below are shared between tak-menu and tak-select
+// The mixins below are shared between mat-menu and mat-select
 
 // menu width must be a multiple of 56px
-$overlay-min-width: 112px !default; // 56 * 2
-$overlay-max-width: 280px !default; // 56 * 5
+$overlay-min-width: 112px !default;   // 56 * 2
+$overlay-max-width: 280px !default;   // 56 * 5
 
 $item-height: 48px !default;
 $side-padding: 16px !default;
 $icon-margin: 16px !default;
 
+
 @mixin base() {
   min-width: $overlay-min-width;
   max-width: $overlay-max-width;
   overflow: auto;
-  -webkit-overflow-scrolling: touch; // for momentum scroll on mobile
+  -webkit-overflow-scrolling: touch;   // for momentum scroll on mobile
 }
 
 @mixin item-base() {
@@ -30,7 +31,7 @@ $icon-margin: 16px !default;
   padding: 0 $side-padding;
 
   text-align: left;
-  text-decoration: none; // necessary to reset anchor tags
+  text-decoration: none;   // necessary to reset anchor tags
 
   // Required for Edge not to show scrollbars when setting the width manually. See #12112.
   max-width: 100%;
@@ -43,7 +44,7 @@ $icon-margin: 16px !default;
     text-align: right;
   }
 
-  .tak-icon {
+  .mat-icon {
     margin-right: $icon-margin;
     vertical-align: middle;
 
@@ -58,29 +59,16 @@ $icon-margin: 16px !default;
   }
 }
 
-@mixin item-submenu-trigger($side-padding) {
-  // Increase the side padding to prevent the indicator from overlapping the text.
-  padding-right: $side-padding * 2;
-
-  [dir='rtl'] & {
-    padding-right: $side-padding;
-    padding-left: $side-padding * 2;
-  }
-}
-
-@mixin item-submenu-icon($side-padding) {
-  position: absolute;
-  top: 50%;
-  right: $side-padding;
-  transform: translateY(-50%);
-  width: 5px;
+@mixin item-submenu-icon($item-spacing, $icon-size) {
+  width: $icon-size;
   height: 10px;
   fill: currentColor;
+  padding-left: $item-spacing;
 
   [dir='rtl'] & {
     right: auto;
-    left: $side-padding;
-    transform: translateY(-50%) scaleX(-1);
+    padding-right: $item-spacing;
+    padding-left: 0;
   }
 
   // Fix for Chromium-based browsers blending in the `currentColor` with the background.

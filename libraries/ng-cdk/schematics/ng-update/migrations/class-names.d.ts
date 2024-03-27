@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -14,19 +14,19 @@ import { UpgradeData } from '../upgrade-data';
  * and replaces the outdated name with the new one if specified in the upgrade data.
  */
 export declare class ClassNamesMigration extends Migration<UpgradeData> {
-  /** Change data that upgrades to the specified target version. */
-  data: ClassNameUpgradeData[];
-  /**
-   * List of identifier names that have been imported from `@angular/material` or `@angular/cdk`
-   * in the current source file and therefore can be considered trusted.
-   */
-  trustedIdentifiers: Set<string>;
-  /** List of namespaces that have been imported from `@angular/material` or `@angular/cdk`. */
-  trustedNamespaces: Set<string>;
-  enabled: boolean;
-  visitNode(node: ts.Node): void;
-  /** Method that is called for every identifier inside of the specified project. */
-  private _visitIdentifier;
-  /** Creates a failure and replacement for the specified identifier. */
-  private _createFailureWithReplacement;
+    /** Change data that upgrades to the specified target version. */
+    data: ClassNameUpgradeData[];
+    /**
+     * List of identifier names that have been imported from `@takkion/ng-material` or `@takkion/ng-cdk`
+     * in the current source file and therefore can be considered trusted.
+     */
+    trustedIdentifiers: Set<string>;
+    /** List of namespaces that have been imported from `@takkion/ng-material` or `@takkion/ng-cdk`. */
+    trustedNamespaces: Set<string>;
+    enabled: boolean;
+    visitNode(node: ts.Node): void;
+    /** Method that is called for every identifier inside of the specified project. */
+    private _visitIdentifier;
+    /** Creates a failure and replacement for the specified identifier. */
+    private _createFailureWithReplacement;
 }

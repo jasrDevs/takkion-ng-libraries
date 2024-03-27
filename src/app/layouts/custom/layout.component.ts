@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
-import { SIDE_NAV } from './navigation';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-layout',
@@ -14,38 +7,4 @@ import { SIDE_NAV } from './navigation';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdminLayoutComponent implements OnInit, OnDestroy {
-  public navigation = SIDE_NAV;
-
-  public resourcesLoaded = false;
-
-  public permissions = ['1', '2', '3'];
-
-  public context = 'BOGOTA';
-
-  public accordionInCollections = true;
-  public disableHiddenCollections = true;
-
-  public ngOnInit(): void {
-    this.navigation.items
-      .filter(el => el.type === 'collection')
-      .map(item => {
-        item.showCollectionContent = true;
-        this.accordionInCollections = false;
-      });
-
-    this.resourcesLoaded = true;
-
-    this._setTheme();
-  }
-
-  public ngOnDestroy(): void {
-    document.getElementsByTagName('body')[0].classList.remove('dark-theme');
-  }
-
-  private _setTheme(): void {
-    if (localStorage.getItem('dark-theme') !== null) {
-      document.getElementsByTagName('body')[0].classList.add('dark-theme');
-    }
-  }
-}
+export class AdminLayoutComponent {}

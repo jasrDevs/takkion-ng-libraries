@@ -1,228 +1,139 @@
-@use 'sass:map';
-@use 'sass:meta';
+@use '@material/slider/slider-theme' as mdc-slider-theme;
 @use '../core/theming/theming';
+@use '../core/theming/inspection';
+@use '../core/theming/validation';
 @use '../core/typography/typography';
-@use '../core/typography/typography-utils';
+@use '../core/style/sass-utils';
+@use '../core/tokens/token-utils';
+@use '../core/tokens/m2/mat/slider' as tokens-mat-slider;
+@use '../core/tokens/m2/mdc/slider' as tokens-mdc-slider;
 
-@mixin _inner-content-theme($palette) {
-  .tak-slider-track-fill,
-  .tak-slider-thumb,
-  .tak-slider-thumb-label {
-    background-color: theming.get-color-from-palette($palette);
+/// Outputs base theme styles (styles not dependent on the color, typography, or density settings)
+/// for the mat-slider.
+/// @param {Map} $theme The theme to generate base styles for.
+@mixin base($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, base));
   }
-
-  .tak-slider-thumb-label-text {
-    color: theming.get-color-from-palette($palette, default-contrast);
-  }
-
-  .tak-slider-focus-ring {
-    $opacity: 0.2;
-    $color: theming.get-color-from-palette($palette, default, $opacity);
-    background-color: $color;
-
-    // `tak-color` uses `rgba` for the opacity which won't work with
-    // CSS variables so we need to use `opacity` as a fallback.
-    @if (meta.type-of($color) != color) {
-      opacity: $opacity;
+  @else {
+    // Add default values for tokens not related to color, typography, or density.
+    @include sass-utils.current-selector-or-root() {
+      $mat-tokens: tokens-mat-slider.get-unthemable-tokens();
+      @include token-utils.create-token-values(tokens-mat-slider.$prefix, $mat-tokens);
+      @include mdc-slider-theme.theme(tokens-mdc-slider.get-unthemable-tokens());
     }
   }
 }
 
-@mixin color($config-or-theme) {
-  $config: theming.get-color-config($config-or-theme);
-  $primary: map.get($config, primary);
-  $accent: map.get($config, accent);
-  $warn: map.get($config, warn);
-  $background: map.get($config, background);
-  $foreground: map.get($config, foreground);
-
-  $tak-slider-off-color: theming.get-color-from-palette($foreground, slider-off);
-  $tak-slider-off-focused-color: theming.get-color-from-palette($foreground, slider-off-active);
-  $tak-slider-disabled-color: theming.get-color-from-palette($foreground, slider-off);
-  $tak-slider-labeled-min-value-thumb-color: theming.get-color-from-palette(
-    $foreground,
-    slider-min
-  );
-  $tak-slider-labeled-min-value-thumb-label-color: theming.get-color-from-palette(
-    $foreground,
-    slider-off
-  );
-  $tak-slider-tick-opacity: 0.7;
-  $tak-slider-tick-color: theming.get-color-from-palette(
-    $foreground,
-    base,
-    $tak-slider-tick-opacity
-  );
-  $tak-slider-tick-size: 2px;
-
-  .tak-slider-track-background {
-    background-color: $tak-slider-off-color;
+/// Outputs color theme styles for the mat-slider.
+/// @param {Map} $theme The theme to generate color styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the slider: primary, secondary, tertiary,
+///     or error (If not specified, default primary color will be used).
+@mixin color($theme, $options...) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, color), $options...);
   }
+  @else {
+    $is-dark: inspection.get-theme-type($theme) == dark;
 
-  .tak-slider {
-    &.tak-primary {
-      @include _inner-content-theme($primary);
-    }
-
-    &.tak-accent {
-      @include _inner-content-theme($accent);
-    }
-
-    &.tak-warn {
-      @include _inner-content-theme($warn);
-    }
-  }
-
-  .tak-slider:hover,
-  .tak-slider.cdk-focused {
-    .tak-slider-track-background {
-      background-color: $tak-slider-off-focused-color;
-    }
-  }
-
-  .tak-slider.tak-slider-disabled {
-    .tak-slider-track-background,
-    .tak-slider-track-fill,
-    .tak-slider-thumb {
-      background-color: $tak-slider-disabled-color;
-    }
-
-    &:hover {
-      .tak-slider-track-background {
-        background-color: $tak-slider-disabled-color;
-      }
-    }
-  }
-
-  .tak-slider.tak-slider-min-value {
-    .tak-slider-focus-ring {
-      $opacity: 0.12;
-      $color: theming.get-color-from-palette($foreground, base, $opacity);
-      background-color: $color;
-
-      // `tak-color` uses `rgba` for the opacity which won't work with
-      // CSS variables so we need to use `opacity` as a fallback.
-      @if (meta.type-of($color) != color) {
-        opacity: $opacity;
-      }
-    }
-
-    &.tak-slider-thumb-label-showing {
-      .tak-slider-thumb,
-      .tak-slider-thumb-label {
-        background-color: $tak-slider-labeled-min-value-thumb-color;
-      }
-
-      &.cdk-focused {
-        .tak-slider-thumb,
-        .tak-slider-thumb-label {
-          background-color: $tak-slider-labeled-min-value-thumb-label-color;
-        }
-      }
-    }
-
-    &:not(.tak-slider-thumb-label-showing) {
-      .tak-slider-thumb {
-        border-color: $tak-slider-off-color;
-        background-color: transparent;
-      }
-
-      &:hover,
-      &.cdk-focused {
-        .tak-slider-thumb {
-          border-color: $tak-slider-off-focused-color;
-        }
-
-        &.tak-slider-disabled .tak-slider-thumb {
-          border-color: $tak-slider-disabled-color;
-        }
-      }
-    }
-  }
-
-  .tak-slider-has-ticks .tak-slider-wrapper::after {
-    border-color: $tak-slider-tick-color;
-
-    // `tak-color` uses `rgba` for the opacity which won't work with
-    // CSS variables so we need to use `opacity` as a fallback.
-    @if (meta.type-of($tak-slider-tick-color) != color) {
-      opacity: $tak-slider-tick-opacity;
-    }
-  }
-
-  .tak-slider-horizontal .tak-slider-ticks {
-    background-image: repeating-linear-gradient(
-      to right,
-      $tak-slider-tick-color,
-      $tak-slider-tick-color $tak-slider-tick-size,
-      transparent 0,
-      transparent
-    );
-    // Firefox doesn't draw the gradient correctly with 'to right'
-    // (see https://bugzilla.mozilla.org/show_bug.cgi?id=1314319).
-    background-image: -moz-repeating-linear-gradient(
-      0.0001deg,
-      $tak-slider-tick-color,
-      $tak-slider-tick-color $tak-slider-tick-size,
-      transparent 0,
-      transparent
+    $mdc-color-tokens: token-utils.resolve-elevation(
+        tokens-mdc-slider.get-color-tokens($theme),
+        handle-elevation,
+        handle-shadow-color
     );
 
-    // `tak-color` uses `rgba` for the opacity which won't work with
-    // CSS variables so we need to use `opacity` as a fallback.
-    @if (meta.type-of($tak-slider-tick-color) != color) {
-      opacity: $tak-slider-tick-opacity;
-    }
-  }
+    $mat-slider-color-tokens: tokens-mat-slider.get-color-tokens($theme);
 
-  .tak-slider-vertical .tak-slider-ticks {
-    background-image: repeating-linear-gradient(
-      to bottom,
-      $tak-slider-tick-color,
-      $tak-slider-tick-color $tak-slider-tick-size,
-      transparent 0,
-      transparent
+  // Add values for MDC slider tokens.
+  @include sass-utils.current-selector-or-root() {
+    @include mdc-slider-theme.theme($mdc-color-tokens);
+    @include token-utils.create-token-values(
+      tokens-mat-slider.$prefix,
+      $mat-slider-color-tokens
     );
 
-    // `tak-color` uses `rgba` for the opacity which won't work with
-    // CSS variables so we need to use `opacity` as a fallback.
-    @if (meta.type-of($tak-slider-tick-color) != color) {
-      opacity: $tak-slider-tick-opacity;
+    .mat-accent {
+      @include token-utils.create-token-values(
+        tokens-mat-slider.$prefix,
+        tokens-mat-slider.private-get-color-palette-color-tokens($theme, accent),
+      );
+      @include mdc-slider-theme.theme(
+        tokens-mdc-slider.private-get-color-palette-color-tokens($theme, accent));
+    }
+
+      .mat-warn {
+        @include token-utils.create-token-values(
+          tokens-mat-slider.$prefix,
+          tokens-mat-slider.private-get-color-palette-color-tokens($theme, warn),
+        );
+        @include mdc-slider-theme.theme(
+            tokens-mdc-slider.private-get-color-palette-color-tokens($theme, warn));
+      }
     }
   }
 }
 
-@mixin typography($config-or-theme) {
-  $config: typography.private-typography-to-2014-config(
-    theming.get-typography-config($config-or-theme)
-  );
-  .tak-slider-thumb-label-text {
-    font: {
-      family: typography-utils.font-family($config);
-      size: typography-utils.font-size($config, caption);
-      weight: typography-utils.font-weight($config, body-2);
+
+/// Outputs typography theme styles for the mat-slider.
+/// @param {Map} $theme The theme to generate typography styles for.
+@mixin typography($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, typography));
+  }
+  @else {
+    // Add values for MDC slider tokens.
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-slider-theme.theme(tokens-mdc-slider.get-typography-tokens($theme));
     }
   }
 }
 
-@mixin _density($config-or-theme) {
-}
 
-@mixin theme($theme-or-color-config) {
-  $theme: theming.private-legacy-get-theme($theme-or-color-config);
-  @include theming.private-check-duplicate-theme-styles($theme, 'tak-slider') {
-    $color: theming.get-color-config($theme);
-    $density: theming.get-density-config($theme);
-    $typography: theming.get-typography-config($theme);
-
-    @if $color != null {
-      @include color($color);
-    }
-    @if $density != null {
-      @include _density($density);
-    }
-    @if $typography != null {
-      @include typography($typography);
+/// Outputs density theme styles for the mat-slider.
+/// @param {Map} $theme The theme to generate density styles for.
+@mixin density($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, density));
+  }
+  @else {
+    // Add values for MDC slider tokens.
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-slider-theme.theme(tokens-mdc-slider.get-density-tokens($theme));
     }
   }
+}
+
+/// Outputs all (base, color, typography, and density) theme styles for the mat-option.
+/// @param {Map} $theme The theme to generate styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the slider: primary, secondary, tertiary,
+///     or error (If not specified, default primary color will be used).
+@mixin theme($theme, $options...) {
+  @include theming.private-check-duplicate-theme-styles($theme, 'mat-slider') {
+    @if inspection.get-theme-version($theme) == 1 {
+      @include _theme-from-tokens(inspection.get-theme-tokens($theme), $options...);
+    }
+    @else {
+      @include base($theme);
+      @if inspection.theme-has($theme, color) {
+        @include color($theme);
+      }
+      @if inspection.theme-has($theme, density) {
+        @include density($theme);
+      }
+      @if inspection.theme-has($theme, typography) {
+        @include typography($theme);
+      }
+    }
+  }
+}
+
+@mixin _theme-from-tokens($tokens, $options...) {
+  @include validation.selector-defined(
+      'Calls to Angular Material theme mixins with an M3 theme must be wrapped in a selector');
+  $mdc-slider-tokens: token-utils.get-tokens-for($tokens, tokens-mdc-slider.$prefix, $options...);
+  $mat-slider-tokens: token-utils.get-tokens-for($tokens, tokens-mat-slider.$prefix, $options...);
+  @include mdc-slider-theme.theme($mdc-slider-tokens);
+  @include token-utils.create-token-values(tokens-mat-slider.$prefix, $mat-slider-tokens);
 }

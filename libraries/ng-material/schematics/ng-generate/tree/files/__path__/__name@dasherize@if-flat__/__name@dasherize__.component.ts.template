@@ -1,6 +1,8 @@
 import { Component<% if (!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if (changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
-import { TakTreeFlatDataSource, TakTreeFlattener } from '@takkion/ng-material/tree';
-import { FlatTreeControl } from '@takkion/ng-cdk/tree';
+import { <% if(standalone) { %>MatTreeModule, <% } %>MatTreeFlatDataSource, MatTreeFlattener } from '@takkion/ng-material/tree';
+import { FlatTreeControl } from '@takkion/ng-cdk/tree';<% if(standalone) { %>
+import { MatButtonModule } from '@takkion/ng-material/button';
+import { MatIconModule } from '@takkion/ng-material/icon';<% } %>
 import { files } from './example-data';
 
 /** File node data with possible child nodes. */
@@ -27,12 +29,14 @@ export interface FlatTreeNode {
     <%= indentTextContent(resolvedFiles.template, 4) %>
   `,<% } else { %>
   templateUrl: './<%= dasherize(name) %>.component.html',<% } if (inlineStyle) { %>
-  styles: [`
+  styles: `
     <%= indentTextContent(resolvedFiles.stylesheet, 4) %>
-  `]<% } else { %>
-  styleUrls: ['./<%= dasherize(name) %>.component.<%= style %>']<% } %><% if(!!viewEncapsulation) { %>,
+  `<% } else { %>
+  styleUrl: './<%= dasherize(name) %>.component.<%= style %>'<% } %><% if(!!viewEncapsulation) { %>,
   encapsulation: ViewEncapsulation.<%= viewEncapsulation %><% } if (changeDetection !== 'Default') { %>,
-  changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
+  changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %><% if(standalone) { %>,
+  standalone: true,
+  imports: [MatTreeModule, MatButtonModule, MatIconModule]<% } %>
 })
 export class <%= classify(name) %>Component {
 
@@ -40,20 +44,20 @@ export class <%= classify(name) %>Component {
   treeControl: FlatTreeControl<FlatTreeNode>;
 
   /** The TreeFlattener is used to generate the flat list of items from hierarchical data. */
-  treeFlattener: TakTreeFlattener<FileNode, FlatTreeNode>;
+  treeFlattener: MatTreeFlattener<FileNode, FlatTreeNode>;
 
-  /** The TakTreeFlatDataSource connects the control and flattener to provide data. */
-  dataSource: TakTreeFlatDataSource<FileNode, FlatTreeNode>;
+  /** The MatTreeFlatDataSource connects the control and flattener to provide data. */
+  dataSource: MatTreeFlatDataSource<FileNode, FlatTreeNode>;
 
   constructor() {
-    this.treeFlattener = new TakTreeFlattener(
+    this.treeFlattener = new MatTreeFlattener(
       this.transformer,
       this.getLevel,
       this.isExpandable,
       this.getChildren);
 
     this.treeControl = new FlatTreeControl(this.getLevel, this.isExpandable);
-    this.dataSource = new TakTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
     this.dataSource.data = files;
   }
 

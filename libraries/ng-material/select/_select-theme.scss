@@ -1,102 +1,110 @@
-@use 'sass:map';
+@use '../core/tokens/m2/mat/select' as tokens-mat-select;
+@use '../core/tokens/token-utils';
+@use '../core/style/sass-utils';
+
 @use '../core/theming/theming';
-@use '../core/style/private';
-@use '../core/style/form-common';
+@use '../core/theming/inspection';
+@use '../core/theming/validation';
 @use '../core/typography/typography';
-@use '../core/typography/typography-utils';
 
-@mixin color($config-or-theme) {
-  $config: theming.get-color-config($config-or-theme);
-  $foreground: map.get($config, foreground);
-  $background: map.get($config, background);
-  $primary: map.get($config, primary);
-  $accent: map.get($config, accent);
-  $warn: map.get($config, warn);
-
-  .tak-select-value {
-    color: theming.get-color-from-palette($foreground, text);
+/// Outputs base theme styles (styles not dependent on the color, typography, or density settings)
+/// for the mat-select.
+/// @param {Map} $theme The theme to generate base styles for.
+@mixin base($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, base));
   }
-
-  .tak-select-placeholder {
-    color: form-common.private-control-placeholder-color($config);
-  }
-
-  .tak-select-disabled .tak-select-value {
-    color: theming.get-color-from-palette($foreground, disabled-text);
-  }
-
-  .tak-select-arrow {
-    color: theming.get-color-from-palette($foreground, secondary-text);
-  }
-
-  .tak-select-panel {
-    background: theming.get-color-from-palette($background, card);
-    @include private.private-theme-overridable-elevation(4, $config);
-
-    .tak-option.tak-selected:not(.tak-option-multiple) {
-      background: theming.get-color-from-palette($background, hover, 0.12);
-    }
-  }
-
-  .tak-form-field {
-    &.tak-focused {
-      &.tak-primary .tak-select-arrow {
-        color: theming.get-color-from-palette($primary, text);
-      }
-
-      &.tak-accent .tak-select-arrow {
-        color: theming.get-color-from-palette($accent, text);
-      }
-
-      &.tak-warn .tak-select-arrow {
-        color: theming.get-color-from-palette($warn, text);
-      }
-    }
-
-    .tak-select.tak-select-invalid .tak-select-arrow {
-      color: theming.get-color-from-palette($warn, text);
-    }
-
-    .tak-select.tak-select-disabled .tak-select-arrow {
-      color: theming.get-color-from-palette($foreground, disabled-text);
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      $mat-tokens: tokens-mat-select.get-unthemable-tokens();
+      @include token-utils.create-token-values(tokens-mat-select.$prefix, $mat-tokens);
     }
   }
 }
 
-@mixin typography($config-or-theme) {
-  $config: typography.private-typography-to-2014-config(
-    theming.get-typography-config($config-or-theme)
-  );
-  // The unit-less line-height from the font config.
-  $line-height: typography-utils.line-height($config, input);
-
-  .tak-select {
-    font-family: typography-utils.font-family($config);
+/// Outputs color theme styles for the mat-select.
+/// @param {Map} $theme The theme to generate color styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the select arrow: primary, secondary, tertiary,
+///     or error (If not specified, default primary color will be used).
+@mixin color($theme, $options...) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, color), $options...);
   }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(tokens-mat-select.$prefix,
+        tokens-mat-select.get-color-tokens($theme));
 
-  .tak-select-trigger {
-    height: typography-utils.private-coerce-unitless-to-em($line-height);
+      .mat-mdc-form-field.mat-accent {
+        @include token-utils.create-token-values(tokens-mat-select.$prefix,
+          tokens-mat-select.get-color-tokens($theme, accent));
+      }
+
+      .mat-mdc-form-field.mat-warn {
+        @include token-utils.create-token-values(tokens-mat-select.$prefix,
+          tokens-mat-select.get-color-tokens($theme, warn));
+      }
+    }
   }
 }
 
-@mixin _density($config-or-theme) {
-}
-
-@mixin theme($theme-or-color-config) {
-  $theme: theming.private-legacy-get-theme($theme-or-color-config);
-  @include theming.private-check-duplicate-theme-styles($theme, 'tak-select') {
-    $color: theming.get-color-config($theme);
-    $density: theming.get-density-config($theme);
-    $typography: theming.get-typography-config($theme);
-
-    @if $color != null {
-      @include color($color);
-    }
-    @if $density != null {
-      @include _density($density);
-    }
-    @if $typography != null {
-      @include typography($typography);
+/// Outputs typography theme styles for the mat-select.
+/// @param {Map} $theme The theme to generate typography styles for.
+@mixin typography($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, typography));
+  }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(tokens-mat-select.$prefix,
+        tokens-mat-select.get-typography-tokens($theme));
     }
   }
+}
+
+/// Outputs typography theme styles for the mat-select.
+/// @param {Map} $theme The theme to generate density styles for.
+@mixin density($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, density));
+  }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(tokens-mat-select.$prefix,
+        tokens-mat-select.get-density-tokens($theme));
+    }
+  }
+}
+
+/// Outputs all (base, color, typography, and density) theme styles for the mat-icon.
+/// @param {Map} $theme The theme to generate styles for.
+/// @param {ArgList} Additional optional arguments (only supported for M3 themes):
+///   $color-variant: The color variant to use for the select arrow: primary, secondary, tertiary,
+///     or error (If not specified, default primary color will be used).
+@mixin theme($theme, $options...) {
+  @include theming.private-check-duplicate-theme-styles($theme, 'mat-select') {
+    @if inspection.get-theme-version($theme) == 1 {
+      @include _theme-from-tokens(inspection.get-theme-tokens($theme), $options...);
+    }
+    @else {
+      @include base($theme);
+      @if inspection.theme-has($theme, color) {
+        @include color($theme);
+      }
+      @if inspection.theme-has($theme, density) {
+        @include density($theme);
+      }
+      @if inspection.theme-has($theme, typography) {
+        @include typography($theme);
+      }
+    }
+  }
+}
+
+@mixin _theme-from-tokens($tokens, $options...) {
+  @include validation.selector-defined(
+      'Calls to Angular Material theme mixins with an M3 theme must be wrapped in a selector');
+  $mat-select-tokens: token-utils.get-tokens-for($tokens, tokens-mat-select.$prefix, $options...);
+  @include token-utils.create-token-values(tokens-mat-select.$prefix, $mat-select-tokens);
 }

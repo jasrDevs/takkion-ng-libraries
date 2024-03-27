@@ -1,12 +1,14 @@
 // Default minimum and maximum height for collapsed panel headers.
 $header-collapsed-height: 48px !default;
 $header-collapsed-minimum-height: 36px !default;
-$header-collapsed-maximum-height: $header-collapsed-height !default;
+$header-collapsed-maximum-height:
+    $header-collapsed-height !default;
 
 // Default minimum and maximum height for expanded panel headers.
 $header-expanded-height: 64px !default;
 $header-expanded-minimum-height: 48px !default;
-$header-expanded-maximum-height: $header-expanded-height !default;
+$header-expanded-maximum-height:
+    $header-expanded-height !default;
 
 // Density configuration for the expansion panel. Captures the
 // height for both expanded and collapsed panel headers.
@@ -20,7 +22,7 @@ $header-density-config: (
     default: $header-expanded-height,
     maximum: $header-expanded-maximum-height,
     minimum: $header-expanded-minimum-height,
-  ),
+  )
 ) !default;
 
 // Note: Keep this in sync with the animation timing for the toggle indicator

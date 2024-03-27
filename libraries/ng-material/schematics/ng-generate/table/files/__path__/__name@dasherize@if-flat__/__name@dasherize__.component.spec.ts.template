@@ -1,8 +1,8 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TakPaginatorModule } from '@takkion/ng-material/paginator';
-import { TakSortModule } from '@takkion/ng-material/sort';
-import { TakTableModule } from '@takkion/ng-material/table';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';<% if(!standalone) { %>
+import { MatPaginatorModule } from '@takkion/ng-material/paginator';
+import { MatSortModule } from '@takkion/ng-material/sort';
+import { MatTableModule } from '@takkion/ng-material/table';<% } %>
 
 import { <%= classify(name) %>Component } from './<%= dasherize(name) %>.component';
 
@@ -11,14 +11,15 @@ describe('<%= classify(name) %>Component', () => {
   let fixture: ComponentFixture<<%= classify(name) %>Component>;
 
   beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ <%= classify(name) %>Component ],
+    TestBed.configureTestingModule({<% if(standalone) { %>
+      imports: [NoopAnimationsModule]<% } else { %>
+      declarations: [<%= classify(name) %>Component],
       imports: [
         NoopAnimationsModule,
-        TakPaginatorModule,
-        TakSortModule,
-        TakTableModule,
-      ]
+        MatPaginatorModule,
+        MatSortModule,
+        MatTableModule,
+      ]<% } %>
     }).compileComponents();
   }));
 

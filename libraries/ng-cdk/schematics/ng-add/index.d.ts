@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -8,7 +8,7 @@
 import { Rule } from '@angular-devkit/schematics';
 /**
  * Schematic factory entry-point for the `ng-add` schematic. The ng-add schematic will be
- * automatically executed if developers run `ng add @angular/cdk`.
+ * automatically executed if developers run `ng add @takkion/ng-cdk`.
  *
  * By default, the CLI already installs the package that has been specified with `ng add`.
  * We just store the version in the `package.json` in case the package manager didn't. Also

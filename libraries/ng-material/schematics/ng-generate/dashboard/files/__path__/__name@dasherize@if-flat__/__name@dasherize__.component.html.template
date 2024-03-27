@@ -1,24 +1,26 @@
 <div class="grid-container">
-  <h1 class="tak-h1">Dashboard</h1>
-  <tak-grid-list cols="2" rowHeight="350px">
-    <tak-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <tak-card class="dashboard-card">
-        <tak-card-header>
-          <tak-card-title>
-            {{card.title}}
-            <button tak-icon-button class="more-button" [takMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <tak-icon>more_vert</tak-icon>
-            </button>
-            <tak-menu #menu="takMenu" xPosition="before">
-              <button tak-menu-item>Expand</button>
-              <button tak-menu-item>Remove</button>
-            </tak-menu>
-          </tak-card-title>
-        </tak-card-header>
-        <tak-card-content class="dashboard-card-content">
-          <div>Card Content Here</div>
-        </tak-card-content>
-      </tak-card>
-    </tak-grid-tile>
-  </tak-grid-list>
+  <h1 class="mat-h1">Dashboard</h1>
+  <mat-grid-list cols="2" rowHeight="350px">
+    @for (card of cards | async; track card) {
+      <mat-grid-tile [colspan]="card.cols" [rowspan]="card.rows">
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              {{card.title}}
+              <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item>Expand</button>
+                <button mat-menu-item>Remove</button>
+              </mat-menu>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+            <div>Card Content Here</div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    }
+  </mat-grid-list>
 </div>

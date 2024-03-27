@@ -1,131 +1,102 @@
 @use 'sass:map';
-@use '../core/density/private/compatibility';
-@use '../core/style/variables';
 @use '../core/theming/theming';
+@use '../core/theming/inspection';
+@use '../core/theming/validation';
 @use '../core/typography/typography';
-@use '../core/typography/typography-utils';
-@use './toolbar-variables';
+@use '../core/tokens/m2/mat/toolbar' as tokens-mat-toolbar;
+@use '../core/tokens/token-utils';
+@use '../core/style/sass-utils';
 
-@mixin _height($height) {
-  .tak-toolbar-multiple-rows {
-    min-height: $height;
-  }
-  .tak-toolbar-row,
-  .tak-toolbar-single-row {
-    height: $height;
-  }
-}
-
-@mixin _palette-styles($palette) {
-  background: theming.get-color-from-palette($palette);
-  color: theming.get-color-from-palette($palette, default-contrast);
-}
-
-@mixin _form-field-overrides {
-  .tak-form-field-underline,
-  .tak-form-field-ripple,
-  .tak-focused .tak-form-field-ripple {
-    background-color: currentColor;
-  }
-
-  .tak-form-field-label,
-  .tak-focused .tak-form-field-label,
-  .tak-select-value,
-  .tak-select-arrow,
-  .tak-form-field.tak-focused .tak-select-arrow {
-    color: inherit;
-  }
-
-  .tak-input-element {
-    caret-color: currentColor;
-  }
-}
-
-@mixin color($config-or-theme) {
-  $config: theming.get-color-config($config-or-theme);
-  $primary: map.get($config, primary);
-  $accent: map.get($config, accent);
-  $warn: map.get($config, warn);
-  $background: map.get($config, background);
-  $foreground: map.get($config, foreground);
-
-  .tak-toolbar {
-    background: theming.get-color-from-palette($background, app-bar);
-    color: theming.get-color-from-palette($foreground, text);
-
-    &.tak-primary {
-      @include _palette-styles($primary);
-    }
-
-    &.tak-accent {
-      @include _palette-styles($accent);
-    }
-
-    &.tak-warn {
-      @include _palette-styles($warn);
-    }
-
-    @include _form-field-overrides;
-  }
-}
-
-@mixin typography($config-or-theme) {
-  $config: typography.private-typography-to-2014-config(
-    theming.get-typography-config($config-or-theme)
+@mixin _palette-styles($theme, $palette-name) {
+  @include token-utils.create-token-values(
+    tokens-mat-toolbar.$prefix,
+    tokens-mat-toolbar.private-get-color-palette-color-tokens(
+      $background-color: inspection.get-theme-color($theme, $palette-name),
+      $text-color: inspection.get-theme-color($theme, $palette-name, default-contrast)
+    )
   );
-  .tak-toolbar,
-  .tak-toolbar h1,
-  .tak-toolbar h2,
-  .tak-toolbar h3,
-  .tak-toolbar h4,
-  .tak-toolbar h5,
-  .tak-toolbar h6 {
-    @include typography-utils.typography-level($config, title);
-    margin: 0;
-  }
 }
 
-@mixin density($config-or-theme) {
-  $density-scale: theming.get-density-config($config-or-theme);
-  $height-desktop: compatibility.private-density-prop-value(
-    toolbar-variables.$desktop-density-config,
-    $density-scale,
-    height
-  );
-  $height-mobile: compatibility.private-density-prop-value(
-    toolbar-variables.$mobile-density-config,
-    $density-scale,
-    height
-  );
+@mixin base($theme) {}
 
-  @include compatibility.private-density-legacy-compatibility() {
-    // Set the default height for the toolbar.
-    @include _height($height-desktop);
+@mixin color($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, color));
+  }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(tokens-mat-toolbar.$prefix,
+        tokens-mat-toolbar.get-color-tokens($theme));
+    }
 
-    // As per specs, toolbars should have a different height in mobile devices. This has been
-    // specified in the old guidelines and is still observable in the new specifications by
-    // looking at the spec images. See: https://material.io/design/components/app-bars-top.html#anatomy
-    @media (variables.$xsmall) {
-      @include _height($height-mobile);
+    .mat-toolbar {
+      &.mat-primary {
+        @include _palette-styles($theme, primary);
+      }
+
+      &.mat-accent {
+        @include _palette-styles($theme, accent);
+      }
+
+      &.mat-warn {
+        @include _palette-styles($theme, warn);
+      }
     }
   }
 }
 
-@mixin theme($theme-or-color-config) {
-  $theme: theming.private-legacy-get-theme($theme-or-color-config);
-  @include theming.private-check-duplicate-theme-styles($theme, 'tak-toolbar') {
-    $color: theming.get-color-config($theme);
-    $density: theming.get-density-config($theme);
-    $typography: theming.get-typography-config($theme);
+@mixin typography($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, typography));
+  }
+  @else {
+    // TODO(mmalerba): Stop calling this and resolve resulting screen diffs.
+    $theme: inspection.private-get-typography-back-compat-theme($theme);
 
-    @if $color != null {
-      @include color($color);
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(tokens-mat-toolbar.$prefix,
+        tokens-mat-toolbar.get-typography-tokens($theme));
     }
-    @if $density != null {
-      @include density($density);
+  }
+}
+
+@mixin density($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, density));
+  }
+  @else {
+    @include sass-utils.current-selector-or-root() {
+      @include token-utils.create-token-values(tokens-mat-toolbar.$prefix,
+        tokens-mat-toolbar.get-density-tokens($theme));
     }
-    @if $typography != null {
-      @include typography($typography);
+  }
+}
+
+@mixin theme($theme) {
+  @include theming.private-check-duplicate-theme-styles($theme, 'mat-toolbar') {
+    @if inspection.get-theme-version($theme) == 1 {
+      @include _theme-from-tokens(inspection.get-theme-tokens($theme));
     }
+    @else {
+      @include base($theme);
+      @if inspection.theme-has($theme, color) {
+        @include color($theme);
+      }
+      @if inspection.theme-has($theme, density) {
+        @include density($theme);
+      }
+      @if inspection.theme-has($theme, typography) {
+        @include typography($theme);
+      }
+    }
+  }
+}
+
+@mixin _theme-from-tokens($tokens) {
+  @include validation.selector-defined(
+      'Calls to Angular Material theme mixins with an M3 theme must be wrapped in a selector');
+  @if ($tokens != ()) {
+    @include token-utils.create-token-values(tokens-mat-toolbar.$prefix,
+      map.get($tokens, tokens-mat-toolbar.$prefix));
   }
 }

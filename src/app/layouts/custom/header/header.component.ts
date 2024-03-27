@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { TakModal } from '@takkion/ng-components/modal';
 
 @Component({
   selector: 'app-header',
@@ -9,31 +8,14 @@ import { TakModal } from '@takkion/ng-components/modal';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  constructor(private _modal: TakModal) {}
-
-  public toggleTheme(): void {
-    document.getElementsByTagName('body')[0].classList.toggle('tak-dark-theme');
-
-    if (document.body.classList.contains('tak-dark-theme')) {
-      localStorage.setItem('tak-dark-theme', 'true');
+  public toggleMode() {
+    const body = document.body;
+    if (body.classList.contains('dark-theme')) {
+      body.classList.remove('dark-theme');
+      body.classList.add('default-theme');
     } else {
-      localStorage.removeItem('tak-dark-theme');
+      body.classList.add('dark-theme');
+      body.classList.remove('default-theme');
     }
-  }
-
-  public onLogout(): void {
-    this._modal
-      .confirm('¿Desea cerrar su sesión?', '¿Seguro?', {
-        confirmButton: 'A',
-        deniedButton: 'B',
-        hasTextArea: true,
-      })
-      .subscribe(result => {
-        console.log(result);
-        if (result && result.success) {
-          localStorage.clear();
-          location.reload();
-        }
-      });
   }
 }

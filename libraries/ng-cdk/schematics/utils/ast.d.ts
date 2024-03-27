@@ -1,23 +1,18 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
 import { Tree } from '@angular-devkit/schematics';
 import { Schema as ComponentOptions } from '@schematics/angular/component/schema';
-import { ProjectDefinition } from '@angular-devkit/core/src/workspace';
+import { workspaces } from '@angular-devkit/core';
 import * as ts from 'typescript';
 /** Reads file given path and returns TypeScript source file. */
 export declare function parseSourceFile(host: Tree, path: string): ts.SourceFile;
 /** Import and add module to root app module. */
-export declare function addModuleImportToRootModule(
-  host: Tree,
-  moduleName: string,
-  src: string,
-  project: ProjectDefinition
-): void;
+export declare function addModuleImportToRootModule(host: Tree, moduleName: string, src: string, project: workspaces.ProjectDefinition): void;
 /**
  * Import and add module to specific module path.
  * @param host the tree we are updating
@@ -25,14 +20,6 @@ export declare function addModuleImportToRootModule(
  * @param moduleName name of module to import
  * @param src src location to import
  */
-export declare function addModuleImportToModule(
-  host: Tree,
-  modulePath: string,
-  moduleName: string,
-  src: string
-): void;
+export declare function addModuleImportToModule(host: Tree, modulePath: string, moduleName: string, src: string): void;
 /** Wraps the internal find module from options with undefined path handling  */
-export declare function findModuleFromOptions(
-  host: Tree,
-  options: ComponentOptions
-): Promise<string | undefined>;
+export declare function findModuleFromOptions(host: Tree, options: ComponentOptions): Promise<string | undefined>;

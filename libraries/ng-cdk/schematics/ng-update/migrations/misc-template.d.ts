@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -13,6 +13,6 @@ import { UpgradeData } from '../upgrade-data';
  * instances of outdated Angular CDK API that can't be migrated automatically.
  */
 export declare class MiscTemplateMigration extends Migration<UpgradeData> {
-  enabled: boolean;
-  visitTemplate(template: ResolvedResource): void;
+    enabled: boolean;
+    visitTemplate(template: ResolvedResource): void;
 }

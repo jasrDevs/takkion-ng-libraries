@@ -1,11 +1,11 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';<% if(!standalone) { %>
 import { ReactiveFormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TakButtonModule } from '@takkion/ng-material/button';
-import { TakCardModule } from '@takkion/ng-material/card';
-import { TakInputModule } from '@takkion/ng-material/input';
-import { TakRadioModule } from '@takkion/ng-material/radio';
-import { TakSelectModule } from '@takkion/ng-material/select';
+import { MatButtonModule } from '@takkion/ng-material/button';
+import { MatCardModule } from '@takkion/ng-material/card';
+import { MatInputModule } from '@takkion/ng-material/input';
+import { MatRadioModule } from '@takkion/ng-material/radio';
+import { MatSelectModule } from '@takkion/ng-material/select';<% } %>
 
 import { <%= classify(name) %>Component } from './<%= dasherize(name) %>.component';
 
@@ -14,17 +14,18 @@ describe('<%= classify(name) %>Component', () => {
   let fixture: ComponentFixture<<%= classify(name) %>Component>;
 
   beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ <%= classify(name) %>Component ],
+    TestBed.configureTestingModule({<% if(standalone) { %>
+      imports: [NoopAnimationsModule]<% } else { %>
+      declarations: [<%= classify(name) %>Component],
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
-        TakButtonModule,
-        TakCardModule,
-        TakInputModule,
-        TakRadioModule,
-        TakSelectModule,
-      ]
+        MatButtonModule,
+        MatCardModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+      ]<% } %>
     }).compileComponents();
   }));
 

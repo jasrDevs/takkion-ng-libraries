@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -17,10 +17,10 @@ import { UpgradeData } from '../upgrade-data';
  * e.g. `<my-component color="primary">` becomes `my-component[color]`
  */
 export declare class InputNamesMigration extends Migration<UpgradeData> {
-  /** Change data that upgrades to the specified target version. */
-  data: InputNameUpgradeData[];
-  enabled: boolean;
-  visitStylesheet(stylesheet: ResolvedResource): void;
-  visitTemplate(template: ResolvedResource): void;
-  private _replaceInputName;
+    /** Change data that upgrades to the specified target version. */
+    data: InputNameUpgradeData[];
+    enabled: boolean;
+    visitStylesheet(stylesheet: ResolvedResource): void;
+    visitTemplate(template: ResolvedResource): void;
+    private _replaceInputName;
 }

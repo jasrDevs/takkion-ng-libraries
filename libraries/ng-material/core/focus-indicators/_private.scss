@@ -1,6 +1,9 @@
 @use 'sass:map';
+@use 'sass:meta';
 @use '@takkion/ng-cdk';
 @use '../style/layout-common';
+@use '../theming/theming';
+@use '../theming/inspection';
 
 // Private sass variables that will be used as reference throughout component stylesheets.
 $default-border-width: 3px;
@@ -18,10 +21,22 @@ $default-border-radius: 4px;
       box-sizing: border-box;
       pointer-events: none;
       display: var(--#{$prefix}-focus-indicator-display, none); // Hide the indicator by default.
-      border: var(--#{$prefix}-focus-indicator-border-width, #{$default-border-width})
-        var(--#{$prefix}-focus-indicator-border-style, #{$default-border-style})
-        var(--#{$prefix}-focus-indicator-border-color, #{$default-border-color});
-      border-radius: var(--#{$prefix}-focus-indicator-border-radius, #{$default-border-radius});
+      border: var(
+          --#{$prefix}-focus-indicator-border-width,
+          #{$default-border-width}
+        )
+        var(
+          --#{$prefix}-focus-indicator-border-style,
+          #{$default-border-style}
+        )
+        var(
+          --#{$prefix}-focus-indicator-border-color,
+          #{$default-border-color}
+        );
+      border-radius: var(
+        --#{$prefix}-focus-indicator-border-radius,
+        #{$default-border-radius}
+      );
     }
 
     // By default, render the focus indicator when the focus indicator host element takes focus.
@@ -33,12 +48,7 @@ $default-border-radius: 4px;
 
   // Enable the indicator in high contrast mode.
   @include cdk.high-contrast(active, off) {
-    @include customize-focus-indicators(
-      (
-        display: block,
-      ),
-      $prefix
-    );
+    @include customize-focus-indicators((display: block), $prefix);
   }
 }
 
@@ -68,11 +78,97 @@ $default-border-radius: 4px;
 
   @if (&) {
     @include _output-variables($map);
-  } @else {
+  }
+  @else {
     // We use `html` here instead of `:root`, because the
     // latter causes some issues with internal tooling.
     html {
       @include _output-variables($map);
+    }
+  }
+}
+
+@mixin strong-focus-indicators($config: ()) {
+  // Default focus indicator config.
+  $default-config: (
+      border-color: black,
+      display: block,
+  );
+
+  // Merge default config with user config.
+  $config: map.merge($default-config, $config);
+
+  @include customize-focus-indicators($config, 'mat');
+}
+
+@mixin mdc-strong-focus-indicators($config: ()) {
+  // Default focus indicator config.
+  $default-config: (
+      border-color: black,
+      display: block,
+  );
+
+  // Merge default config with user config.
+  $config: map.merge($default-config, $config);
+
+  @include customize-focus-indicators($config, 'mat-mdc');
+}
+
+@mixin strong-focus-indicators-color($theme-or-color) {
+  @if meta.type-of($theme-or-color) == 'color' {
+    @include customize-focus-indicators((
+        border-color: $theme-or-color
+    ), 'mat');
+  }
+  @else {
+    $border-color: inspection.get-theme-color($theme-or-color, primary);
+    @include customize-focus-indicators((
+        border-color: $border-color
+    ), 'mat');
+  }
+}
+
+@mixin strong-focus-indicators-theme($theme-or-color) {
+  @if meta.type-of($theme-or-color) == 'color' {
+    @include customize-focus-indicators((
+        border-color: $theme-or-color
+    ), 'mat');
+  }
+  @else {
+    @include theming.private-check-duplicate-theme-styles($theme-or-color, 'mat-focus-indicators') {
+      @if inspection.theme-has($theme-or-color, color) {
+        @include strong-focus-indicators-color($theme-or-color);
+      }
+    }
+  }
+}
+
+@mixin mdc-strong-focus-indicators-color($theme-or-color) {
+  @if meta.type-of($theme-or-color) == 'color' {
+    @include customize-focus-indicators((
+        border-color: $theme-or-color
+    ), 'mat-mdc');
+  }
+  @else {
+    $border-color: inspection.get-theme-color($theme-or-color, primary);
+    @include customize-focus-indicators((
+        border-color: $border-color
+    ), 'mat-mdc');
+  }
+}
+
+@mixin mdc-strong-focus-indicators-theme($theme-or-color) {
+  @if meta.type-of($theme-or-color) == 'color' {
+    @include customize-focus-indicators((
+        border-color: $theme-or-color
+    ), 'mat-mdc');
+  }
+  @else {
+    @include theming.private-check-duplicate-theme-styles(
+        $theme-or-color, 'mat-mdc-focus-indicators') {
+      @if inspection.theme-has($theme-or-color, color) {
+        @include mdc-strong-focus-indicators-color($theme-or-color);
+      }
     }
   }
 }

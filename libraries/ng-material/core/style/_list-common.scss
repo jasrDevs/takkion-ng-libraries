@@ -6,16 +6,16 @@
   text-overflow: ellipsis;
 }
 
-// Mixin to provide all tak-line styles, changing secondary font size based on whether the list
+// Mixin to provide all mat-line styles, changing secondary font size based on whether the list
 // is in dense mode.
 @mixin base($secondary-font-size) {
-  .tak-line {
+  .mat-line {
     @include truncate-line();
     display: block;
     box-sizing: border-box;
 
     // all lines but the top line should have smaller text
-    &:nth-child(n + 2) {
+    &:nth-child(n+2) {
       font-size: $secondary-font-size;
     }
   }
@@ -31,7 +31,7 @@
   }
 }
 
-// This mixin provides base styles for the wrapper around tak-line elements in a list.
+// This mixin provides base styles for the wrapper around mat-line elements in a list.
 @mixin wrapper-base() {
   @include normalize-text();
 

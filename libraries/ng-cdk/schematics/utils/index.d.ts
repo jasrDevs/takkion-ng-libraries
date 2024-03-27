@@ -1,6 +1,6 @@
 /**
  * @license
- * Developed by Google LLC but not supported.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -15,5 +15,5 @@ export * from './project-index-file';
 export * from './project-main-file';
 export * from './project-style-file';
 export * from './project-targets';
+export * from './project-tsconfig-paths';
 export * from './schematic-options';
-export { importsProvidersFrom, addModuleImportToStandaloneBootstrap } from './ast/standalone';

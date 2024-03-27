@@ -1,243 +1,179 @@
-import { _AbstractConstructor } from '@takkion/ng-material/core';
+import { AbstractControl } from '@angular/forms';
 import { AfterContentInit } from '@angular/core';
-import { BooleanInput } from '@takkion/ng-cdk/coercion';
-import { CanColor } from '@takkion/ng-material/core';
-import { CanDisable } from '@takkion/ng-material/core';
-import { CanDisableRipple } from '@takkion/ng-material/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { CheckboxRequiredValidator } from '@angular/forms';
-import { _Constructor } from '@takkion/ng-material/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { ElementRef } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { FocusMonitor } from '@takkion/ng-cdk/a11y';
-import { FocusOrigin } from '@takkion/ng-cdk/a11y';
-import { HasTabIndex } from '@takkion/ng-material/core';
 import * as i0 from '@angular/core';
 import * as i3 from '@takkion/ng-material/core';
-import * as i4 from '@takkion/ng-cdk/observers';
 import { InjectionToken } from '@angular/core';
+import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { Provider } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
 import { ThemePalette } from '@takkion/ng-material/core';
 import { Type } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
+import { Validator } from '@angular/forms';
 
 declare namespace i1 {
-  export { TAK_SLIDE_TOGGLE_REQUIRED_VALIDATOR, TakSlideToggleRequiredValidator };
+    export {
+        MAT_SLIDE_TOGGLE_REQUIRED_VALIDATOR,
+        MatSlideToggleRequiredValidator
+    }
 }
 
 declare namespace i2 {
-  export {
-    TAK_SLIDE_TOGGLE_VALUE_ACCESSOR,
-    TakSlideToggleChange,
-    _TakSlideToggleBase,
-    TakSlideToggle,
-  };
+    export {
+        MAT_SLIDE_TOGGLE_VALUE_ACCESSOR,
+        MatSlideToggleChange,
+        MatSlideToggle
+    }
 }
 
-/** Injection token to be used to override the default options for `tak-slide-toggle`. */
-export declare const TAK_SLIDE_TOGGLE_DEFAULT_OPTIONS: InjectionToken<TakSlideToggleDefaultOptions>;
+/** Injection token to be used to override the default options for `mat-slide-toggle`. */
+export declare const MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS: InjectionToken<MatSlideToggleDefaultOptions>;
 
-export declare const TAK_SLIDE_TOGGLE_REQUIRED_VALIDATOR: Provider;
+/**
+ * @deprecated No longer used, `MatCheckbox` implements required validation directly.
+ * @breaking-change 19.0.0
+ */
+export declare const MAT_SLIDE_TOGGLE_REQUIRED_VALIDATOR: Provider;
 
-/** @docs-private */
-export declare const TAK_SLIDE_TOGGLE_VALUE_ACCESSOR: {
-  provide: InjectionToken<readonly ControlValueAccessor[]>;
-  useExisting: Type<any>;
-  multi: boolean;
+/**
+ * @deprecated Will stop being exported.
+ * @breaking-change 19.0.0
+ */
+export declare const MAT_SLIDE_TOGGLE_VALUE_ACCESSOR: {
+    provide: InjectionToken<readonly ControlValueAccessor[]>;
+    useExisting: Type<any>;
+    multi: boolean;
 };
 
-/** Represents a slidable "switch" toggle that can be moved between on and off. */
-export declare class TakSlideToggle extends _TakSlideToggleBase<TakSlideToggleChange> {
-  /** Reference to the underlying input element. */
-  _inputElement: ElementRef<HTMLInputElement>;
-  constructor(
-    elementRef: ElementRef,
-    focusMonitor: FocusMonitor,
-    changeDetectorRef: ChangeDetectorRef,
-    tabIndex: string,
-    defaults: TakSlideToggleDefaultOptions,
-    animationMode?: string
-  );
-  protected _createChangeEvent(isChecked: boolean): TakSlideToggleChange;
-  /** Method being called whenever the underlying input emits a change event. */
-  _onChangeEvent(event: Event): void;
-  /** Method being called whenever the slide-toggle has been clicked. */
-  _onInputClick(event: Event): void;
-  /** Focuses the slide-toggle. */
-  focus(options?: FocusOptions, origin?: FocusOrigin): void;
-  /** Method being called whenever the label text changes. */
-  _onLabelTextChange(): void;
-  static ɵfac: i0.ɵɵFactoryDeclaration<
-    TakSlideToggle,
-    [null, null, null, { attribute: 'tabindex' }, null, { optional: true }]
-  >;
-  static ɵcmp: i0.ɵɵComponentDeclaration<
-    TakSlideToggle,
-    'tak-slide-toggle',
-    ['takSlideToggle'],
-    { disabled: 'disabled'; disableRipple: 'disableRipple'; color: 'color'; tabIndex: 'tabIndex' },
-    {},
-    never,
-    ['*'],
-    false
-  >;
+export declare class MatSlideToggle implements OnDestroy, AfterContentInit, OnChanges, ControlValueAccessor, Validator {
+    private _elementRef;
+    protected _focusMonitor: FocusMonitor;
+    protected _changeDetectorRef: ChangeDetectorRef;
+    defaults: MatSlideToggleDefaultOptions;
+    private _onChange;
+    private _onTouched;
+    private _validatorOnChange;
+    private _uniqueId;
+    private _checked;
+    private _createChangeEvent;
+    /** Unique ID for the label element. */
+    _labelId: string;
+    /** Returns the unique id for the visual hidden button. */
+    get buttonId(): string;
+    /** Reference to the MDC switch element. */
+    _switchElement: ElementRef<HTMLElement>;
+    /** Focuses the slide-toggle. */
+    focus(): void;
+    /** Whether noop animations are enabled. */
+    _noopAnimations: boolean;
+    /** Whether the slide toggle is currently focused. */
+    _focused: boolean;
+    /** Name value will be applied to the input element if present. */
+    name: string | null;
+    /** A unique id for the slide-toggle input. If none is supplied, it will be auto-generated. */
+    id: string;
+    /** Whether the label should appear after or before the slide-toggle. Defaults to 'after'. */
+    labelPosition: 'before' | 'after';
+    /** Used to set the aria-label attribute on the underlying input element. */
+    ariaLabel: string | null;
+    /** Used to set the aria-labelledby attribute on the underlying input element. */
+    ariaLabelledby: string | null;
+    /** Used to set the aria-describedby attribute on the underlying input element. */
+    ariaDescribedby: string;
+    /** Whether the slide-toggle is required. */
+    required: boolean;
+    /** Palette color of slide toggle. */
+    color: string | undefined;
+    /** Whether the slide toggle is disabled. */
+    disabled: boolean;
+    /** Whether the slide toggle has a ripple. */
+    disableRipple: boolean;
+    /** Tabindex of slide toggle. */
+    tabIndex: number;
+    /** Whether the slide-toggle element is checked or not. */
+    get checked(): boolean;
+    set checked(value: boolean);
+    /** Whether to hide the icon inside of the slide toggle. */
+    hideIcon: boolean;
+    /** An event will be dispatched each time the slide-toggle changes its value. */
+    readonly change: EventEmitter<MatSlideToggleChange>;
+    /**
+     * An event will be dispatched each time the slide-toggle input is toggled.
+     * This event is always emitted when the user toggles the slide toggle, but this does not mean
+     * the slide toggle's value has changed.
+     */
+    readonly toggleChange: EventEmitter<void>;
+    /** Returns the unique id for the visual hidden input. */
+    get inputId(): string;
+    constructor(_elementRef: ElementRef, _focusMonitor: FocusMonitor, _changeDetectorRef: ChangeDetectorRef, tabIndex: string, defaults: MatSlideToggleDefaultOptions, animationMode?: string);
+    ngAfterContentInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
+    ngOnDestroy(): void;
+    /** Implemented as part of ControlValueAccessor. */
+    writeValue(value: any): void;
+    /** Implemented as part of ControlValueAccessor. */
+    registerOnChange(fn: any): void;
+    /** Implemented as part of ControlValueAccessor. */
+    registerOnTouched(fn: any): void;
+    /** Implemented as a part of Validator. */
+    validate(control: AbstractControl<boolean>): ValidationErrors | null;
+    /** Implemented as a part of Validator. */
+    registerOnValidatorChange(fn: () => void): void;
+    /** Implemented as a part of ControlValueAccessor. */
+    setDisabledState(isDisabled: boolean): void;
+    /** Toggles the checked state of the slide-toggle. */
+    toggle(): void;
+    /**
+     * Emits a change event on the `change` output. Also notifies the FormControl about the change.
+     */
+    protected _emitChangeEvent(): void;
+    /** Method being called whenever the underlying button is clicked. */
+    _handleClick(): void;
+    _getAriaLabelledBy(): string | null;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatSlideToggle, [null, null, null, { attribute: "tabindex"; }, null, { optional: true; }]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MatSlideToggle, "mat-slide-toggle", ["matSlideToggle"], { "name": { "alias": "name"; "required": false; }; "id": { "alias": "id"; "required": false; }; "labelPosition": { "alias": "labelPosition"; "required": false; }; "ariaLabel": { "alias": "aria-label"; "required": false; }; "ariaLabelledby": { "alias": "aria-labelledby"; "required": false; }; "ariaDescribedby": { "alias": "aria-describedby"; "required": false; }; "required": { "alias": "required"; "required": false; }; "color": { "alias": "color"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "disableRipple": { "alias": "disableRipple"; "required": false; }; "tabIndex": { "alias": "tabIndex"; "required": false; }; "checked": { "alias": "checked"; "required": false; }; "hideIcon": { "alias": "hideIcon"; "required": false; }; }, { "change": "change"; "toggleChange": "toggleChange"; }, never, ["*"], true, never>;
+    static ngAcceptInputType_required: unknown;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_disableRipple: unknown;
+    static ngAcceptInputType_tabIndex: unknown;
+    static ngAcceptInputType_checked: unknown;
+    static ngAcceptInputType_hideIcon: unknown;
 }
 
-export declare abstract class _TakSlideToggleBase<T>
-  extends _TakSlideToggleMixinBase
-  implements
-    OnDestroy,
-    AfterContentInit,
-    ControlValueAccessor,
-    CanDisable,
-    CanColor,
-    HasTabIndex,
-    CanDisableRipple
-{
-  protected _focusMonitor: FocusMonitor;
-  protected _changeDetectorRef: ChangeDetectorRef;
-  defaults: TakSlideToggleDefaultOptions;
-  protected _onChange: (_: any) => void;
-  private _onTouched;
-  protected _uniqueId: string;
-  private _required;
-  private _checked;
-  protected abstract _createChangeEvent(isChecked: boolean): T;
-  abstract focus(options?: FocusOptions, origin?: FocusOrigin): void;
-  /** Whether noop animations are enabled. */
-  _noopAnimations: boolean;
-  /** Whether the slide toggle is currently focused. */
-  _focused: boolean;
-  /** Name value will be applied to the input element if present. */
-  name: string | null;
-  /** A unique id for the slide-toggle input. If none is supplied, it will be auto-generated. */
-  id: string;
-  /** Whether the label should appear after or before the slide-toggle. Defaults to 'after'. */
-  labelPosition: 'before' | 'after';
-  /** Used to set the aria-label attribute on the underlying input element. */
-  ariaLabel: string | null;
-  /** Used to set the aria-labelledby attribute on the underlying input element. */
-  ariaLabelledby: string | null;
-  /** Used to set the aria-describedby attribute on the underlying input element. */
-  ariaDescribedby: string;
-  /** Whether the slide-toggle is required. */
-  get required(): boolean;
-  set required(value: BooleanInput);
-  /** Whether the slide-toggle element is checked or not. */
-  get checked(): boolean;
-  set checked(value: BooleanInput);
-  /** An event will be dispatched each time the slide-toggle changes its value. */
-  readonly change: EventEmitter<T>;
-  /**
-   * An event will be dispatched each time the slide-toggle input is toggled.
-   * This event is always emitted when the user toggles the slide toggle, but this does not mean
-   * the slide toggle's value has changed.
-   */
-  readonly toggleChange: EventEmitter<void>;
-  /** Returns the unique id for the visual hidden input. */
-  get inputId(): string;
-  constructor(
-    elementRef: ElementRef,
-    _focusMonitor: FocusMonitor,
-    _changeDetectorRef: ChangeDetectorRef,
-    tabIndex: string,
-    defaults: TakSlideToggleDefaultOptions,
-    animationMode: string | undefined,
-    idPrefix: string
-  );
-  ngAfterContentInit(): void;
-  ngOnDestroy(): void;
-  /** Implemented as part of ControlValueAccessor. */
-  writeValue(value: any): void;
-  /** Implemented as part of ControlValueAccessor. */
-  registerOnChange(fn: any): void;
-  /** Implemented as part of ControlValueAccessor. */
-  registerOnTouched(fn: any): void;
-  /** Implemented as a part of ControlValueAccessor. */
-  setDisabledState(isDisabled: boolean): void;
-  /** Toggles the checked state of the slide-toggle. */
-  toggle(): void;
-  /**
-   * Emits a change event on the `change` output. Also notifies the FormControl about the change.
-   */
-  protected _emitChangeEvent(): void;
-  static ɵfac: i0.ɵɵFactoryDeclaration<_TakSlideToggleBase<any>, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    _TakSlideToggleBase<any>,
-    never,
-    never,
-    {
-      name: 'name';
-      id: 'id';
-      labelPosition: 'labelPosition';
-      ariaLabel: 'aria-label';
-      ariaLabelledby: 'aria-labelledby';
-      ariaDescribedby: 'aria-describedby';
-      required: 'required';
-      checked: 'checked';
-    },
-    { change: 'change'; toggleChange: 'toggleChange' },
-    never,
-    never,
-    false
-  >;
+/** Change event object emitted by a slide toggle. */
+export declare class MatSlideToggleChange {
+    /** The source slide toggle of the event. */
+    source: MatSlideToggle;
+    /** The new `checked` value of the slide toggle. */
+    checked: boolean;
+    constructor(
+    /** The source slide toggle of the event. */
+    source: MatSlideToggle, 
+    /** The new `checked` value of the slide toggle. */
+    checked: boolean);
 }
 
-/** Change event object emitted by a TakSlideToggle. */
-export declare class TakSlideToggleChange {
-  /** The source TakSlideToggle of the event. */
-  source: TakSlideToggle;
-  /** The new `checked` value of the TakSlideToggle. */
-  checked: boolean;
-  constructor(
-    /** The source TakSlideToggle of the event. */
-    source: TakSlideToggle,
-    /** The new `checked` value of the TakSlideToggle. */
-    checked: boolean
-  );
+/** Default `mat-slide-toggle` options that can be overridden. */
+export declare interface MatSlideToggleDefaultOptions {
+    /** Whether toggle action triggers value changes in slide toggle. */
+    disableToggleValue?: boolean;
+    /** Default color for slide toggles. */
+    color?: ThemePalette;
+    /** Whether to hide the icon inside the slide toggle. */
+    hideIcon?: boolean;
 }
 
-/** Default `tak-slide-toggle` options that can be overridden. */
-export declare interface TakSlideToggleDefaultOptions {
-  /** Whether toggle action triggers value changes in slide toggle. */
-  disableToggleValue?: boolean;
-  /** Default color for slide toggles. */
-  color?: ThemePalette;
-}
-
-/** @docs-private */
-declare const _TakSlideToggleMixinBase: _Constructor<HasTabIndex> &
-  _AbstractConstructor<HasTabIndex> &
-  _Constructor<CanColor> &
-  _AbstractConstructor<CanColor> &
-  _Constructor<CanDisableRipple> &
-  _AbstractConstructor<CanDisableRipple> &
-  _Constructor<CanDisable> &
-  _AbstractConstructor<CanDisable> & {
-    new (_elementRef: ElementRef): {
-      _elementRef: ElementRef;
-    };
-  };
-
-export declare class TakSlideToggleModule {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakSlideToggleModule, never>;
-  static ɵmod: i0.ɵɵNgModuleDeclaration<
-    TakSlideToggleModule,
-    [typeof i2.TakSlideToggle],
-    [
-      typeof _TakSlideToggleRequiredValidatorModule,
-      typeof i3.TakRippleModule,
-      typeof i3.TakCommonModule,
-      typeof i4.ObserversModule,
-    ],
-    [
-      typeof _TakSlideToggleRequiredValidatorModule,
-      typeof i2.TakSlideToggle,
-      typeof i3.TakCommonModule,
-    ]
-  >;
-  static ɵinj: i0.ɵɵInjectorDeclaration<TakSlideToggleModule>;
+export declare class MatSlideToggleModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatSlideToggleModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<MatSlideToggleModule, never, [typeof i2.MatSlideToggle, typeof i3.MatCommonModule], [typeof i2.MatSlideToggle, typeof i3.MatCommonModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<MatSlideToggleModule>;
 }
 
 /**
@@ -247,31 +183,23 @@ export declare class TakSlideToggleModule {
  * where the value is always defined.
  *
  * Required slide-toggle form controls are valid when checked.
+ *
+ * @deprecated No longer used, `MatCheckbox` implements required validation directly.
+ * @breaking-change 19.0.0
  */
-export declare class TakSlideToggleRequiredValidator extends CheckboxRequiredValidator {
-  static ɵfac: i0.ɵɵFactoryDeclaration<TakSlideToggleRequiredValidator, never>;
-  static ɵdir: i0.ɵɵDirectiveDeclaration<
-    TakSlideToggleRequiredValidator,
-    'tak-slide-toggle[required][formControlName],             tak-slide-toggle[required][formControl], tak-slide-toggle[required][ngModel]',
-    never,
-    {},
-    {},
-    never,
-    never,
-    false
-  >;
+export declare class MatSlideToggleRequiredValidator extends CheckboxRequiredValidator {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatSlideToggleRequiredValidator, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MatSlideToggleRequiredValidator, "mat-slide-toggle[required][formControlName],             mat-slide-toggle[required][formControl], mat-slide-toggle[required][ngModel]", never, {}, {}, never, never, true, never>;
 }
 
-/** This module is used by both original and MDC-based slide-toggle implementations. */
-export declare class _TakSlideToggleRequiredValidatorModule {
-  static ɵfac: i0.ɵɵFactoryDeclaration<_TakSlideToggleRequiredValidatorModule, never>;
-  static ɵmod: i0.ɵɵNgModuleDeclaration<
-    _TakSlideToggleRequiredValidatorModule,
-    [typeof i1.TakSlideToggleRequiredValidator],
-    never,
-    [typeof i1.TakSlideToggleRequiredValidator]
-  >;
-  static ɵinj: i0.ɵɵInjectorDeclaration<_TakSlideToggleRequiredValidatorModule>;
+/**
+ * @deprecated No longer used, `MatSlideToggle` implements required validation directly.
+ * @breaking-change 19.0.0
+ */
+export declare class _MatSlideToggleRequiredValidatorModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<_MatSlideToggleRequiredValidatorModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<_MatSlideToggleRequiredValidatorModule, never, [typeof i1.MatSlideToggleRequiredValidator], [typeof i1.MatSlideToggleRequiredValidator]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<_MatSlideToggleRequiredValidatorModule>;
 }
 
-export {};
+export { }

@@ -1,5 +1,14 @@
-import { Component<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
+import { Component, inject<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
+<% if(standalone) { %>
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { MatInputModule } from '@takkion/ng-material/input';
+import { MatButtonModule } from '@takkion/ng-material/button';
+import { MatSelectModule } from '@takkion/ng-material/select';
+import { MatRadioModule } from '@takkion/ng-material/radio';
+import { MatCardModule } from '@takkion/ng-material/card';
+<% } else { %>
 import { FormBuilder, Validators } from '@angular/forms';
+<% } %>
 
 @Component({
   selector: '<%= selector %>',<% if(inlineTemplate) { %>
@@ -7,14 +16,24 @@ import { FormBuilder, Validators } from '@angular/forms';
     <%= indentTextContent(resolvedFiles.template, 4) %>
   `,<% } else { %>
   templateUrl: './<%= dasherize(name) %>.component.html',<% } if(inlineStyle) { %>
-  styles: [`
+  styles: `
     <%= indentTextContent(resolvedFiles.stylesheet, 4) %>
-  `]<% } else { %>
-  styleUrls: ['./<%= dasherize(name) %>.component.<%= style %>']<% } %><% if(!!viewEncapsulation) { %>,
+  `<% } else { %>
+  styleUrl: './<%= dasherize(name) %>.component.<%= style %>'<% } %><% if(!!viewEncapsulation) { %>,
   encapsulation: ViewEncapsulation.<%= viewEncapsulation %><% } if (changeDetection !== 'Default') { %>,
-  changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
+  changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %><% if(standalone) { %>,
+  standalone: true,
+  imports: [
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    ReactiveFormsModule
+  ]<% } %>
 })
 export class <%= classify(name) %>Component {
+  private fb = inject(FormBuilder);
   addressForm = this.fb.group({
     company: null,
     firstName: [null, Validators.required],
@@ -92,8 +111,6 @@ export class <%= classify(name) %>Component {
     {name: 'Wisconsin', abbreviation: 'WI'},
     {name: 'Wyoming', abbreviation: 'WY'}
   ];
-
-  constructor(private fb: FormBuilder) {}
 
   onSubmit(): void {
     alert('Thanks!');

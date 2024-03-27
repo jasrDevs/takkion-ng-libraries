@@ -1,8 +1,0 @@
-@forward '../core/style/private.import';
-@forward '../core/theming/theming.import';
-@forward 'sidenav-theme' hide color, theme, typography;
-@forward 'sidenav-theme' as tak-sidenav-* hide tak-sidenav-density;
-
-@import '../core/style/private';
-@import '../core/theming/palette';
-@import '../core/theming/theming';

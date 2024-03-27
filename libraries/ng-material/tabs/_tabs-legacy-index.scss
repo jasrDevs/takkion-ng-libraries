@@ -1,6 +1,0 @@
-@forward 'tabs-theme' hide color, theme, typography;
-@forward 'tabs-theme' as tak-tabs-* hide tak-tabs-background, tak-tabs-density, tak-tabs-ink-bar,
-  tak-tabs-tab-label-focus;
-@forward 'tabs-common' hide $tab-animation-duration, $tab-bar-height;
-@forward 'tabs-common' as tak-* hide tak-ink-bar, tak-paginated-tab-header,
-  tak-paginated-tab-header-container, tak-paginated-tab-header-item-wrapper, tak-tab-label;

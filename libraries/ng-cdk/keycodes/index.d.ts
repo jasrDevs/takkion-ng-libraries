@@ -116,6 +116,7 @@ export declare const LEFT_ARROW = 37;
 
 export declare const M = 77;
 
+
 export declare const MAC_ENTER = 3;
 
 export declare const MAC_META = 224;
@@ -126,7 +127,8 @@ export declare const MAC_WK_CMD_RIGHT = 93;
 
 export declare const META = 91;
 
-declare type ModifierKey = 'altKey' | 'shiftKey' | 'ctrlKey' | 'metaKey';
+
+export declare type ModifierKey = 'altKey' | 'shiftKey' | 'ctrlKey' | 'metaKey';
 
 export declare const MUTE = 173;
 
@@ -244,4 +246,4 @@ export declare const Z = 90;
 
 export declare const ZERO = 48;
 
-export {};
+export { }
